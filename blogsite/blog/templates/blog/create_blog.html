@@ -1,0 +1,55 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+   <!--
+                {% csrf_token %}
+                <div class="fieldWrapper">
+                    <label>Headline:</label>
+                    {{ form.headline }}
+                </div>
+                
+                <div class="fieldWrapper">
+                    <label>Category:</label>
+                    <select style="display: block;">
+                        <option value="0">---------</option>
+                        {% for c in categories %}
+                        <option value="1">{{ c.category_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="fieldWrapper">
+                    <label>Category:</label>
+                    {{ form.category_name }}
+                </div>
+                <div class="fieldWrapper">
+                    <label>Pub date:</label>
+                    {{ form.pub_date }}
+                </div>
+                <div class="fieldWrapper">
+                    <label>Content:</label>
+                    {{ form.content }}
+                </div>
+                <div class="fieldWrapper">
+                    <label>Blog slug:</label>
+                    {{ form.blog_slug }}
+                </div>           
+-->
+
+
+    <div class="row form-error">
+        <div class="column" id="content">
+            <form  method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+            
+
+
+
+    
+        

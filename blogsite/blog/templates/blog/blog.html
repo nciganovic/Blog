@@ -1,0 +1,14 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+    <h1>{{ single_blog.headline }}</h1>
+    <img src="/media/blog/{{ single_blog.img_name }}.jpg"/>
+    <p>{{ single_blog.pub_date }}</p>
+    <p>{{ single_blog.content|safe }}</p>
+{% endblock %}
+            
+
+
+
+    
+        

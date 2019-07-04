@@ -1,0 +1,28 @@
+from django.db import models
+from datetime import datetime
+from django.utils import timezone
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+class Categories(models.Model): 
+    category_name = models.CharField(max_length = 200)
+    category_description = models.TextField()
+    photo = models.ImageField(upload_to="gallery")
+    category_slug = models.CharField(max_length = 200)
+    def __str__(self):
+        return self.category_name
+
+class Blog(models.Model):
+    headline = models.CharField(max_length = 200)
+    pub_date = models.DateTimeField('date published')
+    content = models.TextField()
+    category_name = models.ForeignKey(Categories, on_delete=models.CASCADE, default = None)
+    img_name = models.CharField(max_length = 200)
+    blog_slug = models.CharField(max_length = 200)
+    
+    def __str__(self):
+        return self.headline
+
+
+

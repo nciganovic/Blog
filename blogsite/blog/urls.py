@@ -1,0 +1,19 @@
+from django.urls import path
+from . import views
+from blogsite import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls import url
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('register/', views.register, name='register'),
+    path('login/', views.login_request, name='login'),
+    path('logout/', views.logout_request, name='logout'),
+    path('<single_slug>', views.single_slug, name='single_slug'),
+    path('create_blog/', views.create_blog, name='create_blog'),
+]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+

@@ -1,0 +1,25 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+    <div class="row">
+        {% for b in blogs %}
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="/media/blog/{{ b.img_name }}.jpg" alt="My Pic">
+                        <span class="card-title "></span>
+                    </div>
+                    <div class="card-action">
+                        <a href="/{{b.blog_slug}}" class="black-text">{{ b.headline }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+            
+
+
+
+    
+        

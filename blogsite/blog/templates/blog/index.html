@@ -1,0 +1,28 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+    <div class="row">
+        {% for c in category %}
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="/media/blog/{{ c.category_name }}.jpg" alt="My Pic">
+                        <span class="card-title ">{{ c.category_name }}</span>
+                    </div>
+                    <div class="card-content">
+                        {{ c.category_description }}
+                    </div>
+                    <div class="card-action">
+                        <a href="{{c.category_slug}}">VISIT</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+            
+
+
+
+    
+        
