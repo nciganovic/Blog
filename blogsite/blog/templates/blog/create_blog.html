@@ -41,7 +41,7 @@
         <div class="column" id="content">
             <form  method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form }}
                 <button type="submit">Save</button>
             </form>
         </div>
