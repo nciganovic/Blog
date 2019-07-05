@@ -1,13 +1,14 @@
 """Functions for views.py"""
 
+import datetime
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .models import Blog, Categories
-from .forms import PostForm
+from .forms import PostForm, CtgForm
 
 def create_blog(request):
     """Creating User's Blog"""
@@ -20,18 +21,24 @@ def create_blog(request):
         print("------BLOG POST ERROR--------")
         if blog_post_form.is_valid():
             print("---------------------VALID FORM-------------------------")
+            """
+            instance = blog_post_form.save(commit=False)
+            instance.category_name = request.category_name
+            instance.save()
+            """
             headline = blog_post_form.cleaned_data.get('headline')
             category_name = blog_post_form.cleaned_data.get('category_name')
             content = blog_post_form.cleaned_data.get('content')
             blog_slug = blog_post_form.cleaned_data.get('blog_slug')
             
-            p = Blog(headline=headline, category_name=category_name, content=content, blog_slug=blog_slug)
+            p = Blog(headline=headline, content=content, blog_slug=blog_slug, pub_date = datetime.datetime.now())
             p.save()
-
-            return redirect("index")
+            
+            return HttpResponseRedirect(instance.get_absolute_url())
     else:
         blog_post_form = PostForm()
-    return render(request, tmpl, context={"form":blog_post_form})
+        ctg_form = CtgForm()
+    return render(request, tmpl, context={"form":blog_post_form , "form_ctg":ctg_form})
 
 def single_slug(request, single_slug):
     """Creating links for every category"""

@@ -7,14 +7,23 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+CHOICES = [
+    ('Gaming', 'Gaming'),
+    ('Programming', 'Programming'),
+    ('Art', 'Art'),
+    ('Science', 'Science'),
+    ('Sport', 'Sport'),
+    ('Politics', 'Politics'),
+]
+
 class Categories(models.Model):
     """Table Categories of Database"""
-    category_name = models.CharField(max_length=200)
+    category_name = models.CharField(max_length=200, choices=CHOICES)
     category_description = models.TextField()
     photo = models.ImageField(upload_to="gallery")
     category_slug = models.CharField(max_length=200)
     def __str__(self):
-        """When class Cagories is called, category_name will be displayed"""
+        """When class Cagories ispy called, category_name will be displayed"""
         return self.category_name
 
 class Blog(models.Model):
