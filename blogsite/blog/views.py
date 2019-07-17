@@ -4,7 +4,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from django.views.generic.edit import CreateView #NEW
 from .models import Blog, Categories
 from .forms import PostForm, CtgForm, myUserCreationForm, myAuthenticationForm
 
@@ -18,12 +17,12 @@ def create_blog(request):
         print("------BLOG POST ERROR--------")
         if blog_post_form.is_valid():
             print("---------------------VALID FORM-------------------------")
-            
+            '''
             headline = blog_post_form.cleaned_data.get('headline')
             category_name = blog_post_form.cleaned_data.get('category_name')
             content = blog_post_form.cleaned_data.get('content')
             blog_slug = blog_post_form.cleaned_data.get('blog_slug')
-            
+            '''
             blog_post_form.save()
             
             return redirect("index")
