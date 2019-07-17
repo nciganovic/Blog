@@ -8,12 +8,6 @@ from django.views.generic.edit import CreateView #NEW
 from .models import Blog, Categories
 from .forms import PostForm, CtgForm, myUserCreationForm, myAuthenticationForm
 
-class CreateMyModelView(CreateView):
-    model = Categories
-    fields = ['category_name']
-    template_name = "blog/create_new_blog.html"
-    #success_url = 'myapp/success.html'
-
 
 def create_blog(request):
     categ_select = Categories.objects.all
@@ -35,10 +29,10 @@ def create_blog(request):
             return redirect("index")
     else: 
         blog_post_form = PostForm()
-        
+        category_form = CtgForm()
     return render(request, 
                  "blog/create_blog.html",
-                 context={"form": blog_post_form , "categories": categ_select })
+                 context={"form": blog_post_form , "ctg_form": category_form })
 
 
 def single_slug(request, single_slug):

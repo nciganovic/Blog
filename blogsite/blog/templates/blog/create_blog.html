@@ -1,48 +1,28 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-   <!--
+    <div class="container-fluid">
+        <div class="column" id="content">
+            <h1 class="text-center">Write your blog: </h1>
+            <form  method="post">
                 {% csrf_token %}
-                <div class="fieldWrapper">
+                <div class="margin-custom">
                     <label>Headline:</label>
                     {{ form.headline }}
                 </div>
-                
-                <div class="fieldWrapper">
-                    <label>Category:</label>
-                    <select style="display: block;">
-                        <option value="0">---------</option>
-                        {% for c in categories %}
-                        <option value="1">{{ c.category_name }}</option>
-                        {% endfor %}
-                    </select>
+                <div class="margin-custom">
+                    {{ ctg_form.as_p }}
                 </div>
-                
-                <div class="fieldWrapper">
-                    <label>Category:</label>
-                    {{ form.category_name }}
-                </div>
-                <div class="fieldWrapper">
-                    <label>Pub date:</label>
-                    {{ form.pub_date }}
-                </div>
-                <div class="fieldWrapper">
-                    <label>Content:</label>
+                <div class="margin-custom">
+                    <label>New paragraph:</label>
                     {{ form.content }}
                 </div>
-                <div class="fieldWrapper">
+                <div class="margin-custom">
                     <label>Blog slug:</label>
                     {{ form.blog_slug }}
-                </div>           
--->
-
-
-    <div class="row form-error">
-        <div class="column" id="content">
-            <form  method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Save</button>
+                </div>
+               
+                <button class="btn btn-primary margin-0" type="submit">Save</button>
             </form>
         </div>
     </div>

@@ -5,8 +5,17 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+CHOICES = [
+    ('Gaming', 'Gaming'),
+    ('Art', 'Art'),
+    ('Programming', 'Programming'),
+    ('Science', 'Science'),
+    ('Politics', 'Politics'),
+    ('Sport', 'Sport'),
+]
+
 class Categories(models.Model): 
-    category_name = models.CharField(max_length = 200)
+    category_name = models.CharField(max_length = 200, choices = CHOICES)
     category_description = models.TextField()
     photo = models.ImageField(upload_to="gallery")
     category_slug = models.CharField(max_length = 200)
@@ -23,6 +32,3 @@ class Blog(models.Model):
     
     def __str__(self):
         return self.headline
-
-
-

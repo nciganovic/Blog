@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from tinymce import TinyMCE
-from .models import Blog
+from .models import Blog, Categories
      
 class TinyMCEWidget(TinyMCE):
     def use_required_attribute(self, *args):
@@ -13,17 +13,27 @@ class DateInput(forms.DateInput):
 
 class PostForm(forms.ModelForm):
     
-    category_name = forms.CharField()
-    
     class Meta:
         model = Blog
         fields = ['headline', 'content', 'blog_slug']
+
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+
+        self.fields['headline'].widget.attrs['class'] = 'form-control'
+        self.fields['content'].widget.attrs['class'] = 'form-control'
+        self.fields['blog_slug'].widget.attrs['class'] = 'form-control'
 
 class CtgForm(forms.ModelForm):
     """Form that lets users create Category"""
     class Meta:
         model = Categories
         fields = ['category_name']
+    
+    def __init__(self, *args, **kwargs):
+        super(CtgForm, self).__init__(*args, **kwargs)
+
+        self.fields['category_name'].widget.attrs['class'] = 'form-control'
 
 class myUserCreationForm(UserCreationForm):
 

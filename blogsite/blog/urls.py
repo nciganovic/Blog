@@ -12,7 +12,6 @@ urlpatterns = [
     path('logout/', views.logout_request, name='logout'),
     path('<single_slug>', views.single_slug, name='single_slug'),
     path('create_blog/', views.create_blog, name='create_blog'),
-    path('create/', views.CreateMyModelView.as_view(), name='author_create'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
