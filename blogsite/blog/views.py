@@ -1,11 +1,19 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from django.http import HttpResponse
-from .models import Blog, Categories
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from .forms import PostForm
+from django.views.generic.edit import CreateView #NEW
+from .models import Blog, Categories
+from .forms import PostForm, CtgForm, myUserCreationForm, myAuthenticationForm
+
+class CreateMyModelView(CreateView):
+    model = Categories
+    fields = ['category_name']
+    template_name = "blog/create_new_blog.html"
+    #success_url = 'myapp/success.html'
+
 
 def create_blog(request):
     categ_select = Categories.objects.all
@@ -55,7 +63,7 @@ def logout_request(request):
 
 def login_request(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data= request.POST)
+        form = myAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -69,14 +77,12 @@ def login_request(request):
         else:
             messages.error(request, "Invalid username or password")
 
-    form = AuthenticationForm()
-    return render(request, 
-                 "blog/login.html",
-                 {"form": form})
+    form = myAuthenticationForm()
+    return render(request, "blog/login.html", {"form": form})
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = myUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -87,7 +93,7 @@ def register(request):
             messages.info(request, f"You are now logged in as {username}")
             return redirect('/')
     else:
-        form = UserCreationForm()
+        form = myUserCreationForm()
     return render(request, 'blog/register.html', {'form': form})
 
 def index(request):

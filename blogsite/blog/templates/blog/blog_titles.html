@@ -1,7 +1,7 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-    <div class="row">
+   <!-- <div class="row">
         {% for b in blogs %}
             <div class="col s12 m6 l3">
                 <div class="card">
@@ -15,7 +15,36 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
+    </div>-->
+
+    <div class="row">
+            {% for b in blogs %}
+                <!-- Card -->
+                <div class="card m-3 col-xl-5 padding-0">
+    
+                    <!-- Card image -->
+                    <div class="view overlay">
+                    <img class="card-img-top" src="/media/blog/{{ b.img_name }}.jpg" alt="Card image cap">
+                    <a href="{{b.blog_slug}}">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                    </div>
+                
+                    <!-- Card content -->
+                    <div class="card-body">
+                
+                    <!-- Title -->
+                    <h4 class="card-title">{{ c.category_name }}</h4>
+    
+                    <!-- Button -->
+                    <a href="{{b.blog_slug}}" class="btn btn-primary">{{ b.headline }}</a>
+                
+                    </div>
+                
+                </div>
+                <!-- Card -->
+            {% endfor %}
+        </div>
 {% endblock %}
             
 

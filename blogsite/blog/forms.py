@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from tinymce import TinyMCE
 from .models import Blog
@@ -17,5 +17,36 @@ class PostForm(forms.ModelForm):
     
     class Meta:
         model = Blog
-        fields = ['headline','category_name','content','blog_slug', 'pub_date']
-        widgets = {'pub_date' : DateInput(), 'category_name' : forms.Select}
+        fields = ['headline', 'content', 'blog_slug']
+
+class CtgForm(forms.ModelForm):
+    """Form that lets users create Category"""
+    class Meta:
+        model = Categories
+        fields = ['category_name']
+
+class myUserCreationForm(UserCreationForm):
+
+    class Meta:
+        model=User
+        fields = ('username', 'password1', 'password2')
+
+    def __init__(self, *args, **kwargs):
+        super(myUserCreationForm, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['class'] = 'form-control'
+
+class myAuthenticationForm(AuthenticationForm):
+
+    class Meta:
+        model=User
+        fields = ('username', 'password')
+
+    def __init__(self, *args, **kwargs):
+        super(myAuthenticationForm, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget.attrs['class'] = 'form-control'
+        
