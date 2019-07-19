@@ -15,15 +15,6 @@ class DateInput(forms.DateInput):
     """Changing date type"""
     input_type = 'date'
 
-CHOICES = [
-    ('Gaming', 'Gaming'),
-    ('Programming', 'Programming'),
-    ('Art', 'Art'),
-    ('Science', 'Science'),
-    ('Sport', 'Sport'),
-    ('Politics', 'Politics'),
-]
-
 class PostForm(forms.ModelForm):
     class Meta:
         model = Blog
