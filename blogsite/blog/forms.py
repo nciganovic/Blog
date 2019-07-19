@@ -16,9 +16,12 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class PostForm(forms.ModelForm):
+
+    category_name = forms.ModelChoiceField(queryset=Categories.objects.all())
+
     class Meta:
         model = Blog
-        fields = ['headline', 'content', 'blog_slug']
+        fields = ['headline', 'content', 'blog_slug', 'category_name']
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)

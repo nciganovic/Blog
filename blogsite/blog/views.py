@@ -32,13 +32,11 @@ def create_blog(request):
             
             instance.save()
 
-            
-            
-            return HttpResponseRedirect(instance.get_absolute_url())
+            return redirect("index")
     else:
         blog_post_form = PostForm()
         category_form = CtgForm()
-    return render(request, 
+        return render(request, 
                  "blog/create_blog.html",
                  context={"form": blog_post_form , "ctg_form": category_form })
 
