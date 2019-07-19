@@ -9,16 +9,15 @@ from django.dispatch import receiver
 
 CHOICES = [
     ('Gaming', 'Gaming'),
-    ('Programming', 'Programming'),
     ('Art', 'Art'),
+    ('Programming', 'Programming'),
     ('Science', 'Science'),
-    ('Sport', 'Sport'),
     ('Politics', 'Politics'),
+    ('Sport', 'Sport'),
 ]
 
-class Categories(models.Model):
-    """Table Categories of Database"""
-    category_name = models.CharField(max_length=200, choices=CHOICES)
+class Categories(models.Model): 
+    category_name = models.CharField(max_length = 200, choices = CHOICES)
     category_description = models.TextField()
     photo = models.ImageField(upload_to="gallery")
     category_slug = models.CharField(max_length=200)
@@ -27,9 +26,8 @@ class Categories(models.Model):
         return self.category_name
 
 class Blog(models.Model):
-    """Table Blog of Database"""
-    headline = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    headline = models.CharField(max_length = 200)
+    pub_date = models.DateTimeField('date published', default = timezone.now)
     content = models.TextField()
     category_name = models.ForeignKey(Categories, on_delete=models.CASCADE, default=None)
     img_name = models.CharField(max_length=200)

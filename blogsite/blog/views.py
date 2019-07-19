@@ -4,11 +4,12 @@ import datetime
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .models import Blog, Categories
-from .forms import PostForm, CtgForm
+from .forms import PostForm, CtgForm, myUserCreationForm, myAuthenticationForm
+
 
 def create_blog(request):
     """Creating User's Blog"""
@@ -21,24 +22,26 @@ def create_blog(request):
         print("------BLOG POST ERROR--------")
         if blog_post_form.is_valid():
             print("---------------------VALID FORM-------------------------")
-            """
-            instance = blog_post_form.save(commit=False)
-            instance.category_name = request.category_name
-            instance.save()
-            """
+            '''
             headline = blog_post_form.cleaned_data.get('headline')
             category_name = blog_post_form.cleaned_data.get('category_name')
             content = blog_post_form.cleaned_data.get('content')
             blog_slug = blog_post_form.cleaned_data.get('blog_slug')
+            '''
+            instance = blog_post_form.save(commit=False)
             
-            p = Blog(headline=headline, content=content, blog_slug=blog_slug, pub_date = datetime.datetime.now())
-            p.save()
+            instance.save()
+
+            
             
             return HttpResponseRedirect(instance.get_absolute_url())
     else:
         blog_post_form = PostForm()
-        ctg_form = CtgForm()
-    return render(request, tmpl, context={"form":blog_post_form , "form_ctg":ctg_form})
+        category_form = CtgForm()
+    return render(request, 
+                 "blog/create_blog.html",
+                 context={"form": blog_post_form , "ctg_form": category_form })
+
 
 def single_slug(request, single_slug):
     """Creating links for every category"""
@@ -62,7 +65,7 @@ def logout_request(request):
 def login_request(request):
     """Logging in"""
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+        form = myAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -74,13 +77,13 @@ def login_request(request):
             else: messages.error(request, "Invalid username or password")
         else: messages.error(request, "Invalid username or password")
 
-    form = AuthenticationForm()
+    form = myAuthenticationForm()
     return render(request, "blog/login.html", {"form": form})
 
 def register(request):
     """Registering new user"""
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = myUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -91,7 +94,7 @@ def register(request):
             messages.info(request, f"You are now logged in as {username}")
             return redirect('/')
     else:
-        form = UserCreationForm()
+        form = myUserCreationForm()
     return render(request, 'blog/register.html', {'form': form})
 
 def index(request):
