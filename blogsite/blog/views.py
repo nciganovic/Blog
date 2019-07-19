@@ -13,32 +13,23 @@ from .forms import PostForm, CtgForm, myUserCreationForm, myAuthenticationForm
 
 def create_blog(request):
     """Creating User's Blog"""
-    #categ_select = Categories.objects.all
     tmpl = "blog/create_blog.html"
     if request.method == 'POST':
         blog_post_form = PostForm(request.POST)
+        category_form = CtgForm()
         print("------BLOG POST ERROR--------")
         print(blog_post_form.errors)
         print("------BLOG POST ERROR--------")
         if blog_post_form.is_valid():
             print("---------------------VALID FORM-------------------------")
-            '''
-            headline = blog_post_form.cleaned_data.get('headline')
-            category_name = blog_post_form.cleaned_data.get('category_name')
-            content = blog_post_form.cleaned_data.get('content')
-            blog_slug = blog_post_form.cleaned_data.get('blog_slug')
-            '''
-            instance = blog_post_form.save(commit=False)
-            
-            instance.save()
+           
+            blog_post_form.save()
 
             return redirect("index")
     else:
         blog_post_form = PostForm()
         category_form = CtgForm()
-        return render(request, 
-                 "blog/create_blog.html",
-                 context={"form": blog_post_form , "ctg_form": category_form })
+    return render(request, tmpl, context={"form": blog_post_form , "ctg_form": category_form })
 
 
 def single_slug(request, single_slug):
