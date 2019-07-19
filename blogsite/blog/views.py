@@ -23,7 +23,11 @@ def create_blog(request):
             content = blog_post_form.cleaned_data.get('content')
             blog_slug = blog_post_form.cleaned_data.get('blog_slug')
             '''
-            blog_post_form.save()
+            instance = blog_post_form.save(commit=False)
+            
+            instance.save()
+
+            
             
             return redirect("index")
     else: 

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from tinymce import TinyMCE
@@ -12,7 +13,7 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class PostForm(forms.ModelForm):
-    
+
     class Meta:
         model = Blog
         fields = ['headline', 'content', 'blog_slug']

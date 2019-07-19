@@ -24,7 +24,7 @@ class Categories(models.Model):
 
 class Blog(models.Model):
     headline = models.CharField(max_length = 200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default = timezone.now)
     content = models.TextField()
     category_name = models.ForeignKey(Categories, on_delete=models.CASCADE, default = None)
     img_name = models.CharField(max_length = 200)
