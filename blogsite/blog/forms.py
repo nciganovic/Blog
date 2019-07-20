@@ -21,7 +21,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Blog
-        fields = ['headline', 'content', 'blog_slug', 'category_name']
+        fields = ['headline', 'content', 'blog_slug', 'category_name', 'image']
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
@@ -29,17 +29,8 @@ class PostForm(forms.ModelForm):
         self.fields['headline'].widget.attrs['class'] = 'form-control'
         self.fields['content'].widget.attrs['class'] = 'form-control'
         self.fields['blog_slug'].widget.attrs['class'] = 'form-control'
-
-class CtgForm(forms.ModelForm):
-    """Form that lets users create Category"""
-    class Meta:
-        model = Categories
-        fields = ['category_name']
-    
-    def __init__(self, *args, **kwargs):
-        super(CtgForm, self).__init__(*args, **kwargs)
-
         self.fields['category_name'].widget.attrs['class'] = 'form-control'
+        self.fields['image'].widget.attrs['class'] = 'form-control'
 
 class myUserCreationForm(UserCreationForm):
 

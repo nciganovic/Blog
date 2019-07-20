@@ -8,15 +8,14 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .models import Blog, Categories
-from .forms import PostForm, CtgForm, myUserCreationForm, myAuthenticationForm
+from .forms import PostForm, myUserCreationForm, myAuthenticationForm
 
 
 def create_blog(request):
     """Creating User's Blog"""
     tmpl = "blog/create_blog.html"
     if request.method == 'POST':
-        blog_post_form = PostForm(request.POST)
-        category_form = CtgForm()
+        blog_post_form = PostForm(request.POST, request.FILES)
         print("------BLOG POST ERROR--------")
         print(blog_post_form.errors)
         print("------BLOG POST ERROR--------")
@@ -28,8 +27,7 @@ def create_blog(request):
             return redirect("index")
     else:
         blog_post_form = PostForm()
-        category_form = CtgForm()
-    return render(request, tmpl, context={"form": blog_post_form , "ctg_form": category_form })
+    return render(request, tmpl, context={"form": blog_post_form })
 
 
 def single_slug(request, single_slug):

@@ -32,6 +32,7 @@ class Blog(models.Model):
     category_name = models.ForeignKey(Categories, on_delete=models.CASCADE, default=None)
     img_name = models.CharField(max_length=200)
     blog_slug = models.CharField(max_length=200)
+    image = models.ImageField(upload_to = 'blog', default = 'blog/media/blog/amer.jpg')
     def __str__(self):
         """When class Blog is called, headlines will be displayed"""
         return self.headline

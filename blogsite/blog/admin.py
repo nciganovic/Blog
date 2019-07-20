@@ -13,7 +13,7 @@ class BlogAdmin(admin.ModelAdmin):
         ("Title/date", {"fields": ["headline", "pub_date"]}),
         ("Blog slug", {"fields": ["blog_slug"]}),
         ("Category", {"fields": ["category_name"]}),
-        ("Image", {"fields":["img_name"]}),
+        ("Image", {"fields":["img_name", "image"]}),
         ("Content", {"fields":["content"]}),
     ]
 

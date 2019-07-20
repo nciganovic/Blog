@@ -1,22 +1,6 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-   <!-- <div class="row">
-        {% for b in blogs %}
-            <div class="col s12 m6 l3">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="/media/blog/{{ b.img_name }}.jpg" alt="My Pic">
-                        <span class="card-title "></span>
-                    </div>
-                    <div class="card-action">
-                        <a href="/{{b.blog_slug}}" class="black-text">{{ b.headline }}</a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>-->
-
     <div class="row">
             {% for b in blogs %}
                 <!-- Card -->
@@ -24,7 +8,7 @@
     
                     <!-- Card image -->
                     <div class="view overlay">
-                    <img class="card-img-top" src="/media/blog/{{ b.img_name }}.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/media/blog/{{ b.img_name }}.jpg" alt="{{ b.img_name }}">
                     <a href="{{b.blog_slug}}">
                         <div class="mask rgba-white-slight"></div>
                     </a>
@@ -34,10 +18,10 @@
                     <div class="card-body">
                 
                     <!-- Title -->
-                    <h4 class="card-title">{{ c.category_name }}</h4>
+                    <h4 class="card-title">{{ b.headline }}</h4>
     
                     <!-- Button -->
-                    <a href="{{b.blog_slug}}" class="btn btn-primary">{{ b.headline }}</a>
+                    <a href="{{b.blog_slug}}" class="btn btn-primary">Read</a>
                 
                     </div>
                 
