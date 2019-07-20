@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1 class="text-center m-5">{{ single_blog.headline }}</h1>
-    <!--<img src="/media/blog/{{ single_blog.img_name }}.jpg"/>-->
+    <img src="/media/blog/{{ single_blog.img_name }}.jpg" alt = "{{ single_blog.img_name }}"/>
     <p class="text-center mb-5">Date published: {{ single_blog.pub_date }}</p>
     <p class="m-2">{{ single_blog.content|safe }}</p>
 {% endblock %}

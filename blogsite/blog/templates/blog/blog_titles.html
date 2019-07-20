@@ -2,14 +2,14 @@
 
 {% block content %}
     <div class="row">
-            {% for b in blogs %}
+            {% for blog in blogs %}
                 <!-- Card -->
                 <div class="card m-3 col-xl-5 padding-0">
     
                     <!-- Card image -->
                     <div class="view overlay">
-                    <img class="card-img-top" src="/media/blog/{{ b.img_name }}.jpg" alt="{{ b.img_name }}">
-                    <a href="{{b.blog_slug}}">
+                    <img class="card-img-top" src="/media/blog/{{ blog.img_name }}.jpg" alt="{{ blog.img_name }}">
+                    <a href="{{blog.blog_slug}}">
                         <div class="mask rgba-white-slight"></div>
                     </a>
                     </div>
@@ -18,10 +18,10 @@
                     <div class="card-body">
                 
                     <!-- Title -->
-                    <h4 class="card-title">{{ b.headline }}</h4>
+                    <h4 class="card-title">{{ blog.headline }}</h4>
     
                     <!-- Button -->
-                    <a href="{{b.blog_slug}}" class="btn btn-primary">Read</a>
+                    <a href="{{blog.blog_slug}}" class="btn btn-primary">Read</a>
                 
                     </div>
                 
