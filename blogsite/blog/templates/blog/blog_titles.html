@@ -8,7 +8,12 @@
     
                     <!-- Card image -->
                     <div class="view overlay">
-                    <img class="card-img-top" src="/media/blog/{{ blog.img_name }}.jpg" alt="{{ blog.img_name }}">
+                    
+                    {% load static %}   
+                    {% with 'image/'|add:blog.img_name|add:'.jpg' as image_static %}
+                        <img class="card-img-top" src='{% static image_static %}' alt="{{ blog.img_name }}">
+                    {% endwith %}    
+
                     <a href="{{blog.blog_slug}}">
                         <div class="mask rgba-white-slight"></div>
                     </a>
