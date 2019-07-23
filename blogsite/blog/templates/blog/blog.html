@@ -1,10 +1,14 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-    <h1>{{ single_blog.headline }}</h1>
-    <img src="/media/blog/{{ single_blog.img_name }}.jpg"/>
-    <p>{{ single_blog.pub_date }}</p>
-    <p>{{ single_blog.content|safe }}</p>
+    <h1 class="text-center m-5">{{ single_blog.headline }}</h1>
+    {% load static %}   
+    {% with 'image/'|add:single_blog.img_name|add:'.jpg' as image_static %}
+        <img class="card-img-top" src='{% static image_static %}' alt="{{ single_blog.img_name }}">
+    {% endwith %}
+    <p class="text-center mb-5">Date published: {{ single_blog.pub_date }}</p>
+    <p class="text-center mb-5">Author: {{ single_blog.author.get_full_name }}</p>
+    <p class="m-2">{{ single_blog.content|safe }}</p>
 {% endblock %}
             
 

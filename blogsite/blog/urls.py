@@ -1,9 +1,10 @@
+""" URLS for blog functions """
+
 from django.urls import path
-from . import views
-from blogsite import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.conf.urls import url
+from blogsite import settings
+from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -15,5 +16,4 @@ urlpatterns = [
 ]
 
 urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 
