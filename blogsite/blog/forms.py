@@ -22,7 +22,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ['headline', 'content', 'blog_slug', 'category_name', 'image', 'img_name']
-
+        exclude = ['author']
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
 
@@ -30,18 +30,20 @@ class PostForm(forms.ModelForm):
         self.fields['content'].widget.attrs['class'] = 'form-control'
         self.fields['blog_slug'].widget.attrs['class'] = 'form-control'
         self.fields['category_name'].widget.attrs['class'] = 'form-control'
-        self.fields['image'].widget.attrs['class'] = 'form-control'
         self.fields['img_name'].widget.attrs['class'] = 'form-control'
 
 class myUserCreationForm(UserCreationForm):
 
     class Meta:
         model=User
-        fields = ('username', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super(myUserCreationForm, self).__init__(*args, **kwargs)
 
+        self.fields['first_name'].widget.attrs['class'] = 'form-control'
+        self.fields['last_name'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['class'] = 'form-control'

@@ -11,6 +11,7 @@ class BlogAdmin(admin.ModelAdmin):
     """fieldsets: setting up order of fields in admin page"""
     fieldsets = [
         ("Title/date", {"fields": ["headline", "pub_date"]}),
+        ("Author", {"fields": ["author"]}),
         ("Blog slug", {"fields": ["blog_slug"]}),
         ("Category", {"fields": ["category_name"]}),
         ("Image", {"fields":["img_name", "image"]}),

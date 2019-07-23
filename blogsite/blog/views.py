@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .models import Blog, Categories
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm
-
+from django.contrib.auth.models import User
 
 def create_blog(request):
     """Creating User's Blog"""
@@ -21,8 +21,9 @@ def create_blog(request):
         print("------BLOG POST ERROR--------")
         if blog_post_form.is_valid():
             print("---------------------VALID FORM-------------------------")
-           
-            blog_post_form.save()
+            form = blog_post_form.save(commit=False)
+            form.author = request.user
+            form.save()
 
             return redirect("index")
     else:

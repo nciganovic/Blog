@@ -5,11 +5,37 @@
         <form method="post">
             <div class="form-group">
             {% csrf_token %}
+            <div class="row mt-5">
+                <div class="col-6 mt-3 mb-3">
+                    <label>First name:</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="col-6 mt-3 mb-3">
+                    <label>Last name:</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="col-12 mt-3 mb-3">
+                        <label>Username:</label>
+                        {{ form.username }}
+                    </div>
+                <div class="col-12 mt-3 mb-3">
+                    <label>Email:</label>
+                    {{ form.email }}
+                </div>
+                <div class="col-6 mt-3 mb-3">
+                    <label>Password:</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="col-6 mt-3 mb-3">
+                    <label>Repeat password:</label>
+                    {{ form.password2 }}
+                </div>
+            </div>
             
-            {{ form.as_p }}
+            
             
             </div>
-            <button class="btn btn-primary" type="submit">Sign up</button>
+            <button class="btn btn-primary margin-0" type="submit">Sign up</button>
         </form>
 
 {% endblock %}
