@@ -4,14 +4,23 @@
     <div class="container-fluid">
         <div class="column" id="content">
             <h1 class="text-center">Write your blog: </h1>
-            <form  method="post">
+            <form  method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="margin-custom">
                     <label>Headline:</label>
                     {{ form.headline }}
                 </div>
                 <div class="margin-custom">
-                    {{ ctg_form.as_p }}
+                    <label>Category:</label>
+                    {{ form.category_name }}
+                </div>
+                <div class="margin-custom">
+                    <label>Upload Image:</label>
+                    {{ form.image }}
+                </div>
+                <div class="margin-custom">
+                    <label>Image name:</label>
+                    {{ form.img_name }}
                 </div>
                 <div class="margin-custom">
                     <label>New paragraph:</label>
