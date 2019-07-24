@@ -1,0 +1,37 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+<div class="row">
+    {% for blog in blogs %}
+        <!-- Card -->
+        <div class="card m-3 col-xl-5 padding-0">
+            
+            <!-- Card image -->
+            <div class="view overlay">
+            
+            {% load static %}   
+            {% with 'image/'|add:blog.img_name|add:'.jpg' as image_static %}
+                <img class="card-img-top" src='{% static image_static %}' alt="{{ blog.img_name }}">
+            {% endwith %}
+            
+            <a href="{{blog.blog_slug}}">
+                <div class="mask rgba-white-slight"></div>
+            </a>
+            </div>
+        
+            <!-- Card content -->
+            <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">{{ blog.headline }}</h4>
+            
+            <!-- Button -->
+            <a href="{{blog.blog_slug}}" class="btn btn-primary">Edit</a>
+        
+            </div>
+        
+        </div>
+        <!-- Card -->
+    {% endfor %}
+</div>
+{% endblock %}

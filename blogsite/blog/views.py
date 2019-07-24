@@ -10,6 +10,15 @@ from django.contrib.auth import login, logout, authenticate
 from .models import Blog, Categories
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm
 from django.contrib.auth.models import User
+  
+def my_blogs(request):
+    tmpl = "blog/my_blogs.html"
+    current_author = request.user
+    blogs = Blog.objects.filter(author = current_author)
+    
+    return render(request, tmpl, context={"blogs": blogs })
+
+
 
 def create_blog(request):
     """Creating User's Blog"""
@@ -33,6 +42,12 @@ def create_blog(request):
 
 def single_slug(request, single_slug):
     """Creating links for every category"""
+    current_author = request.user
+    blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
+    if single_slug in blogs_author:
+        matching_blog = Blog.objects.get(blog_slug=single_slug)
+        return render(request, 'blog/edit_blog.html', context={"edit_blog": matching_blog})
+
     categories = [c.category_slug for c in Categories.objects.all()] 
     if single_slug in categories:
         matching_categories = Blog.objects.filter(category_name__category_slug=single_slug)
@@ -43,6 +58,8 @@ def single_slug(request, single_slug):
     if single_slug in blogs:
         matching_blog = Blog.objects.get(blog_slug=single_slug)
         return render(request, 'blog/blog.html', context={"single_blog": matching_blog})
+
+    
 
 def logout_request(request):
     """Logging out"""
