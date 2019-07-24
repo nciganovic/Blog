@@ -18,6 +18,21 @@ def my_blogs(request):
     
     return render(request, tmpl, context={"blogs": blogs })
 
+def delete_blog(request, single_slug):
+    current_author = request.user
+    blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
+    if single_slug in blogs_author:
+        matching_blog = Blog.objects.get(blog_slug=single_slug)
+    if request.method == 'POST':
+        matching_blog.delete()
+        return redirect("my_blogs")
+    else:
+        current_author = request.user
+        blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
+        if single_slug in blogs_author:
+            matching_blog = Blog.objects.get(blog_slug=single_slug)
+            return render(request, 'blog/delete_blog.html', context={"delete_blog": matching_blog })
+
 def edit_blog(request, single_slug):
     current_author = request.user
     blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 

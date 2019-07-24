@@ -1,0 +1,15 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+    <h1>Do you really want to delete blog: {{ delete_blog.headline }}</h1>
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Yes</button>
+    </form>
+    
+    <a class="btn btn-primary" href="../"> No</a>
+    
+{% endblock %}
+            
+
+
