@@ -18,7 +18,28 @@ def my_blogs(request):
     
     return render(request, tmpl, context={"blogs": blogs })
 
-
+def edit_blog(request, single_slug):
+    current_author = request.user
+    blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
+    if single_slug in blogs_author:
+        matching_blog = Blog.objects.get(blog_slug=single_slug)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=matching_blog)
+        if form.is_valid():
+            edited_form = form.save(commit=False)
+            edited_form.author = request.user
+            edited_form.save()
+            return redirect("my_blogs")
+        else:
+            form = PostForm(instance=matching_blog)
+        
+    else:
+        current_author = request.user
+        blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
+        if single_slug in blogs_author:
+            matching_blog = Blog.objects.get(blog_slug=single_slug)
+            form = PostForm(instance=matching_blog)
+            return render(request, 'blog/edit_blog.html', context={"edit_blog": matching_blog , "form": form})
 
 def create_blog(request):
     """Creating User's Blog"""
@@ -42,12 +63,6 @@ def create_blog(request):
 
 def single_slug(request, single_slug):
     """Creating links for every category"""
-    current_author = request.user
-    blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
-    if single_slug in blogs_author:
-        matching_blog = Blog.objects.get(blog_slug=single_slug)
-        return render(request, 'blog/edit_blog.html', context={"edit_blog": matching_blog})
-
     categories = [c.category_slug for c in Categories.objects.all()] 
     if single_slug in categories:
         matching_categories = Blog.objects.filter(category_name__category_slug=single_slug)
