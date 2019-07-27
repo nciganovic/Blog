@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
   
 def my_blogs(request):
     tmpl = "blog/my_blogs.html"
-    current_author = request.user
+    current_author = request.users
     blogs = Blog.objects.filter(author = current_author)
     
     return render(request, tmpl, context={"blogs": blogs })
@@ -122,11 +122,9 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f"New Account Created: {username}")
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            messages.info(request, f"You are now logged in as {username}")
             return redirect('/')
     else:
         form = myUserCreationForm()
