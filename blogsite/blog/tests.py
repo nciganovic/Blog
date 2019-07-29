@@ -71,7 +71,7 @@ class BlogTestCase(TestCase):
         resp_post = self.client.post(url)
         self.assertEqual(resp_post.status_code, 200)
         
-    #def test_blog_views_register_form(self): 
+    def test_blog_views_register_form(self): 
         register_form = myUserCreationForm(data={
             'first_name':"Test_name_new",
             'last_name':"Test_name_2",
@@ -83,14 +83,14 @@ class BlogTestCase(TestCase):
         print('\n Register form errors: ',register_form.errors)
         print('\n Register non field form errors: ',register_form.non_field_errors)
             
+        url = reverse('register')
+        resp_post = self.client.get(url)
+
         self.assertTrue(register_form.is_valid())
         self.assertEqual(register_form.cleaned_data['username'], "Test_username_new")
         self.assertEqual(register_form.cleaned_data['password1'], "testpassword123")
 
-        #url_index = reverse('index')
-        #response = self.client.get('/')
-
-        self.assertRedirects(resp_post, '/register/', status_code=302, target_status_code=200, 
+        self.assertRedirects(resp_post, '/index/', status_code=302, target_status_code=200, 
         msg_prefix='', fetch_redirect_response=True)
         '''
         self.assertEqual(form.first_name, "Test_name_new")

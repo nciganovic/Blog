@@ -221,7 +221,7 @@
 <p id="t13" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t14" class="stm run hide_run"><span class="key">def</span> <span class="nam">my_blogs</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t15" class="stm mis">    <span class="nam">tmpl</span> <span class="op">=</span> <span class="str">"blog/my_blogs.html"</span><span class="strut">&nbsp;</span></p>
-<p id="t16" class="stm mis">    <span class="nam">current_author</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">users</span><span class="strut">&nbsp;</span></p>
+<p id="t16" class="stm mis">    <span class="nam">current_author</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="strut">&nbsp;</span></p>
 <p id="t17" class="stm mis">    <span class="nam">blogs</span> <span class="op">=</span> <span class="nam">Blog</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">filter</span><span class="op">(</span><span class="nam">author</span> <span class="op">=</span> <span class="nam">current_author</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t18" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t19" class="stm mis">    <span class="key">return</span> <span class="nam">render</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">tmpl</span><span class="op">,</span> <span class="nam">context</span><span class="op">=</span><span class="op">{</span><span class="str">"blogs"</span><span class="op">:</span> <span class="nam">blogs</span> <span class="op">}</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
@@ -352,7 +352,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.5.3</a>,
-            created at 2019-07-27 11:36
+            created at 2019-07-29 12:37
         </p>
     </div>
 </div>

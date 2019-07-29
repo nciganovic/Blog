@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
   
 def my_blogs(request):
     tmpl = "blog/my_blogs.html"
-    current_author = request.users
+    current_author = request.user
     blogs = Blog.objects.filter(author = current_author)
     
     return render(request, tmpl, context={"blogs": blogs })
