@@ -1,13 +1,13 @@
 """ Testing and debugging blogsite """
 
-from django.test import TestCase, Client
+from django.test import TestCase, Client, RequestFactory
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from .models import Blog, Categories
-from .views import index, register
-from .forms import myUserCreationForm, myAuthenticationForm
+from .views import index, register, create_blog, my_blogs
+from .forms import myUserCreationForm, myAuthenticationForm, PostForm
 
 
 class TestModels(TestCase):
@@ -48,11 +48,13 @@ class TestModels(TestCase):
  
 class TestViews(TestCase):
     def setUp(self):
-            self.client = Client()
-            self.Test_Models = TestModels()
-            user = User.objects.create(username='test', email='test@test.com', is_active=True)
-            user.set_password('Test1234')
-            user.save()
+        self.request_factory = RequestFactory()
+        self.client = Client()
+        self.Test_Models = TestModels()
+        self.user = User.objects.create(username='test', email='test@test.com', is_active=True)
+        self.user.set_password('Test1234')
+        self.user.save()
+            
 
     def test_views_index(self):
         '''Testing index page at views.py'''
@@ -123,8 +125,8 @@ class TestViews(TestCase):
             'password': "Test1234",
              }
         )
-        print('\n login_form errors: ',login_form.errors)
-        print('\n login_form non field errors: ',login_form.non_field_errors)
+        #print('\n login_form errors: ',login_form.errors)
+        #print('\n login_form non field errors: ',login_form.non_field_errors)
         self.assertTrue(login_form.is_valid())
         self.assertEqual(login_form.cleaned_data['username'], "test")
         self.assertEqual(login_form.cleaned_data['password'], "Test1234")
@@ -141,7 +143,6 @@ class TestViews(TestCase):
         msg_prefix='', fetch_redirect_response=True)
 
     #LOGOUT  
-    #TODO fix logout test
     def test_views_logout(self):
         url = reverse('logout')
         resp_post = self.client.post(url)
@@ -149,24 +150,77 @@ class TestViews(TestCase):
         self.assertRedirects(resp_post, '/', status_code=302, target_status_code=200, 
         msg_prefix='', fetch_redirect_response=True) 
 
-    def test_single_slug(self):
-        #b = self.create_Blog()
-        c = self.Test_Models.create_Categories()
-        single_slug = 'gaming'
-        self.assertEqual(single_slug, c.category_slug)
+    #SINGLE_SLUG
+    def test_view_single_slug(self):
+        url = reverse('single_slug', args=['gaming'])
+        resp = self.client.get(url)
+        #self.assertEqual(resp.status_code, 200)
 
-    def test_create_blog(self): 
+    #CREATE_BLOG
+    def test_view_create_blog_GET(self): 
         url = reverse('create_blog')
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
 
-    #TODO make request user so my_blog can work     
-    '''
+    def test_view_create_blog_POST(self): 
+        url = reverse('create_blog')
+        resp = self.client.post(url)
+        self.assertEqual(resp.status_code, 200)
+
+    def test_view_is_valid_create_blog_form(self): 
+        c = self.Test_Models.create_Categories()
+        blog_post = PostForm(data={
+            'headline':"Headline test",
+            'category_name': "1",
+            'image': "",
+            'img_name': "testimg",
+            'content': "Test Content",
+            'blog_slug': "testslug",
+             }
+        )
+        #print('\n Blog post errors: ',blog_post.errors)
+        #print('\n Blog post field errors: ',blog_post.non_field_errors)
+        self.assertTrue(blog_post.is_valid())
+        
+    def test_view_create_blog_redirect(self): 
+        c = self.Test_Models.create_Categories()
+        url = reverse('create_blog')
+        request = self.request_factory.post(url, {
+            'headline':"Headline test",
+            'category_name': "1",
+            'image': "",
+            'img_name': "testimg",
+            'content': "Test Content",
+            'blog_slug': "testslug",
+             })
+        request.user = self.user
+        Blog.author = request.user
+        response = create_blog(request)
+        self.assertEqual(response.status_code, 302) 
+
+        resp_post = self.client.post(url, {
+            'headline':"Headline test",
+            'category_name': "1",
+            'image': "",
+            'img_name': "testimg",
+            'content': "Test Content",
+            'blog_slug': "testslug",
+             })
+        self.assertRedirects(resp_post, '/', status_code=302, target_status_code=200, 
+        msg_prefix='', fetch_redirect_response=True)
+
+
+    #MY_BLOG     
     def test_my_blog(self):
         url = reverse('my_blogs')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-    '''
+        request = self.request_factory.get(url)
+        request.user = self.user
+        Blog.author = request.user
+        response = my_blogs(request)
+        self.assertEqual(response.status_code, 200) 
+
+        
+    
         
 
 
