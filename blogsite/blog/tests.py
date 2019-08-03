@@ -2,11 +2,11 @@
 
 from django.test import TestCase, Client, RequestFactory
 from django.utils import timezone
-from django.urls import reverse
+from django.urls import reverse, resolve
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from .models import Blog, Categories
-from .views import index, register, create_blog, my_blogs
+from .views import index, register, create_blog, my_blogs, single_slug
 from .forms import myUserCreationForm, myAuthenticationForm, PostForm
 
 
@@ -24,9 +24,10 @@ class TestModels(TestCase):
     def create_User(self):
         return User.objects.create( first_name = 'Test_name_1',
                                     last_name = 'Test_name_2',
-                                    email = 'test@gmail.com',
-                                    username = 'Test_username',
-                                    password = 'testpassword')
+                                    email = 'test@test.com',
+                                    username = 'test',
+                                    password = 'Test1234',
+                                    is_active=True)
 
     def create_Blog(self):
         return Blog.objects.create( headline = 'New Test headline', 
@@ -51,9 +52,10 @@ class TestViews(TestCase):
         self.request_factory = RequestFactory()
         self.client = Client()
         self.Test_Models = TestModels()
-        self.user = User.objects.create(username='test', email='test@test.com', is_active=True)
+        self.user = self.Test_Models.create_User()
         self.user.set_password('Test1234')
         self.user.save()
+        
             
 
     def test_views_index(self):
@@ -151,10 +153,19 @@ class TestViews(TestCase):
         msg_prefix='', fetch_redirect_response=True) 
 
     #SINGLE_SLUG
-    def test_view_single_slug(self):
-        url = reverse('single_slug', args=['gaming'])
-        resp = self.client.get(url)
-        #self.assertEqual(resp.status_code, 200)
+    def test_view_single_slug_category(self):
+        c = self.Test_Models.create_Categories()
+        url = reverse('single_slug', args=(c.category_slug,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+    '''
+    def test_view_single_slug_blog(self):
+        user = User.objects.get(username = 'test')
+        b = self.Test_Models.create_Blog(user)
+        url = reverse('single_slug', args=(b.blog_slug,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+    '''  
 
     #CREATE_BLOG
     def test_view_create_blog_GET(self): 
