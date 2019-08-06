@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
   
 def my_blogs(request):
     tmpl = "blog/my_blogs.html"
-    current_author = request.users
+    current_author = request.user
     blogs = Blog.objects.filter(author = current_author)
     
     return render(request, tmpl, context={"blogs": blogs })
@@ -61,11 +61,11 @@ def create_blog(request):
     tmpl = "blog/create_blog.html"
     if request.method == 'POST':
         blog_post_form = PostForm(request.POST, request.FILES)
-        print("------BLOG POST ERROR--------")
-        print(blog_post_form.errors)
-        print("------BLOG POST ERROR--------")
+        #print("------BLOG POST ERROR--------")
+        #print(blog_post_form.errors)
+        #print("------BLOG POST ERROR--------")
         if blog_post_form.is_valid():
-            print("---------------------VALID FORM-------------------------")
+            #print("---------------------VALID FORM-------------------------")
             form = blog_post_form.save(commit=False)
             form.author = request.user
             form.save()
