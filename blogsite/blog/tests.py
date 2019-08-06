@@ -29,24 +29,30 @@ class TestModels(TestCase):
                                     password = 'Test1234',
                                     is_active=True)
 
+    def get_User(self):
+        return User.objects.get(username = 'test')
+
     def create_Blog(self):
+        u = User(username = 'test4', password = 'test4')
+        u.save()
         return Blog.objects.create( headline = 'New Test headline', 
-                                    pub_date = timezone.now(), 
+                                    pub_date = timezone.now(),
+                                    author = u, 
                                     content = 'Test content',
                                     category_name = self.create_Categories(),
                                     img_name = 'test_image',
                                     blog_slug = 'newtestheadline',
                                     image = '',
-                                    author = self.create_User())
-
+                                     )
+    
     def test_blog_creation(self):
-        '''Testing models.py '''
+      
         b = self.create_Blog()
         c = self.create_Categories()
         self.assertTrue(isinstance(b, Blog))
         self.assertEqual(b.__str__(), b.headline)
         self.assertEqual(c.__str__(), c.category_name)
- 
+    
 class TestViews(TestCase):
     def setUp(self):
         self.request_factory = RequestFactory()
@@ -55,9 +61,8 @@ class TestViews(TestCase):
         self.user = self.Test_Models.create_User()
         self.user.set_password('Test1234')
         self.user.save()
-        
-            
-
+        self.create_Categories = self.Test_Models.create_Categories()
+    
     def test_views_index(self):
         '''Testing index page at views.py'''
         c = self.Test_Models.create_Categories()
@@ -158,14 +163,14 @@ class TestViews(TestCase):
         url = reverse('single_slug', args=(c.category_slug,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-    '''
+    
     def test_view_single_slug_blog(self):
-        user = User.objects.get(username = 'test')
-        b = self.Test_Models.create_Blog(user)
+        
+        b = self.Test_Models.create_Blog()
         url = reverse('single_slug', args=(b.blog_slug,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-    '''  
+    
 
     #CREATE_BLOG
     def test_view_create_blog_GET(self): 
@@ -234,7 +239,24 @@ class TestViews(TestCase):
     
         
 
-
+        '''
+        ctg = Categories(category_name = 'Gaming',
+                                category_description = 'Test desc', 
+                                photo = '',
+                                category_slug = 'gaming')
+                ctg.save()
+                user = User(username = 'test5', password='test5')
+                user.save()
+                b = Blog(                   headline = 'Test_Headline', 
+                                            pub_date = timezone.now(), 
+                                            content = 'Test content',
+                                            category_name = ctg,
+                                            img_name = 'test_image',
+                                            blog_slug = 'newtestheadline',
+                                            image = '',
+                                            author = user)
+                b.save(force_insert=True)
+        '''
 
 
 

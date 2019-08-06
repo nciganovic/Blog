@@ -61,11 +61,11 @@ def create_blog(request):
     tmpl = "blog/create_blog.html"
     if request.method == 'POST':
         blog_post_form = PostForm(request.POST, request.FILES)
-        print("------BLOG POST ERROR--------")
-        print(blog_post_form.errors)
-        print("------BLOG POST ERROR--------")
+        #print("------BLOG POST ERROR--------")
+        #print(blog_post_form.errors)
+        #print("------BLOG POST ERROR--------")
         if blog_post_form.is_valid():
-            print("---------------------VALID FORM-------------------------")
+            #print("---------------------VALID FORM-------------------------")
             form = blog_post_form.save(commit=False)
             form.author = request.user
             form.save()
