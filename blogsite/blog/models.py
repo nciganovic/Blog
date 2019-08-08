@@ -1,5 +1,7 @@
 """Elements of Database for Website """
 
+import os
+import uuid
 from datetime import datetime
 from django.db import models
 from django.utils import timezone
@@ -44,3 +46,9 @@ def slug_save(sender, instance, *args, **kwargs):
         instance.blog_slug = unique_slug_generator(instance, instance.headline, instance.blog_slug)
 
 pre_save.connect(slug_save, sender=Blog)
+
+def unique_img_name(sender, instance, *args, **kwargs):
+    if not instance.img_name: 
+        instance.img_name = os.path.basename(instance.image.name)
+        
+pre_save.connect(unique_img_name, sender=Blog)

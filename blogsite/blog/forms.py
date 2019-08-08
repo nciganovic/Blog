@@ -21,7 +21,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Blog
-        fields = ['headline', 'content', 'category_name', 'image', 'img_name']
+        fields = ['headline', 'content', 'category_name', 'image']
         exclude = ['author']
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
@@ -30,7 +30,7 @@ class PostForm(forms.ModelForm):
         self.fields['content'].widget.attrs['class'] = 'form-control'
         #self.fields['blog_slug'].widget.attrs['class'] = 'form-control'
         self.fields['category_name'].widget.attrs['class'] = 'form-control'
-        self.fields['img_name'].widget.attrs['class'] = 'form-control'
+        #self.fields['img_name'].widget.attrs['class'] = 'form-control'
 
 class myUserCreationForm(UserCreationForm):
 

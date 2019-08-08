@@ -10,7 +10,7 @@
                     <div class="view overlay">
                     
                     {% load static %}   
-                    {% with 'image/'|add:blog.img_name|add:'.jpg' as image_static %}
+                    {% with 'image/'|add:blog.img_name|add:'' as image_static %}
                         <img class="card-img-top" src='{% static image_static %}' alt="{{ blog.img_name }}">
                     {% endwith %}    
 
