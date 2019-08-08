@@ -4,8 +4,9 @@ from datetime import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
 from django.conf import settings
+from .utils import unique_slug_generator
 
 CHOICES = [
     ('Gaming', 'Gaming'),
@@ -22,7 +23,7 @@ class Categories(models.Model):
     photo = models.ImageField(upload_to="gallery")
     category_slug = models.CharField(max_length=200)
     def __str__(self):
-        """When class Cagories ispy called, category_name will be displayed"""
+        """When class Cagories is called, category_name will be displayed"""
         return self.category_name
 
 class Blog(models.Model):
@@ -31,9 +32,15 @@ class Blog(models.Model):
     content = models.TextField()
     category_name = models.ForeignKey(Categories, on_delete=models.CASCADE, default=None)
     img_name = models.CharField(max_length=200)
-    blog_slug = models.CharField(max_length=200)
+    blog_slug = models.SlugField(max_length = 200, unique=True)
     image = models.ImageField(upload_to = 'image', default = 'blog/media/blog/amer.jpg')
     author = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
     def __str__(self):
         """When class Blog is called, headlines will be displayed"""
         return self.headline
+
+def slug_save(sender, instance, *args, **kwargs):
+    if not instance.blog_slug: 
+        instance.blog_slug = unique_slug_generator(instance, instance.headline, instance.blog_slug)
+
+pre_save.connect(slug_save, sender=Blog)

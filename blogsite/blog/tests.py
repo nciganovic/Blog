@@ -237,9 +237,33 @@ class TestViews(TestCase):
         response = my_blogs(request)
         self.assertEqual(response.status_code, 200) 
 
-        
-    
-        
+class SlugTestCase(TestCase):
+    def setUp(self):
+        Categories.objects.create(  category_name = 'Art',
+                                    category_description = 'Test desc', 
+                                    photo = '',
+                                    category_slug = 'art')
+        User.objects.create(username='tester', password='tester')
+        Blog.objects.create(headline = 'This is title', 
+                            pub_date = timezone.now(),
+                            author = User.objects.get(username='tester'),
+                            content = 'Test content',
+                            category_name = Categories.objects.get(category_name = 'Art'),
+                            img_name = 'test_image',
+                            image = '',)
+        Blog.objects.create(headline = 'This is title', 
+                            pub_date = timezone.now(),
+                            author = User.objects.get(username='tester'),
+                            content = 'Test content',
+                            category_name = Categories.objects.get(category_name = 'Art'),
+                            img_name = 'test_image',
+                            image = '',)
+   
+    def test_slug(self):
+        object_1 = Blog.objects.get(pk=1)
+        object_2 = Blog.objects.get(pk=2)
+        self.assertEqual(object_1.blog_slug, 'this-is-title')
+        self.assertEqual(object_2.blog_slug, 'this-is-title-2')
 
         '''
         ctg = Categories(category_name = 'Gaming',
