@@ -1,5 +1,4 @@
 """Functions for views.py"""
-
 import datetime
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
@@ -7,10 +6,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from .models import Blog, Categories
-from .forms import PostForm, myUserCreationForm, myAuthenticationForm
-from django.contrib.auth.models import User
-  
+from .models import Blog, Categories, Comment
+from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment
+from django.contrib.auth.models import User   
+
 def my_blogs(request):
     tmpl = "blog/my_blogs.html"
     current_author = request.user
@@ -87,9 +86,22 @@ def single_slug(request, single_slug):
     blogs = [b.blog_slug for b in Blog.objects.all()] 
     if single_slug in blogs:
         matching_blog = Blog.objects.get(blog_slug=single_slug)
-        return render(request, 'blog/blog.html', context={"single_blog": matching_blog})
-
-    
+        comments = Comment.objects.filter(blog=matching_blog).order_by('-id')
+        if request.method == 'POST': 
+            comment_form = PostComment(request.POST or None)
+            if comment_form.is_valid():
+                content = request.POST.get('comment_text')
+                comment = Comment.objects.create(blog=matching_blog, author=request.user, comment_text=content)
+                comment.save()
+                return HttpResponseRedirect(request.path_info)
+        else:
+            comment_form = PostComment()
+        context = {
+            "single_blog": matching_blog, 
+            "comments":comments,
+            "comment_form":comment_form,
+        }
+        return render(request, 'blog/blog.html', context)   
 
 def logout_request(request):
     """Logging out"""

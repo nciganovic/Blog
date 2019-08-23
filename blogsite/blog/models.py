@@ -52,3 +52,10 @@ def unique_img_name(sender, instance, *args, **kwargs):
         instance.img_name = os.path.basename(instance.image.name)
         
 pre_save.connect(unique_img_name, sender=Blog)
+
+class Comment(models.Model):
+    comment_text = models.TextField(max_length = 200)
+    author = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, default=None)
+    def __str__(self): 
+        return '{}:{}'.format(self.blog.headline, str(self.author.username))
