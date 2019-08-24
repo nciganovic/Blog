@@ -7,9 +7,14 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.db.models import Q
-from .models import Blog, Categories, Comment
+from .models import Blog, Categories, Comment, Profile
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment
 from django.contrib.auth.models import User   
+
+def my_info(request):
+    tmpl = 'blog/my_info.html'
+    profile = Profile.objects.filter(user=request.user)
+    return render(request, tmpl, context={"profile": profile})
 
 def my_blogs(request):
     tmpl = "blog/my_blogs.html"

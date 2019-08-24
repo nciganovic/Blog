@@ -71,7 +71,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
 ]
 
 CRISPY_TEMPLATE_PACK = 'uni_form'

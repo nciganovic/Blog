@@ -1,0 +1,20 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+    <h1 class="text-center">My Info</h1>
+    <div class="row">
+        <div class="col-4 mt-3">
+            <img src="" alt="profile pic">
+        </div>
+        <div class="col-8 mt-3">
+            <p>First name: {{ user.first_name }}</p>
+            <p>Last name: {{ user.first_name }}</p>
+            <p>Username: {{ user.username }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Birth date: {{ user.profile.birth_date}}</p>
+            <p>Bio: {{ user.profile.bio }}</p>
+            <a class="btn btn-primary">Change</a>
+        </div>
+    </div>
+{% endblock %}
+            

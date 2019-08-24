@@ -16,6 +16,7 @@ urlpatterns = [
     path('my_blogs/', views.my_blogs, name='my_blogs'),
     path('my_blogs/<single_slug>', views.edit_blog, name='edit_blog'),
     path('delete_blog/<single_slug>', views.delete_blog, name='delete_blog'),
+    path('my_info/', views.my_info, name='my_info'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
