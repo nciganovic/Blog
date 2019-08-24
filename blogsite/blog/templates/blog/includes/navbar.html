@@ -9,14 +9,22 @@
         <ul class="navbar-nav mr-right">
             
             {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="/my_blogs/">My Blogs</a>
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Profile</a>
+                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/my_blogs/">My Blogs</a>
+                    <a class="dropdown-item" href="#">My Info</a>
+                </div>
             </li>
+            <!--
+            <li class="nav-item">
+                <a class="nav-link" href="/my_blogs/">My Profile</a>
+            </li>
+            -->
             <li class="nav-item">
                 <a class="nav-link" href="/create_blog/">Create Blog</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/">{{ user.username }}</a>
             </li>
             <li class="nav-item">
                  <a class="nav-link" href="/logout/">Logout</a>
