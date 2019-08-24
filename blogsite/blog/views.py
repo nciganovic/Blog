@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
+from django.db.models import Q
 from .models import Blog, Categories, Comment
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment
 from django.contrib.auth.models import User   
@@ -144,5 +145,16 @@ def register(request):
 
 def index(request):
     """Loading index page"""
-    category = Categories.objects.all
-    return render(request, 'blog/index.html', context={"category": category})
+    search = False
+    category = Categories.objects.all()
+    blogs = Blog.objects.all()
+    query = request.GET.get('q'); 
+    if query:
+        search = True
+        blogs = blogs.filter(
+            Q(headline__icontains=query) |
+            Q(content__icontains=query) |
+            Q(author__first_name__icontains=query) |
+            Q(author__last_name__icontains=query) 
+        ).distinct()
+    return render(request, 'blog/index.html', context={"category": category, "search": search, "blogs": blogs})
