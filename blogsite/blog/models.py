@@ -24,7 +24,7 @@ CHOICES = [
 class Categories(models.Model): 
     category_name = models.CharField(max_length = 200, choices = CHOICES)
     category_description = models.TextField()
-    photo = models.ImageField(upload_to="gallery")
+    image = models.ImageField(upload_to="ctg_image", default='blog/media/blog/amer.jpg')
     category_slug = models.CharField(max_length=200)
     def __str__(self):
         """When class Cagories is called, category_name will be displayed"""
