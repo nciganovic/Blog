@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from tinymce import TinyMCE
-from .models import Blog, Categories, Comment
+from .models import Blog, Categories, Comment, Profile
      
 class TinyMCEWidget(TinyMCE):
     """Impoting TinyMCE"""
@@ -68,4 +68,13 @@ class PostComment(forms.ModelForm):
         super(PostComment, self).__init__(*args, **kwargs)
 
         self.fields['comment_text'].widget.attrs['class'] = 'form-control'
-        
+
+class ProfileForm(forms.ModelForm): 
+    class Meta: 
+        model=Profile
+        fields=('bio', 'birth_date', 'image',)      
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+
+        self.fields['bio'].widget.attrs['class'] = 'form-control'
+        self.fields['birth_date'].widget.attrs['class'] = 'form-control'

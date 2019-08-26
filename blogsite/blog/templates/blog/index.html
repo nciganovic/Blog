@@ -12,29 +12,22 @@
             {% for c in category %}
                 <!-- Card -->
                 <div class="card m-3 col-xl-5 padding-0">
-                    
                     <!-- Card image -->
                     <div class="view overlay">
-                    
-                    <img src="{{ c.image.url }}" class="img-responsive" alt="{{ c.category_name }}">
-                           
-                    <a href="{{c.category_slug}}">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
+                        <img src="{{ c.image.url }}" class="img-responsive" alt="{{ c.category_name }}">    
+                        <a href="{{c.category_slug}}">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
                     </div>
-                
                     <!-- Card content -->
                     <div class="card-body">
-                
-                    <!-- Title -->
-                    <h4 class="card-title">{{ c.category_name }}</h4>
-                    <!-- Text -->
-                    <p class="card-text">{{ c.category_description }}</p>
-                    <!-- Button -->
-                    <a href="{{c.category_slug}}" class="btn btn-primary">Visit</a>
-                
+                        <!-- Title -->
+                        <h4 class="card-title">{{ c.category_name }}</h4>
+                        <!-- Text -->
+                        <p class="card-text">{{ c.category_description }}</p>
+                        <!-- Button -->
+                        <a href="{{c.category_slug}}" class="btn btn-primary">Visit</a>
                     </div>
-                
                 </div>
                 <!-- Card -->
             {% endfor %}

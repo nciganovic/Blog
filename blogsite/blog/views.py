@@ -8,8 +8,40 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.db.models import Q
 from .models import Blog, Categories, Comment, Profile
-from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment
+from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment, ProfileForm
 from django.contrib.auth.models import User   
+
+'''
+            bio = request.POST.get('bio')
+            birth_date = request.POST.get('birth_date')
+            image = request.POST.get('image')
+            profile = Profile.objects.create(user=user, bio=bio, birth_date=birth_date, image=image)
+            profile_form.save()
+
+            profile_form = ProfileForm(request.POST, request.FILES)
+'''
+def change_info(request):
+    tmpl = 'blog/change_info.html'
+    if request.method == 'POST':
+        register_form = myUserCreationForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if register_form.is_valid():
+            register_form.save()
+            profile_form.save()
+
+            username = register_form.cleaned_data.get('username')
+            raw_password = register_form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect("my_info")
+    else:
+        profile_form = ProfileForm(instance=request.user.profile)
+        register_form = myUserCreationForm(instance=request.user)
+        
+    return render(request, tmpl, context={
+            "register":register_form,
+            "profile":profile_form,
+    })
 
 def my_info(request):
     tmpl = 'blog/my_info.html'
@@ -146,6 +178,7 @@ def register(request):
             return redirect('/')
     else:
         form = myUserCreationForm()
+        profile_form = ProfileForm()
     return render(request, 'blog/register.html', {'form': form})
 
 def index(request):

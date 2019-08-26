@@ -1,0 +1,54 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+    <h2 class="text-center">Change info</h2>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+            {% csrf_token %}
+            <div class="row mt-5">
+                <div class="col-6 mt-3 mb-3">
+                    <label>First name:</label>
+                    {{ register.first_name }}
+                </div>
+                <div class="col-6 mt-3 mb-3">
+                    <label>Last name:</label>
+                    {{ register.last_name }}
+                </div>
+                <div class="col-12 mt-3 mb-3">
+                        <label>Username:</label>
+                        {{ register.username }}
+                    </div>
+                <div class="col-12 mt-3 mb-3">
+                    <label>Email:</label>
+                    {{ register.email }}
+                </div>
+                <div class="col-6 mt-3 mb-3">
+                    <label>Password:</label>
+                    {{ register.password1 }}
+                </div>
+                <div class="col-6 mt-3 mb-3">
+                    <label>Repeat password:</label>
+                    {{ register.password2 }}
+                </div>
+                <div class="col-12 mt-3 mb-3">
+                    <label>Bio:</label>
+                    {{ profile.bio }}
+                </div>
+                <div class="col-12 mt-3 mb-3">
+                    <label>Birth date: (YYYY:MM:DD)</label>
+                    {{ profile.birth_date }}
+                </div>
+                <div class="col-12 mt-3 mb-3">
+                    <label>Profile picture:</label>
+                    {{ profile.image }}
+                </div>
+
+                
+            </div>
+            
+            </div>
+            <button class="btn btn-primary margin-0" type="submit">Change</button>
+        </form>
+
+{% endblock %}
+            
