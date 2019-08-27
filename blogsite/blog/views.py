@@ -11,15 +11,6 @@ from .models import Blog, Categories, Comment, Profile
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment, ProfileForm
 from django.contrib.auth.models import User   
 
-'''
-            bio = request.POST.get('bio')
-            birth_date = request.POST.get('birth_date')
-            image = request.POST.get('image')
-            profile = Profile.objects.create(user=user, bio=bio, birth_date=birth_date, image=image)
-            profile_form.save()
-
-            profile_form = ProfileForm(request.POST, request.FILES)
-'''
 def change_info(request):
     tmpl = 'blog/change_info.html'
     if request.method == 'POST':
@@ -33,7 +24,10 @@ def change_info(request):
             raw_password = register_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            messages.success(request, f"Information successfuly changed!")
             return redirect("my_info")
+        else:
+            messages.error(request, f"Information not changed successfuly!")
     else:
         profile_form = ProfileForm(instance=request.user.profile)
         register_form = myUserCreationForm(instance=request.user)
@@ -62,6 +56,7 @@ def delete_blog(request, single_slug):
         matching_blog = Blog.objects.get(blog_slug=single_slug)
     if request.method == 'POST':
         matching_blog.delete()
+        messages.success(request, f"Blog successfully deleted!")
         return redirect("my_blogs")
     else:
         current_author = request.user
@@ -81,10 +76,11 @@ def edit_blog(request, single_slug):
             edited_form = form.save(commit=False)
             edited_form.author = request.user
             edited_form.save()
+            messages.success(request, f"Blog successfully changed!")
             return redirect("my_blogs")
         else:
             form = PostForm(instance=matching_blog)
-        
+            messages.error(request, f"Blog not changed!")
     else:
         current_author = request.user
         blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
@@ -98,16 +94,15 @@ def create_blog(request):
     tmpl = "blog/create_blog.html"
     if request.method == 'POST':
         blog_post_form = PostForm(request.POST, request.FILES)
-        #print("------BLOG POST ERROR--------")
         #print(blog_post_form.errors)
-        #print("------BLOG POST ERROR--------")
         if blog_post_form.is_valid():
-            #print("---------------------VALID FORM-------------------------")
             form = blog_post_form.save(commit=False)
             form.author = request.user
             form.save()
-
+            messages.success(request, f"Blog successfully created!")
             return redirect("index")
+        else:
+            messages.error(request, f"You need to fill all the fields!")
     else:
         blog_post_form = PostForm()
     return render(request, tmpl, context={"form": blog_post_form })
@@ -175,7 +170,10 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            messages.success(request, f"{username} created account!")
             return redirect('/')
+        else:
+            messages.error(request, "Registration failed, please try again.")
     else:
         form = myUserCreationForm()
         profile_form = ProfileForm()
@@ -195,4 +193,6 @@ def index(request):
             Q(author__first_name__icontains=query) |
             Q(author__last_name__icontains=query) 
         ).distinct()
+        if not blogs:
+            messages.error(request, f"Search {query} doesnt exist")
     return render(request, 'blog/index.html', context={"category": category, "search": search, "blogs": blogs})

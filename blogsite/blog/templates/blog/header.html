@@ -17,12 +17,19 @@
 
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
 
-            {{ form.media }}
+            {{ form.media }} <!--For TinyMCE to work-->
         </head>
         <body>
             {% include "blog/includes/navbar.html" %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                <div class="message-block d-flex justify-content-center {{ message.tags }}">
+                    <p>{{ message }}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
             <div class ="container">
-                {% include "blog/includes/messages.html" %}
                 {% block content %}
                 {% endblock %}
             </div>

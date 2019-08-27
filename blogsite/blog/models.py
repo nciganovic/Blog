@@ -24,7 +24,7 @@ CHOICES = [
 class Categories(models.Model): 
     category_name = models.CharField(max_length = 200, choices = CHOICES)
     category_description = models.TextField()
-    image = models.ImageField(upload_to="ctg_image", default='blog/media/blog/amer.jpg')
+    image = models.ImageField(upload_to="ctg_image", default=None)
     category_slug = models.CharField(max_length=200)
     def __str__(self):
         """When class Cagories is called, category_name will be displayed"""
@@ -37,7 +37,7 @@ class Blog(models.Model):
     category_name = models.ForeignKey(Categories, on_delete=models.CASCADE, default=None)
     img_name = models.CharField(max_length=200)
     blog_slug = models.SlugField(max_length = 200, unique=True)
-    image = models.ImageField(upload_to = 'image', default = 'blog/media/blog/amer.jpg')
+    image = models.ImageField(upload_to = 'image', default=None)
     author = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
     def __str__(self):
         """When class Blog is called, headlines will be displayed"""
