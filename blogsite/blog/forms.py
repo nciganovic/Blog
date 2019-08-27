@@ -16,9 +16,10 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class PostForm(forms.ModelForm):
-
     category_name = forms.ModelChoiceField(queryset=Categories.objects.all())
-
+    content = forms.CharField(
+        widget=TinyMCEWidget(
+            attrs={'required': False, 'cols': 30, 'rows': 10}))
     class Meta:
         model = Blog
         fields = ['headline', 'content', 'category_name', 'image']
