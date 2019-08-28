@@ -18,7 +18,6 @@ urlpatterns = [
     path('delete_blog/<single_slug>', views.delete_blog, name='delete_blog'),
     path('my_info/', views.my_info, name='my_info'),
     path('change_info/', views.change_info, name='change_info'),
-    path('contact/', views.contact, name='contact'),
 ]
 
 #urlpatterns += staticfiles_urlpatterns()
