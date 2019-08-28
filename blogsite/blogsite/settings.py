@@ -73,6 +73,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 CRISPY_TEMPLATE_PACK = 'uni_form'
 
 MIDDLEWARE = [

@@ -1,5 +1,6 @@
 """Functions for views.py"""
 import datetime
+from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,8 +9,29 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.db.models import Q
 from .models import Blog, Categories, Comment, Profile
-from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment, ProfileForm
+from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment, ProfileForm, ContactForm
 from django.contrib.auth.models import User   
+
+def contact(request):
+    tmpl = 'blog/contact.html'
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            from_email = form.cleaned_data.get('from_email')
+            message = form.cleaned_data.get('message')
+            try:
+                send_mail(subject, message, from_email, ['admin@example.com'])
+                sent = True
+            except BadHeaderError:
+                messages.error(request, "Failed to send email.")
+                sent = False
+            if sent == True:
+                messages.success(request, "Email sent successfully.")
+            return redirect("index")
+    else:
+        form = ContactForm()
+    return render(request, tmpl, {"form": form})
 
 def change_info(request):
     tmpl = 'blog/change_info.html'
