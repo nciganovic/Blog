@@ -1,5 +1,6 @@
 """Functions for views.py"""
 import datetime
+from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, redirect
@@ -124,6 +125,12 @@ def create_blog(request):
             if image.size > 1024*1024:
                 messages.error(request, 'Image is larger then 1MB')
                 raise ValidationError("Image file too large ( > 4mb )")
+            w, h = get_image_dimensions(image)
+            if w != 600:
+               raise ValidationError("The image is %i pixel wide. It's supposed to be 600px" % w)
+            if h != 400:
+               raise ValidationError("The image is %i pixel high. It's supposed to be 400px" % h)
+
             form = blog_post_form.save(commit=False)
             form.author = request.user
             form.save()
