@@ -30,8 +30,6 @@ class PostForm(forms.ModelForm):
         self.fields['headline'].widget.attrs['class'] = 'form-control'
         self.fields['content'].widget.attrs['class'] = 'form-control'
         self.fields['category_name'].widget.attrs['class'] = 'form-control'
-        #self.fields['img_name'].widget.attrs['class'] = 'form-control'
-        #self.fields['blog_slug'].widget.attrs['class'] = 'form-control'
 
 class myUserCreationForm(UserCreationForm):
 

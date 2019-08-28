@@ -1,5 +1,6 @@
 """Functions for views.py"""
 import datetime
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
@@ -119,6 +120,10 @@ def create_blog(request):
         blog_post_form = PostForm(request.POST, request.FILES)
         #print(blog_post_form.errors)
         if blog_post_form.is_valid():
+            image = blog_post_form.cleaned_data.get('image')
+            if image.size > 1024*1024:
+                messages.error(request, 'Image is larger then 1MB')
+                raise ValidationError("Image file too large ( > 4mb )")
             form = blog_post_form.save(commit=False)
             form.author = request.user
             form.save()
