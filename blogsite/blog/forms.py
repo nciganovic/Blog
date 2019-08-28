@@ -79,3 +79,14 @@ class ProfileForm(forms.ModelForm):
 
         self.fields['bio'].widget.attrs['class'] = 'form-control'
         self.fields['birth_date'].widget.attrs['class'] = 'form-control'
+
+class ContactForm(forms.Form):
+    from_email = forms.EmailField(required=True)
+    subject = forms.CharField(required=True)
+    message = forms.CharField(widget=forms.Textarea, required=True)
+    def __init__(self, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
+
+        self.fields['from_email'].widget.attrs['class'] = 'form-control'
+        self.fields['message'].widget.attrs['class'] = 'form-control'
+        self.fields['subject'].widget.attrs['class'] = 'form-control'
