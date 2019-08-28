@@ -1,0 +1,51 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+    <h1 class="text-center">My Info</h1>
+    <div class="row">
+        <div class="col-3 mt-3">
+            {% if user.profile.image  %}
+                <img src="{{ user.profile.image.url }}" alt="Profile pic">
+            {% else %}
+                {% load static %}
+                <img src="{% static 'image/user.png' %}" alt="profile pic">
+            {% endif %}
+        </div>
+        <div class="col-6 mt-3">
+            <table class="table table-striped">
+                <tr>
+                    <td class="font-weight-bold">First name:</td>
+                    <td>{{ user.first_name }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Last name:</td>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Username: </td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Email: </td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Bio: </td>
+                    <td>{{ user.profile.bio }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Birth date: </td>
+                    <td>{{ user.profile.birth_date }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a href="/change_info/" class="btn btn-primary">Change info</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-3">
+
+        </div>
+    </div>
+{% endblock %}
+            

@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="column" id="content">
             <h1 class="text-center">Write your blog: </h1>
-            <form  method="post" enctype="multipart/form-data">
+            <form  method="post" id="create_blog_form" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="margin-custom">
                     <label>Headline:</label>
@@ -15,26 +15,56 @@
                     {{ form.category_name }}
                 </div>
                 <div class="margin-custom">
-                    <label>Upload Image:</label>
+                    <label>Upload cover image:</label>
                     {{ form.image }}
-                </div>
-                <div class="margin-custom">
-                    <label>Image name:</label>
-                    {{ form.img_name }}
                 </div>
                 <div class="margin-custom">
                     <label>New paragraph:</label>
                     {{ form.content }}
                 </div>
-                <div class="margin-custom">
-                    <label>Blog slug:</label>
-                    {{ form.blog_slug }}
+
+                <!--
+                <div id="testing">
+                   
                 </div>
-               
-                <button class="btn btn-primary margin-0" type="submit">Save</button>
+                
+                <button class="btn btn-success margin-0 mt-3 mb-3" id="Add_Text" type="button">Add Text</button>
+                <button class="btn btn-success margin-0 mt-3 mb-3" id="Add_Image" type="button">Add Image</button>
+                
+                <button class="btn btn-danger margin-0 mt-3 mb-3" id="Remove_Text" type="button">Remove Item</button>
+                <div class="col-9"></div>
+                -->
+
+                <input class='btn btn-primary pull-right margin-0' type="submit" value="Submit" id='btnsubmit' />
             </form>
+
         </div>
     </div>
+
+    <script>  
+        $(document).ready(function() { 
+            
+            $("#Add_Text").on("click", function() {  
+                $("#testing").append('<div class="form-group"><label for="exampleFormControlTextarea3">New paragrph: </label><textarea class="form-control" id="exampleFormControlTextarea3" rows="3"></textarea></div>');  
+            });  
+            
+            $("#Add_Image").on("click", function() {  
+                $("#testing").append('<div class="form-group"><label for="exampleFormControlTextarea3">Upload image: </label><input type="file" name="uploadField" /></div>');  
+            });
+            $("#Remove_Text").on("click", function() {  
+                $("#testing").children().last().remove();  
+            });  
+            
+            $('#create_blog_form').submit(function(){
+                $("input[type='submit']", this)
+                    .val("Please Wait...")
+                    .attr('disabled', 'disabled');
+                return true;
+            });
+            
+        });  
+    </script>
+    
 {% endblock %}
             
 

@@ -3,12 +3,37 @@
 {% block content %}
     <h1 class="text-center m-5">{{ single_blog.headline }}</h1>
     {% load static %}   
-    {% with 'image/'|add:single_blog.img_name|add:'.jpg' as image_static %}
-        <img class="card-img-top" src='{% static image_static %}' alt="{{ single_blog.img_name }}">
-    {% endwith %}
+    <img class="card-img-top" src='{{ single_blog.image.url }}' alt="{{ blog.img_name }}">
+
     <p class="text-center mb-5">Date published: {{ single_blog.pub_date }}</p>
     <p class="text-center mb-5">Author: {{ single_blog.author.get_full_name }}</p>
     <p class="m-2">{{ single_blog.content|safe }}</p>
+
+    <div class="comment-area">
+        <h3>Comments:</h3>
+        {% if user.is_authenticated %}
+            <div class="add-comment">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form }}
+                    <button class="btn margin-0 mb-2 mt-2" type="submit">Post</button>
+                </form>
+            </div>
+        {% else %}
+            <p>You need to login to add comment.</p>
+        {% endif %}
+        <div class="comments">
+            {{ comments.count }} Comment{{ comments|pluralize }}
+            {% for comment in comments %}
+                <div class="comment">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{ comment.comment_text }}</p>
+                        <footer class="blockquote-footer">by <cite title="Source Title">{{ comment.author|capfirst }}</cite></footer>
+                    </blockquote>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
             
 

@@ -4,7 +4,7 @@ from django.contrib import admin
 from tinymce.widgets import TinyMCE
 from django import forms
 from django.db import models
-from .models import Blog, Categories
+from .models import Blog, Categories, Comment, Profile
 
 
 class BlogAdmin(admin.ModelAdmin):
@@ -24,3 +24,5 @@ class BlogAdmin(admin.ModelAdmin):
 
 admin.site.register(Categories)
 admin.site.register(Blog, BlogAdmin)
+admin.site.register(Comment)
+admin.site.register(Profile)

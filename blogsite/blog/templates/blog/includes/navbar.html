@@ -1,21 +1,33 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Blog.com</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto">       
         </ul>
         <ul class="navbar-nav mr-right">
+            
             {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="/my_blogs/">My Blogs</a>
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">{{ user.username }}</a>
+                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/my_blogs/">My Blogs</a>
+                    <a class="dropdown-item" href="/my_info/">My Info</a>
+                </div>
             </li>
+            <!--
+            <li class="nav-item">
+                <a class="nav-link" href="/my_blogs/">My Profile</a>
+            </li>
+            -->
             <li class="nav-item">
                 <a class="nav-link" href="/create_blog/">Create Blog</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">{{ user.username }}</a>
+                <a class="nav-link" href="/contact/">Contact us</a>
             </li>
             <li class="nav-item">
                  <a class="nav-link" href="/logout/">Logout</a>

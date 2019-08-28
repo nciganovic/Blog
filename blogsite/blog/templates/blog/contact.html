@@ -1,0 +1,12 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+<h1 class="text-center">Contact Us</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit">Send</button>
+    </div>
+</form>
+{% endblock %}
