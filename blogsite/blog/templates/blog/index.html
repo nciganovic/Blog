@@ -1,35 +1,70 @@
 {% extends "blog/header.html" %}
    
 {% block content %}
-    <div class="search">
-        <form method="GET" action="" class="form-inline my-2 my-lg-0 ml-auto">
-            <input class="form-control" type="text" name="q" placeholder="Search post" aria-label="Search">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+    <div class="col-12 cover-img">
+        <div class="outer d-flex">
+            <div class="inner m-auto">
+                <h1 class="text-center text-light">Welcome to <i>Read and Write</i></h1>
+                <p class="text-center text-light">Amazing webiste for creating and reading blogs</p>
+                <div>
+                        <form method="GET" action="" class="form-inline my-2 my-lg-0 ml-auto">
+                            <div class="input-group md-form form-sm form-2 pl-0">
+                                <input class="form-control my-0 py-1 red-border white-txt" name="q" type="text" placeholder="Search for blogs" aria-label="Search" id="SearchForm" style="color:white;">
+                                <div class="input-group-append">
+                                    <button type="submit" class="input-group-text white zero-radius" id="basic-text1"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="search d-flex justify-content-center col-12">
+        <div>
+            <form method="GET" action="" class="form-inline my-2 my-lg-0 ml-auto">
+                <div class="input-group md-form form-sm form-2 pl-0">
+                    <input class="form-control my-0 py-1 red-border" name="q" type="text" placeholder="Search for blogs" aria-label="Search" id="SearchForm">
+                    <div class="input-group-append">
+                        <button type="submit" class="input-group-text white zero-radius" id="basic-text1"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div> 
-    <div class="row">
         {% if search == False %}
             {% for c in category %}
-                <!-- Card -->
+            <!--
                 <div class="card m-3 col-xl-5 padding-0">
-                    <!-- Card image -->
                     <div class="view overlay">
                         <img src="{{ c.image.url }}" class="img-responsive" alt="{{ c.category_name }}">    
                         <a href="{{c.category_slug}}">
                             <div class="mask rgba-white-slight"></div>
                         </a>
                     </div>
-                    <!-- Card content -->
                     <div class="card-body">
-                        <!-- Title -->
                         <h4 class="card-title">{{ c.category_name }}</h4>
-                        <!-- Text -->
                         <p class="card-text">{{ c.category_description }}</p>
-                        <!-- Button -->
                         <a href="{{c.category_slug}}" class="btn btn-primary">Visit</a>
                     </div>
                 </div>
-                <!-- Card -->
+            -->
+            <div class="col-4 d-flex justify-content-center">
+                <div class="card m-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <a href="{{c.category_slug}}">
+                            <img src="{{ c.image.url }}" class="card-img" height="140px" alt="{{ c.category_name }}">
+                        </a>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ c.category_name }}</h5>
+                          <p class="card-text">{{ c.category_description }}</p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         {% else %}
             {% for blog in blogs %}
@@ -61,7 +96,6 @@
                 <!-- Card -->
             {% endfor %}
         {% endif %}
-    </div>
 {% endblock %}
 
 

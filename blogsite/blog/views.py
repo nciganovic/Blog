@@ -33,7 +33,8 @@ def contact(request):
             return redirect("index")
     else:
         form = ContactForm()
-    return render(request, tmpl, {"form": form})
+        category = Categories.objects.all()
+    return render(request, tmpl, {"form": form, "category":category})
 
 
 def change_info(request):
@@ -56,23 +57,25 @@ def change_info(request):
     else:
         profile_form = ProfileForm(instance=request.user.profile)
         register_form = myUserCreationForm(instance=request.user)
-        
+        category = Categories.objects.all()
     return render(request, tmpl, context={
             "register":register_form,
             "profile":profile_form,
+            "category": category,
     })
 
 def my_info(request):
     tmpl = 'blog/my_info.html'
     profile = Profile.objects.filter(user=request.user)
-    return render(request, tmpl, context={"profile": profile})
+    category = Categories.objects.all()
+    return render(request, tmpl, context={"profile": profile, "category": category})
 
 def my_blogs(request):
     tmpl = "blog/my_blogs.html"
     current_author = request.user
     blogs = Blog.objects.filter(author = current_author)
-    
-    return render(request, tmpl, context={"blogs": blogs })
+    category = Categories.objects.all()
+    return render(request, tmpl, context={"blogs": blogs, "category": category})
 
 def delete_blog(request, single_slug):
     current_author = request.user
@@ -84,11 +87,12 @@ def delete_blog(request, single_slug):
         messages.success(request, f"Blog successfully deleted!")
         return redirect("my_blogs")
     else:
+        category = Categories.objects.all()
         current_author = request.user
         blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
         if single_slug in blogs_author:
             matching_blog = Blog.objects.get(blog_slug=single_slug)
-            return render(request, 'blog/delete_blog.html', context={"delete_blog": matching_blog })
+            return render(request, 'blog/delete_blog.html', context={"delete_blog": matching_blog, "category":category})
 
 def edit_blog(request, single_slug):
     current_author = request.user
@@ -107,12 +111,13 @@ def edit_blog(request, single_slug):
             form = PostForm(instance=matching_blog)
             messages.error(request, f"Blog not changed!")
     else:
+        category = Categories.objects.all()
         current_author = request.user
         blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
         if single_slug in blogs_author:
             matching_blog = Blog.objects.get(blog_slug=single_slug)
             form = PostForm(instance=matching_blog)
-            return render(request, 'blog/edit_blog.html', context={"edit_blog": matching_blog , "form": form})
+            return render(request, 'blog/edit_blog.html', context={"edit_blog": matching_blog , "form": form, "category": category})
 
 def create_blog(request):
     """Creating User's Blog"""
@@ -140,17 +145,19 @@ def create_blog(request):
             messages.error(request, f"You need to fill all the fields!")
     else:
         blog_post_form = PostForm()
-    return render(request, tmpl, context={"form": blog_post_form })
+        category = Categories.objects.all()
+    return render(request, tmpl, context={"form": blog_post_form,"category":category})
 
 
 def single_slug(request, single_slug):
     """Creating links for every category"""
+    category = Categories.objects.all()
     categories = [c.category_slug for c in Categories.objects.all()] 
     if single_slug in categories:
         matching_categories = Blog.objects.filter(category_name__category_slug=single_slug)
         return render(request=request,
                       template_name='blog/blog_titles.html',
-                      context={"blogs": matching_categories})
+                      context={"blogs": matching_categories, 'category':category})
     blogs = [b.blog_slug for b in Blog.objects.all()] 
     if single_slug in blogs:
         matching_blog = Blog.objects.get(blog_slug=single_slug)
@@ -164,10 +171,12 @@ def single_slug(request, single_slug):
                 return HttpResponseRedirect(request.path_info)
         else:
             comment_form = PostComment()
+            category = Categories.objects.all()
         context = {
             "single_blog": matching_blog, 
             "comments":comments,
             "comment_form":comment_form,
+            'category':category
         }
         return render(request, 'blog/blog.html', context)   
 
@@ -191,9 +200,10 @@ def login_request(request):
                 return redirect("index")
             else: messages.error(request, "Invalid username or password")
         else: messages.error(request, "Invalid username or password")
-
-    form = myAuthenticationForm()
-    return render(request, "blog/login.html", {"form": form})
+    else:
+        form = myAuthenticationForm()
+        category = Categories.objects.all()
+    return render(request, "blog/login.html", {"form": form, 'category':category})
 
 def register(request):
     """Registering new user"""
@@ -212,7 +222,8 @@ def register(request):
     else:
         form = myUserCreationForm()
         profile_form = ProfileForm()
-    return render(request, 'blog/register.html', {'form': form})
+        category = Categories.objects.all()
+    return render(request, 'blog/register.html', {'form': form, 'category':category})
 
 def index(request):
     """Loading index page"""
