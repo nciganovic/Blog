@@ -1,32 +1,32 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="column" id="content">
-        <h1 class="text-center">Write your blog: </h1>
-        <form  method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="margin-custom">
-                <label>Headline:</label>
-                {{ form.headline }}
-            </div>
-            <div class="margin-custom">
-                <label>Category:</label>
-                {{ form.category_name }}
-            </div>
-            <!--Change image not working!-->
-            <div class="margin-custom">
-                <label>Cover image:</label>
-                {{ form.image }}
-            </div>
-            <div class="margin-custom">
-                <label>New paragraph:</label>
-                {{ form.content }}
-            </div>
-           
-            <button class="btn btn-primary margin-0" type="submit">Save</button>
-        </form>
-    </div>
+<div class="col-12">
+    <h1 class="text-center mt-3">Edit blog</h1>
+</div>
+<div class="container">
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="margin-custom">
+            <label>Headline:</label>
+            {{ form.headline }}
+        </div>
+        <div class="margin-custom">
+            <label>Category:</label>
+            {{ form.category_name }}
+        </div>
+        <!--Change image not working!-->
+        <div class="margin-custom">
+            <label>Cover image:</label>
+            {{ form.image }}
+        </div>
+        <div class="margin-custom">
+            <label>New paragraph:</label>
+            {{ form.content }}
+        </div>
+       
+        <button class="btn btn-primary margin-0" type="submit">Save</button>
+    </form>
 </div>
 {% endblock %}
             

@@ -1,12 +1,16 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
+    <div class="col-12 mt-3">
         <h2 class="text-center font">Login</h2>
+    </div>
+    <div class="container">
         <form method="POST">
             {% csrf_token %}
             {{form.as_p}}
-            
-            <button class="btn btn-primary mb-3" type="submit">Login</button>
+            <button class="btn btn-primary mb-3 margin-0" type="submit">Login</button>
         </form>
-        If you dont have account, <a href="/register/"><strong>Register</strong></a>
+        <p>If you dont have account, <a href="/register/"><strong>Register</strong></a></p>
+    </div>
+        
 {% endblock %}

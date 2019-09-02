@@ -1,13 +1,23 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-    <h1>Do you really want to delete blog: {{ delete_blog.headline }}</h1>
-    <form  method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <button class="btn btn-danger" type="submit">Yes</button>
-    </form>
+<div class="col-12">
+    <h1 class="text-center mt-3">Delete Blog</h1>
+</div>
+<div class="container">
+    <p class="text-center">Do you really want to delete "{{ delete_blog.headline }}"? This action cannot be undone.</p>
+    <div class="col-12">
+        <div class="m-auto" style="width:250px;">
+            <form  method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Yes</button>
+                <a class="btn btn-primary" href="/my_blogs/"> No</a>
+            </form>
+        </div>
+    </div>
     
-    <a class="btn btn-primary" href="/my_blogs/"> No</a>
+</div>
+    
     
 {% endblock %}
             

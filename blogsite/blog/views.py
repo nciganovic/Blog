@@ -18,6 +18,7 @@ def contact(request):
     tmpl = 'blog/contact.html'
     if request.method == 'POST':
         form = ContactForm(request.POST)
+        category = Categories.objects.all()
         if form.is_valid():
             subject = form.cleaned_data.get('subject')
             from_email = form.cleaned_data.get('from_email')
@@ -40,9 +41,18 @@ def contact(request):
 def change_info(request):
     tmpl = 'blog/change_info.html'
     if request.method == 'POST':
+        category = Categories.objects.all()
         register_form = myUserCreationForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if register_form.is_valid():
+            '''
+            image = register_form.cleaned_data.get('image')
+            w, h = get_image_dimensions(image)
+            if w != 600:
+               raise ValidationError("The image is %i pixel wide. It's supposed to be 600px" % w)
+            if h != 400:
+               raise ValidationError("The image is %i pixel high. It's supposed to be 400px" % h)
+            '''
             register_form.save()
             profile_form.save()
 
@@ -83,6 +93,7 @@ def delete_blog(request, single_slug):
     if single_slug in blogs_author:
         matching_blog = Blog.objects.get(blog_slug=single_slug)
     if request.method == 'POST':
+        category = Categories.objects.all()
         matching_blog.delete()
         messages.success(request, f"Blog successfully deleted!")
         return redirect("my_blogs")
@@ -100,6 +111,7 @@ def edit_blog(request, single_slug):
     if single_slug in blogs_author:
         matching_blog = Blog.objects.get(blog_slug=single_slug)
     if request.method == 'POST':
+        category = Categories.objects.all()
         form = PostForm(request.POST, request.FILES, instance=matching_blog)
         if form.is_valid():
             edited_form = form.save(commit=False)
@@ -124,6 +136,7 @@ def create_blog(request):
     tmpl = "blog/create_blog.html"
     if request.method == 'POST':
         blog_post_form = PostForm(request.POST, request.FILES)
+        category = Categories.objects.all()
         #print(blog_post_form.errors)
         if blog_post_form.is_valid():
             image = blog_post_form.cleaned_data.get('image')
@@ -155,9 +168,10 @@ def single_slug(request, single_slug):
     categories = [c.category_slug for c in Categories.objects.all()] 
     if single_slug in categories:
         matching_categories = Blog.objects.filter(category_name__category_slug=single_slug)
+        first_blog = matching_categories[0]
         return render(request=request,
                       template_name='blog/blog_titles.html',
-                      context={"blogs": matching_categories, 'category':category})
+                      context={"blogs": matching_categories, 'category':category, 'first_blog':first_blog})
     blogs = [b.blog_slug for b in Blog.objects.all()] 
     if single_slug in blogs:
         matching_blog = Blog.objects.get(blog_slug=single_slug)
@@ -190,6 +204,7 @@ def login_request(request):
     """Logging in"""
     if request.method == "POST":
         form = myAuthenticationForm(request, data=request.POST)
+        category = Categories.objects.all()
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -208,6 +223,7 @@ def login_request(request):
 def register(request):
     """Registering new user"""
     if request.method == 'POST':
+        category = Categories.objects.all()
         form = myUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
@@ -230,6 +246,7 @@ def index(request):
     search = False
     category = Categories.objects.all()
     blogs = Blog.objects.all()
+    most_recent = Blog.objects.all().order_by('-id')[:4]
     query = request.GET.get('q'); 
     if query:
         search = True
@@ -241,4 +258,8 @@ def index(request):
         ).distinct()
         if not blogs:
             messages.error(request, f"Search {query} doesnt exist")
-    return render(request, 'blog/index.html', context={"category": category, "search": search, "blogs": blogs})
+    return render(request, 'blog/index.html', context={"category": category, 
+                                                        "search": search, 
+                                                        "blogs": blogs,
+                                                        "most_recent": most_recent,
+                                                        "query": query,})

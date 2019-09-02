@@ -1,11 +1,14 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-    <h2 class="text-center">Change info</h2>
+<div class="col-12">
+    <h2 class="text-center mt-3">Change info</h2>
+</div>
+<div class="container">
         <form method="post" enctype="multipart/form-data">
             <div class="form-group">
             {% csrf_token %}
-            <div class="row mt-5">
+            <div class="row mt-3">
                 <div class="col-6 mt-3 mb-3">
                     <label>First name:</label>
                     {{ register.first_name }}
@@ -48,7 +51,8 @@
             
             </div>
             <button class="btn btn-primary margin-0" type="submit">Change</button>
+            <a href="/my_info/" class="btn btn-primary ml-2">Cancel</a>
         </form>
-
+</div>
 {% endblock %}
             
