@@ -44,15 +44,18 @@ def change_info(request):
         category = Categories.objects.all()
         register_form = myUserCreationForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if register_form.is_valid():
-            '''
-            image = register_form.cleaned_data.get('image')
-            w, h = get_image_dimensions(image)
-            if w != 600:
-               raise ValidationError("The image is %i pixel wide. It's supposed to be 600px" % w)
-            if h != 400:
-               raise ValidationError("The image is %i pixel high. It's supposed to be 400px" % h)
-            '''
+        if register_form.is_valid() and profile_form.is_valid():
+            
+            image = profile_form.cleaned_data.get('image')
+            if not image:
+                print('NO IMAGE')
+            else:
+                w, h = get_image_dimensions(image)
+                if w != 100:
+                    raise ValidationError("The image is %i pixel wide. It's supposed to be 100px" % w)
+                if h != 100:
+                    raise ValidationError("The image is %i pixel high. It's supposed to be 100px" % h)
+            
             register_form.save()
             profile_form.save()
 
@@ -60,10 +63,10 @@ def change_info(request):
             raw_password = register_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            messages.success(request, f"Information successfuly changed!")
+            messages.success(request, f"Information successfully changed!")
             return redirect("my_info")
         else:
-            messages.error(request, f"Information not changed successfuly!")
+            messages.error(request, f"Information not changed successfully!")
     else:
         profile_form = ProfileForm(instance=request.user.profile)
         register_form = myUserCreationForm(instance=request.user)

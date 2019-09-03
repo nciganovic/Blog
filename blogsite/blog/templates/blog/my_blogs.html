@@ -5,6 +5,7 @@
     <h1 class="text-center mt-3">My Blogs</h1>
 </div>
     <div class="col-12">
+        {% if blogs %}
             {% for blog in blogs %}
             <div class="col-12 d-flex justify-content-center">
                     <div class="card m-3" style="width: 800px;">
@@ -31,6 +32,9 @@
                         </div>
                     </div>
                 </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <p class="text-center mt-3">You dont have any blogs yet, go and <a href="/create_blog/">create</a> one.</p>
+        {% endif %} 
     </div>
 {% endblock %}
