@@ -1,7 +1,10 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-    <h2 class="text-center">Register</h2>
+    <div class="col-12">
+        <h2 class="text-center mt-3">Register</h2>
+    </div>
+    <div class="container">
         <form method="post">
             <div class="form-group">
                 {% csrf_token %}
@@ -48,6 +51,6 @@
                 </div>
             {% endfor %}
         {% endif %}
-
+    </div>
 {% endblock %}
             

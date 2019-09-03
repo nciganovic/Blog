@@ -1,67 +1,143 @@
 {% extends "blog/header.html" %}
    
 {% block content %}
-    <div class="search">
-        <form method="GET" action="" class="form-inline my-2 my-lg-0 ml-auto">
-            <input class="form-control" type="text" name="q" placeholder="Search post" aria-label="Search">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-    </div> 
-    <div class="row">
-        {% if search == False %}
-            {% for c in category %}
-                <!-- Card -->
-                <div class="card m-3 col-xl-5 padding-0">
-                    <!-- Card image -->
-                    <div class="view overlay">
-                        <img src="{{ c.image.url }}" class="img-responsive" alt="{{ c.category_name }}">    
+    <div class="col-12 cover-img">
+        <div class="outer d-flex">
+            <div class="inner m-auto">
+                <h1 class="text-center text-light">Welcome to Read and Write</h1>
+                <p class="text-center text-light desc">Amazing webiste for creating and reading blogs</p>
+                <div class="w-100">
+                    <form method="GET" action="" class="form-inline my-2 my-lg-0 ml-auto">
+                        <div class="input-group md-form form-sm form-2 pl-0 m-auto" id="SearchHolder">
+                            <input class="form-control my-0 py-1 red-border white-txt" name="q" type="text" placeholder="Search for blogs" aria-label="Search" id="SearchForm" style="color:white;">
+                            <div class="input-group-append">
+                                <button type="submit" class="input-group-text white zero-radius" id="basic-text1"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 d-flex bg-light justify-content-around">
+        <div class="small-nav pt-3">
+            <p><i class="fas fa-pencil-alt"></i> Create</p>
+        </div>
+        <div class="small-nav pt-3">
+            <p><i class="fas fa-book-reader"></i> Read</p>
+        </div>
+        <div class="small-nav pt-3">
+            <p><i class="fas fa-users"></i> Comment</p>
+        </div>
+    </div>
+    {% if search == False %}
+        <div class="col-12">
+            <h2 class="text-center mt-5 mb-2">Categories:</h2>
+        </div>
+        {% for c in category %}
+            <div class="col-4 d-flex justify-content-center">
+                <div class="card m-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                      <div class="col-sm-4">
                         <a href="{{c.category_slug}}">
-                            <div class="mask rgba-white-slight"></div>
+                            <img src="{{ c.image.url }}" class="card-img" alt="{{ c.category_name }}">
                         </a>
-                    </div>
-                    <!-- Card content -->
-                    <div class="card-body">
-                        <!-- Title -->
-                        <h4 class="card-title">{{ c.category_name }}</h4>
-                        <!-- Text -->
-                        <p class="card-text">{{ c.category_description }}</p>
-                        <!-- Button -->
-                        <a href="{{c.category_slug}}" class="btn btn-primary">Visit</a>
+                      </div>
+                      <div class="col-sm-8">
+                        <a href="{{c.category_slug}}">
+                            <div class="card-body">
+                            <h5 class="card-title text-dark">{{ c.category_name }}</h5>
+                            <p class="card-text">{{ c.category_description }}</p>
+                            </div>
+                        </a>
+                      </div>
                     </div>
                 </div>
-                <!-- Card -->
+            </div>
+        {% endfor %}
+            <div class="col-12">
+                <h2 class="text-center mt-5 mb-2">Most recent:</h2>
+            </div>
+            {% for mr in most_recent %}
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="card m-3" style="width: 800px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <a href="{{mr.blog_slug}}">
+                                    <img src="{{ mr.image.url }}" class="card-img" alt="{{ mr.img_name }}">
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <a href="{{mr.blog_slug}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-dark">{{ mr.headline }}</h5>
+                                        <p class="card-text">{{ mr.category_name }}</p>
+                                        <p class="card-text">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
+    {% else %}
+        {% if blogs %}
+            <div class="col-12">
+                <h2 class="text-center mt-5 mb-2">Results of '{{ query }}' search: </h2>
+            </div>
         {% else %}
-            {% for blog in blogs %}
-                <!-- Card -->
-                <div class="card m-3 col-xl-5 padding-0">
-
-                    <!-- Card image -->
-                    <div class="view overlay">
-
-                    <img class="card-img-top" src='{{ blog.image.url }}' alt="{{ blog.img_name }}">
-
-                    <a href="{{blog.blog_slug}}">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
+            <div class="col-12">
+                <h2 class="text-center mt-5 mb-2">Most recent blogs</h2>
+            </div>
+            {% for mr in most_recent %}
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="card m-3" style="width: 800px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <a href="{{mr.blog_slug}}">
+                                    <img src="{{ mr.image.url }}" class="card-img" alt="{{ mr.img_name }}">
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <a href="{{mr.blog_slug}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-dark">{{ mr.headline }}</h5>
+                                        <p class="card-text">{{ mr.category_name }}</p>
+                                        <p class="card-text">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                
-                    <!-- Card content -->
-                    <div class="card-body">
-                
-                    <!-- Title -->
-                    <h4 class="card-title">{{ blog.headline }}</h4>
-
-                    <!-- Button -->
-                    <a href="{{blog.blog_slug}}" class="btn btn-primary">Read</a>
-                
-                    </div>
-                
                 </div>
-                <!-- Card -->
             {% endfor %}
         {% endif %}
-    </div>
+        
+        {% for blog in blogs %}
+            <div class="col-12 d-flex justify-content-center">
+                <div class="card m-3" style="max-width: 800px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <a href="{{blog.blog_slug}}">
+                                <img src="{{ blog.image.url }}" class="card-img" height="200px" alt="{{ blog.img_name }}">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <a href="{{blog.blog_slug}}">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">{{ blog.headline }}</h5>
+                                <p class="card-text">{{ blog.category_name }}</p>
+                                <p class="card-text">{{ blog.author.first_name }} {{ blog.author.last_name }}</p>
+                                <p class="card-text">{{ blog.pub_date }}</p>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 

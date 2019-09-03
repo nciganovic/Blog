@@ -9,36 +9,62 @@
 
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-            <link href='{% static "blog/css/bootstrap/css/mdb.min.css" %}' rel="stylesheet">
+            <link href='{% static "blog/css/bootstrap/css/mdb.css" %}' rel="stylesheet">
 
             <link href='{% static "blog/css/bootstrap/css/style.css" %}' rel="stylesheet">
 
+            <link href='{% static "blog/css/bootstrap/css/media.css" %}' rel="stylesheet">
+
             <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
+
+            <script src="https://kit.fontawesome.com/d27711fee5.js"></script>
 
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
 
             {{ form.media }} <!--For TinyMCE to work-->
         </head>
         <body>
-            {% include "blog/includes/navbar.html" %}
-            
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="message-block d-flex justify-content-center {{ message.tags }}">
-                        <p>{{ message }}</p>
-                    </div>             
-                {% endfor %}
-            {% endif %}
-          
-            <div class ="container">
-                {% block content %}
-                {% endblock %}
+            <div id="page-container">
+                {% include "blog/includes/navbar.html" %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="message-block d-flex justify-content-center {{ message.tags }}">
+                            <p>{{ message }}</p>
+                        </div>             
+                    {% endfor %}
+                {% endif %}
+                <div class="container-fluid" id="content-wrap">
+                    <div class="row">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+                <footer class="page-footer font-small bg-light" id="footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 py-5">
+                                <div class="mb-5 flex-center">
+                                    <a>
+                                        <i class="fab fa-linkedin text-dark fa-lg mr-md-5 mr-3 fa-3x"></i>
+                                    </a>
+                                    <a>
+                                        <i class="fab fa-github-square fa-lg text-dark mr-md-5 mr-3 fa-3x"> </i>
+                                    <a>
+                                        <i class="fas fa-user fa-lg text-dark fa-3x"> </i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-copyright text-center py-3 text-dark">© 2019 Copyright:
+                        <a href="https://mdbootstrap.com/education/bootstrap/" class="text-dark"> Nikola Ciganovic</a>
+                    </div>
+                </footer>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
             </div>
-
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
-</html>
+        </body>
+    </html>
 
 
 
