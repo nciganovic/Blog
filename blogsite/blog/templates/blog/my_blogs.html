@@ -1,34 +1,32 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-<div class="col-12">
-    <h1 class="text-center mt-3">My Blogs</h1>
-</div>
+    <div class="col-12">
+        <h1 class="text-center mt-3">My Blogs</h1>
+    </div>
     <div class="col-12">
         {% if blogs %}
             {% for blog in blogs %}
-            <div class="col-12 d-flex justify-content-center">
+                <div class="col-12 d-flex justify-content-center">
                     <div class="card m-3" style="width: 800px;">
                         <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <a href="{{blog.blog_slug}}">
-                                <img src="{{ blog.image.url }}" class="card-img"  alt="{{ blog.img_name }}">
-                            </a>
-                        </div>
-                        <div class="col-md-8 shadow-none">
-                            <a href="{{blog.blog_slug}}">
-                                <div class="card-body shadow-none">
-                                    <h5 class="card-title text-dark">{{ blog.headline }}</h5>
-                                    <p class="card-text">{{ blog.category_name }}</p> 
-                                    
-                                    <div class="d-flex flex-row-reverse mt-auto">
-                                        <div class="ml-1"><a href="/delete_blog/{{blog.blog_slug}}" class="btn btn-danger margin-0 mt-2">Delete</a></div>
-                                        <div class="mr-1"><a href="/my_blogs/{{blog.blog_slug}}" class="btn btn-primary margin-0 mt-2">Edit</a></div>
+                            <div class="col-md-4">
+                                <a href="{{blog.blog_slug}}">
+                                    <img src="{{ blog.image.url }}" class="card-img"  alt="{{ blog.img_name }}">
+                                </a>
+                            </div>
+                            <div class="col-md-8 shadow-none">
+                                <a href="{{blog.blog_slug}}">
+                                    <div class="card-body shadow-none">
+                                        <h5 class="card-title text-dark">{{ blog.headline }}</h5>
+                                        <p class="card-text">{{ blog.category_name }}</p> 
+                                        <div class="d-flex flex-row-reverse mt-auto">
+                                            <div class="ml-1"><a href="/delete_blog/{{blog.blog_slug}}" class="btn btn-danger margin-0 mt-2">Delete</a></div>
+                                            <div class="mr-1"><a href="/my_blogs/{{blog.blog_slug}}" class="btn btn-primary margin-0 mt-2">Edit</a></div>
+                                        </div>
                                     </div>
-                                    
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -117,6 +117,16 @@ def edit_blog(request, single_slug):
         category = Categories.objects.all()
         form = PostForm(request.POST, request.FILES, instance=matching_blog)
         if form.is_valid():
+            image = form.cleaned_data.get('image')
+            if image.size > 1024*1024:
+                messages.error(request, 'Image is larger then 1MB')
+                raise ValidationError("Image file too large ( > 1mb )")
+            w, h = get_image_dimensions(image)
+            if w != 600:
+               raise ValidationError("The image is %i pixel wide. It's supposed to be 600px" % w)
+            if h != 400:
+               raise ValidationError("The image is %i pixel high. It's supposed to be 400px" % h)
+
             edited_form = form.save(commit=False)
             edited_form.author = request.user
             edited_form.save()
@@ -145,7 +155,7 @@ def create_blog(request):
             image = blog_post_form.cleaned_data.get('image')
             if image.size > 1024*1024:
                 messages.error(request, 'Image is larger then 1MB')
-                raise ValidationError("Image file too large ( > 4mb )")
+                raise ValidationError("Image file too large ( > 1mb )")
             w, h = get_image_dimensions(image)
             if w != 600:
                raise ValidationError("The image is %i pixel wide. It's supposed to be 600px" % w)

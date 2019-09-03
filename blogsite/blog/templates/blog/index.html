@@ -31,11 +31,11 @@
             <p><i class="fas fa-users"></i> Comment</p>
         </div>
     </div>
-        {% if search == False %}
-            <div class="col-12">
-                <h2 class="text-center mt-5 mb-2">Categories:</h2>
-            </div>
-            {% for c in category %}
+    {% if search == False %}
+        <div class="col-12">
+            <h2 class="text-center mt-5 mb-2">Categories:</h2>
+        </div>
+        {% for c in category %}
             <div class="col-4 d-flex justify-content-center">
                 <div class="card m-3" style="max-width: 540px;">
                     <div class="row no-gutters">
@@ -55,91 +55,89 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
+        {% endfor %}
             <div class="col-12">
                 <h2 class="text-center mt-5 mb-2">Most recent:</h2>
             </div>
             {% for mr in most_recent %}
-                    <div class="col-12 d-flex justify-content-center">
-                            <div class="card m-3" style="width: 800px;">
-                                <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    <a href="{{mr.blog_slug}}">
-                                        <img src="{{ mr.image.url }}" class="card-img" alt="{{ mr.img_name }}">
-                                    </a>
-                                </div>
-                                <div class="col-md-8">
-                                    <a href="{{mr.blog_slug}}">
-                                        <div class="card-body">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="card m-3" style="width: 800px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <a href="{{mr.blog_slug}}">
+                                    <img src="{{ mr.image.url }}" class="card-img" alt="{{ mr.img_name }}">
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <a href="{{mr.blog_slug}}">
+                                    <div class="card-body">
                                         <h5 class="card-title text-dark">{{ mr.headline }}</h5>
                                         <p class="card-text">{{ mr.category_name }}</p>
                                         <p class="card-text">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
-                                        
-                                        </div>
-                                    </a>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                {% endfor %}
-        {% else %}
-            {% if blogs %}
-                <div class="col-12">
-                    <h2 class="text-center mt-5 mb-2">Results of '{{ query }}' search: </h2>
-                </div>
-            {% else %}
-                <div class="col-12">
-                        <h2 class="text-center mt-5 mb-2">Most recent blogs</h2>
-                    </div>
-                {% for mr in most_recent %}
-                    <div class="col-12 d-flex justify-content-center">
-                            <div class="card m-3" style="width: 800px;">
-                                <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    <a href="{{mr.blog_slug}}">
-                                        <img src="{{ mr.image.url }}" class="card-img" alt="{{ mr.img_name }}">
-                                    </a>
-                                </div>
-                                <div class="col-md-8">
-                                    <a href="{{mr.blog_slug}}">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-dark">{{ mr.headline }}</h5>
-                                            <p class="card-text">{{ mr.category_name }}</p>
-                                            <p class="card-text">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                {% endfor %}
-            {% endif %}
-        
-            {% for blog in blogs %}
-                
-                <div class="col-12 d-flex justify-content-center">
-                        <div class="card m-3" style="max-width: 800px;">
-                            <div class="row no-gutters">
-                              <div class="col-md-4">
-                                <a href="{{blog.blog_slug}}">
-                                    <img src="{{ blog.image.url }}" class="card-img" height="200px" alt="{{ blog.img_name }}">
-                                </a>
-                              </div>
-                              <div class="col-md-8">
-                                <a href="{{blog.blog_slug}}">
-                                    <div class="card-body">
-                                    <h5 class="card-title text-dark">{{ blog.headline }}</h5>
-                                    <p class="card-text">{{ blog.category_name }}</p>
-                                    <p class="card-text">{{ blog.author.first_name }} {{ blog.author.last_name }}</p>
-                                    <p class="card-text">{{ blog.pub_date }}</p>
                                     </div>
                                 </a>
-                              </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            {% endfor %}
+    {% else %}
+        {% if blogs %}
+            <div class="col-12">
+                <h2 class="text-center mt-5 mb-2">Results of '{{ query }}' search: </h2>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <h2 class="text-center mt-5 mb-2">Most recent blogs</h2>
+            </div>
+            {% for mr in most_recent %}
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="card m-3" style="width: 800px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <a href="{{mr.blog_slug}}">
+                                    <img src="{{ mr.image.url }}" class="card-img" alt="{{ mr.img_name }}">
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <a href="{{mr.blog_slug}}">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-dark">{{ mr.headline }}</h5>
+                                        <p class="card-text">{{ mr.category_name }}</p>
+                                        <p class="card-text">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         {% endif %}
+        
+        {% for blog in blogs %}
+            <div class="col-12 d-flex justify-content-center">
+                <div class="card m-3" style="max-width: 800px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <a href="{{blog.blog_slug}}">
+                                <img src="{{ blog.image.url }}" class="card-img" height="200px" alt="{{ blog.img_name }}">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <a href="{{blog.blog_slug}}">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">{{ blog.headline }}</h5>
+                                <p class="card-text">{{ blog.category_name }}</p>
+                                <p class="card-text">{{ blog.author.first_name }} {{ blog.author.last_name }}</p>
+                                <p class="card-text">{{ blog.pub_date }}</p>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 
