@@ -15,16 +15,21 @@ from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComme
 from django.contrib.auth.models import User   
 
 def contact(request):
-    tmpl = 'blog/contact.html'
+    tmpl = "blog/contact.html"
     category = Categories.objects.all()
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
             subject = form.cleaned_data.get('subject')
             from_email = form.cleaned_data.get('from_email')
             message = form.cleaned_data.get('message')
+            message = from_email + ' ' + message
             try:
-                send_mail(subject, message, from_email, ['admin@example.com'])
+                send_mail(  subject, 
+                            message, 
+                            from_email,
+                            ['nciganovic52@gmail.com'], 
+                            fail_silently=False)
                 sent = True
             except BadHeaderError:
                 messages.error(request, "Failed to send email.")
