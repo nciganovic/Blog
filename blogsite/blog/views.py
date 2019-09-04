@@ -44,20 +44,25 @@ def change_info(request):
         register_form = myUserCreationForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if register_form.is_valid() and profile_form.is_valid():
+            is_valid = True
             image = profile_form.cleaned_data.get('image')
             w, h = get_image_dimensions(image)
             if w != 100:
-                raise ValidationError("The image is %i pixel wide. It's supposed to be 100px" % w)
+                messages.error(request, "Image width must be 100px")
+                is_valid = False
+                print('Width: ', w)
             if h != 100:
-                raise ValidationError("The image is %i pixel high. It's supposed to be 100px" % h)
-            register_form.save()
-            profile_form.save()
-            username = register_form.cleaned_data.get('username')
-            raw_password = register_form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            messages.success(request, f"Information successfully changed!")
-            return redirect("my_info")
+                messages.error(request, "Image height must be 100px")
+                is_valid = False
+            if is_valid == True:
+                register_form.save()
+                profile_form.save()
+                username = register_form.cleaned_data.get('username')
+                raw_password = register_form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                messages.success(request, f"Information successfully changed!")
+                return redirect("my_info")
         else:
             messages.error(request, f"Information not changed successfully!")
     else:
@@ -102,6 +107,7 @@ def delete_blog(request, single_slug):
 
 def edit_blog(request, single_slug):
     tmpl = "blog/edit_blog.html"
+    fixed = False
     current_author = request.user
     blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
     if single_slug in blogs_author:
@@ -110,24 +116,29 @@ def edit_blog(request, single_slug):
         category = Categories.objects.all()
         form = PostForm(request.POST, request.FILES, instance=matching_blog)
         if form.is_valid():
+            is_valid = True
             image = form.cleaned_data.get('image')
             if image.size > 1024*1024:
                 messages.error(request, 'Image is larger then 1MB')
-                raise ValidationError("Image file too large ( > 1mb )")
+                is_valid = False
             w, h = get_image_dimensions(image)
             if w != 600:
-               raise ValidationError("The image is %i pixel wide. It's supposed to be 600px" % w)
+                messages.error(request, "Image width must be 600px")
+                is_valid = False
             if h != 400:
-               raise ValidationError("The image is %i pixel high. It's supposed to be 400px" % h)
-
-            edited_form = form.save(commit=False)
-            edited_form.author = request.user
-            edited_form.save()
-            messages.success(request, f"Blog successfully changed!")
-            return redirect("my_blogs")
+                messages.error(request, "Image height must be 400px")
+                is_valid = False
+            if is_valid == True:
+                edited_form = form.save(commit=False)
+                edited_form.author = request.user
+                edited_form.save()
+                messages.success(request, "Blog successfully changed!")
+                return redirect("my_blogs")
+            else:
+                return redirect(f"../my_blogs/{matching_blog.blog_slug}")
         else:
             form = PostForm(instance=matching_blog)
-            messages.error(request, f"Blog not changed!")
+            messages.error(request, "Blog not changed!")
     else:
         category = Categories.objects.all()
         current_author = request.user
@@ -137,37 +148,43 @@ def edit_blog(request, single_slug):
             form = PostForm(instance=matching_blog)
             return render(request, tmpl, context={"edit_blog": matching_blog, 
                                                   "form": form, 
-                                                  "category": category})
+                                                  "category": category,
+                                                  "fixed": fixed})
 
 def create_blog(request):
     """Creating User's Blog"""
     tmpl = "blog/create_blog.html"
-    if request.method == 'POST':
+    fixed = False
+    if request.method == "POST":
         blog_post_form = PostForm(request.POST, request.FILES)
         category = Categories.objects.all()
         if blog_post_form.is_valid():
+            is_valid = True
             image = blog_post_form.cleaned_data.get('image')
             if image.size > 1024*1024:
                 messages.error(request, "Image is larger then 1MB")
-                raise ValidationError("Image file too large ( > 1mb )")
+                is_valid = False
             w, h = get_image_dimensions(image)
             if w != 600:
-               raise ValidationError("The image is %i pixel wide. It's supposed to be 600px" % w)
+                messages.error(request, "Image width must be 600px")
+                is_valid = False
             if h != 400:
-               raise ValidationError("The image is %i pixel high. It's supposed to be 400px" % h)
-
-            form = blog_post_form.save(commit=False)
-            form.author = request.user
-            form.save()
-            messages.success(request, f"Blog successfully created!")
-            return redirect("index")
+                messages.error(request, "Image height must be 400px")
+                is_valid = False
+            if is_valid == True:
+                form = blog_post_form.save(commit=False)
+                form.author = request.user
+                form.save()
+                messages.success(request, "Blog successfully created!")
+                return redirect("index")
         else:
-            messages.error(request, f"You need to fill all the fields!")
+            messages.error(request, "You need to fill all the fields!")
     else:
         blog_post_form = PostForm()
         category = Categories.objects.all()
-    return render(request, tmpl, context={"form": blog_post_form,"category":category})
-
+    return render(request, tmpl, context={"form": blog_post_form,
+                                          "category":category,
+                                          "fixed": fixed})
 
 def single_slug(request, single_slug):
     """Creating links for every category"""
