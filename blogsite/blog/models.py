@@ -43,18 +43,6 @@ class Blog(models.Model):
         """When class Blog is called, headlines will be displayed"""
         return self.headline
 
-def slug_save(sender, instance, *args, **kwargs):
-    if not instance.blog_slug: 
-        instance.blog_slug = unique_slug_generator(instance, instance.headline, instance.blog_slug)
-
-pre_save.connect(slug_save, sender=Blog)
-
-def unique_img_name(sender, instance, *args, **kwargs):
-    if not instance.img_name: 
-        instance.img_name = os.path.basename(instance.image.name)
-        
-pre_save.connect(unique_img_name, sender=Blog)
-
 class Comment(models.Model):
     comment_text = models.TextField(max_length = 200)
     author = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
@@ -69,6 +57,18 @@ class Profile(models.Model):
     image = models.ImageField(upload_to='profile_pic', default=None, blank=True)
     def __str__(self): 
         return self.user.username
+
+def slug_save(sender, instance, *args, **kwargs):
+    if not instance.blog_slug: 
+        instance.blog_slug = unique_slug_generator(instance, instance.headline, instance.blog_slug)
+
+pre_save.connect(slug_save, sender=Blog)
+
+def unique_img_name(sender, instance, *args, **kwargs):
+    if not instance.img_name: 
+        instance.img_name = os.path.basename(instance.image.name)
+        
+pre_save.connect(unique_img_name, sender=Blog)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

@@ -6,7 +6,6 @@ from django import forms
 from django.db import models
 from .models import Blog, Categories, Comment, Profile
 
-
 class BlogAdmin(admin.ModelAdmin):
     """fieldsets: setting up order of fields in admin page"""
     fieldsets = [

@@ -136,3 +136,11 @@ body{
 }
 .blog-user-image{-ms-flex:0 0 8.333%;flex:0 0 8.333%;max-width:8.333%}
 .blog-user-info{-ms-flex:0 0 91,667%;flex:0 0 91,667%;max-width:91,667%}
+
+.copy{
+    margin:0px; 
+}
+.block{
+    width:100%; 
+    height: 56px;
+}
