@@ -3,8 +3,8 @@ import datetime
 from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, BadHeaderError
-from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import TemplateView, RedirectView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
@@ -13,6 +13,18 @@ from django.db.models import Q
 from .models import Blog, Categories, Comment, Profile
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment, ProfileForm, ContactForm
 from django.contrib.auth.models import User   
+
+def likes(request, single_slug): 
+    print('Single slug----------------', single_slug)
+    obj = get_object_or_404(Blog, blog_slug=single_slug)
+    user = request.user
+    if user in obj.likes.all():
+        obj.likes.remove(user)
+        messages.info(request, "Like removed")
+    else:
+        obj.likes.add(user)
+        messages.success(request, "Like added")
+    return redirect(f"../{single_slug}")
 
 def contact(request):
     tmpl = "blog/contact.html"
@@ -218,11 +230,16 @@ def single_slug(request, single_slug):
         else:
             comment_form = PostComment()
             category = Categories.objects.all()
+            if request.user in matching_blog.likes.all():
+                like_value = 'Dislike'
+            else:
+                like_value = 'Like'
         context = {
             "single_blog": matching_blog, 
             "comments":comments,
             "comment_form":comment_form,
-            "category":category
+            "category":category,
+            "like_value":like_value,
         }
         return render(request, tmpl, context)   
 

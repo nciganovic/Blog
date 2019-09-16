@@ -39,6 +39,7 @@ class Blog(models.Model):
     blog_slug = models.SlugField(max_length = 200, unique=True)
     image = models.ImageField(upload_to = 'image', default=None)
     author = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, blank=True, related_name='blog_likes')
     def __str__(self):
         """When class Blog is called, headlines will be displayed"""
         return self.headline
