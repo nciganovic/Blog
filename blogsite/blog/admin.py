@@ -11,12 +11,20 @@ class BlogAdmin(admin.ModelAdmin):
     fieldsets = [
         ("Title/date", {"fields": ["headline", "pub_date"]}),
         ("Author", {"fields": ["author"]}),
+        ("Category", {"fields": ["category_name"]}),
+        ("Image", {"fields":["image"]}),
+        ("Content", {"fields":["content"]}),
+    ]
+    '''
+    fieldsets = [
+        ("Title/date", {"fields": ["headline", "pub_date"]}),
+        ("Author", {"fields": ["author"]}),
         ("Blog slug", {"fields": ["blog_slug"]}),
         ("Category", {"fields": ["category_name"]}),
         ("Image", {"fields":["img_name", "image"]}),
         ("Content", {"fields":["content"]}),
     ]
-
+    '''
     formfield_overrides = {
         models.TextField: {'widget': TinyMCE()}
     }

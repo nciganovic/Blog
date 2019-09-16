@@ -8,7 +8,7 @@
         {% if blogs %}
             {% for blog in blogs %}
                 <div class="col-12 d-flex justify-content-center">
-                    <div class="card m-3" style="width: 800px;">
+                    <div class="card m-3" id="mr-card">
                         <div class="row no-gutters">
                             <div class="col-md-4">
                                 <a href="{{blog.blog_slug}}">
@@ -18,7 +18,7 @@
                             <div class="col-md-8 shadow-none">
                                 <a href="{{blog.blog_slug}}">
                                     <div class="card-body shadow-none">
-                                        <h5 class="card-title text-dark">{{ blog.headline }}</h5>
+                                        <h2 class="card-title text-dark" id="blog-titles-h2">{{ blog.headline }}</h2>
                                         <p class="card-text">{{ blog.category_name }}</p> 
                                         <div class="d-flex flex-row-reverse mt-auto">
                                             <div class="ml-1"><a href="/delete_blog/{{blog.blog_slug}}" class="btn btn-danger margin-0 mt-2">Delete</a></div>

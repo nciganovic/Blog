@@ -21,11 +21,11 @@
                     <p class="text-center font-15 border-bottom">{{ user.first_name }} {{ user.last_name }}</p>
                     <p class="text-center font-15 border-bottom">{{ user.username }}</p>
                     {% if user.profile.bio %}
-                        <p class="text-center font-15 border-bottom" style="max-width: 300px;">{{user.profile.bio}}</p>
+                        <p class="text-center font-15 border-bottom mw-300">{{user.profile.bio}}</p>
                     {% endif %}
-                    <p class="text-center font-15 border-bottom" style="max-width: 300px;">{{ user.email }}</p>
+                    <p class="text-center font-15 border-bottom mw-300">{{ user.email }}</p>
                     {% if user.profile.birth_date %}
-                        <p class="text-center font-15 border-bottom" style="max-width: 300px;">{{ user.profile.birth_date }}</p>
+                        <p class="text-center font-15 border-bottom mw-300">{{ user.profile.birth_date }}</p>
                     {% endif %}
                 </div>
             </div>

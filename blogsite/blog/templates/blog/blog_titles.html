@@ -4,7 +4,7 @@
         <div class="col-12 mt-3"><h1 class="text-center">{{ first_blog.category_name }}</h1></div>
                 {% for blog in blogs %}
                 <div class="col-12 d-flex justify-content-center">
-                        <div class="card m-3" style="width: 800px;">
+                        <div class="card m-3" id="mr-card">
                             <div class="row no-gutters">
                             <div class="col-md-4">
                                 <a href="{{blog.blog_slug}}">
@@ -14,7 +14,7 @@
                             <div class="col-md-8">
                                 <a href="{{blog.blog_slug}}">
                                     <div class="card-body">
-                                    <h5 class="card-title text-dark">{{ blog.headline }}</h5>
+                                    <h2 class="card-title text-dark" id="blog-titles-h2">{{ blog.headline }}</h2>
                                     <p class="card-text">{{ blog.category_name }}</p>
                                     <p class="card-text">{{ blog.author.first_name }} {{ blog.author.last_name }}</p>
                                     
