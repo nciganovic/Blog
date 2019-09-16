@@ -51,14 +51,15 @@ def change_info(request):
         if register_form.is_valid() and profile_form.is_valid():
             is_valid = True
             image = profile_form.cleaned_data.get('image')
-            w, h = get_image_dimensions(image)
-            if w != 100:
-                messages.error(request, "Image width must be 100px")
-                is_valid = False
-                print('Width: ', w)
-            if h != 100:
-                messages.error(request, "Image height must be 100px")
-                is_valid = False
+            if image:
+                w, h = get_image_dimensions(image)
+                if w != 100:
+                    messages.error(request, "Image width must be 100px")
+                    is_valid = False
+                    print('Width: ', w)
+                if h != 100:
+                    messages.error(request, "Image height must be 100px")
+                    is_valid = False
             if is_valid == True:
                 register_form.save()
                 profile_form.save()
