@@ -23,6 +23,7 @@ urlpatterns = [
     path('my_info/', views.my_info, name='my_info'),
     path('change_info/', views.change_info, name='change_info'),
     path('contact/', views.contact, name='contact'),
+    path('stats/', views.stats, name='stats'),
 ]
 
 if settings.DEBUG:

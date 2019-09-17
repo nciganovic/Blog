@@ -13,7 +13,7 @@ class BlogAdmin(admin.ModelAdmin):
         ("Author", {"fields": ["author"]}),
         ("Category", {"fields": ["category_name"]}),
         ("Image", {"fields":["image"]}),
-        ("Likes", {"fields":["likes"]}),
+        ("Stats", {"fields":["likes", "views"]}),
         ("Content", {"fields":["content"]}),
     ]
     formfield_overrides = {

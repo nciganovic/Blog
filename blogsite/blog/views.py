@@ -1,5 +1,6 @@
 """Functions for views.py"""
 import datetime
+import json
 from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, BadHeaderError
@@ -13,6 +14,11 @@ from django.db.models import Q
 from .models import Blog, Categories, Comment, Profile
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment, ProfileForm, ContactForm
 from django.contrib.auth.models import User   
+
+def stats(request):
+    tmpl = 'blog/all_stats.html'
+    blogs = Blog.objects.filter(author=request.user)
+    return render(request, tmpl, {"blogs": blogs})
 
 def likes(request, single_slug): 
     print('Single slug----------------', single_slug)
@@ -93,9 +99,29 @@ def change_info(request):
 def my_info(request):
     tmpl = "blog/my_info.html"
     profile = Profile.objects.filter(user=request.user)
+    user_blogs = Blog.objects.filter(author=request.user)
+    views_sum = 0
+    likes_sum = 0
+    
+    for blog in user_blogs: 
+        print('--------------------------')
+        print('Name---', blog.headline)
+        print('View---', blog.views.count())
+        print('Likes---', blog.likes.count())
+        views_sum += blog.views.count()
+        likes_sum += blog.likes.count()
+        print('--------------------------')
+        print('View sum-->',blog.headline, ' ', views_sum)
+        print('Likes sum-->',blog.headline, ' ', likes_sum)
+        print('--------------------------')
+    
+    comments_on_user_blog = Blog.objects.filter()
+
     category = Categories.objects.all()
     return render(request, tmpl, context={"profile": profile, 
-                                          "category": category})
+                                          "category": category,
+                                          "views_sum":json.dumps(views_sum),
+                                          "likes_sum": json.dumps(likes_sum),})
 
 def my_blogs(request):
     tmpl = "blog/my_blogs.html"
@@ -217,6 +243,7 @@ def single_slug(request, single_slug):
                                               "first_blog":first_blog})
     blogs = [b.blog_slug for b in Blog.objects.all()] 
     if single_slug in blogs:
+        user = request.user
         tmpl = 'blog/blog.html'
         matching_blog = Blog.objects.get(blog_slug=single_slug)
         comments = Comment.objects.filter(blog=matching_blog).order_by('-id')
@@ -224,13 +251,19 @@ def single_slug(request, single_slug):
             comment_form = PostComment(request.POST or None)
             if comment_form.is_valid():
                 content = request.POST.get('comment_text')
-                comment = Comment.objects.create(blog=matching_blog, author=request.user, comment_text=content)
+                comment = Comment.objects.create(blog=matching_blog, author=user, comment_text=content)
                 comment.save()
                 return HttpResponseRedirect(request.path_info)
         else:
             comment_form = PostComment()
             category = Categories.objects.all()
-            if request.user in matching_blog.likes.all():
+            if user.is_authenticated:
+                if matching_blog.author != user:
+                    print('------Blog author: ',matching_blog.author)
+                    print('------Current user: ',user)
+                    matching_blog.views.add(user)
+
+            if user in matching_blog.likes.all():
                 like_value = 'Dislike'
             else:
                 like_value = 'Like'
