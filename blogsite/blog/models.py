@@ -57,6 +57,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=200, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     image = models.ImageField(upload_to='profile_pic', default=None, blank=True)
+    premium = models.BooleanField(default=False)
     def __str__(self): 
         return self.user.username
 

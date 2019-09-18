@@ -30,6 +30,11 @@
                     {% if user.profile.birth_date %}
                         <p class="text-center font-15 border-bottom mw-300">{{ user.profile.birth_date }}</p>
                     {% endif %}
+                    {% if user.profile.premium == True %}
+                        <p class="text-center font-15 border-bottom mw-300">Premium user</p>
+                    {% else %}
+                        <p class="text-center font-15 border-bottom mw-300">Basic user</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-6">

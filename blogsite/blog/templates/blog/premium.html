@@ -1,0 +1,19 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+    <div class="col-12">
+        <h1 class="text-center mt-3">Buy premium</h1>
+    </div>
+    <div class="col-12 mt-3 d-flex justify-content-center">
+        <h2>Buy for $5.00</h2>
+        <form action="{% url 'charge' %}" method="POST">
+            {% csrf_token %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ key }}"
+                data-description="A Django Charge"
+                data-amount="500"
+                data-locale="auto">
+            </script>
+        </form>
+    </div>
+{% endblock %}

@@ -1,6 +1,8 @@
 """Functions for views.py"""
 import datetime
 import json
+import stripe
+from django.conf import settings
 from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, BadHeaderError
@@ -14,6 +16,32 @@ from django.db.models import Q
 from .models import Blog, Categories, Comment, Profile
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment, ProfileForm, ContactForm
 from django.contrib.auth.models import User   
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class PremiumPageView(TemplateView):
+    template_name = 'blog/premium.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['key'] = settings.STRIPE_PUBLISHABLE_KEY
+        return context
+
+def charge(request):
+    tmpl = 'blog/charge.html'
+    if request.method == 'POST':
+        
+        current_profile = Profile.objects.get(user=request.user)
+        current_profile.premium = True
+        current_profile.save()
+        
+        charge = stripe.Charge.create(
+            amount=500,
+            currency='usd',
+            description='A Django Premium charge',
+            source=request.POST['stripeToken']
+        )
+        return render(request, tmpl)
 
 def stats(request):
     tmpl = 'blog/all_stats.html'

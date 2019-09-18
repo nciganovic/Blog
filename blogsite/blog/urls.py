@@ -24,6 +24,8 @@ urlpatterns = [
     path('change_info/', views.change_info, name='change_info'),
     path('contact/', views.contact, name='contact'),
     path('stats/', views.stats, name='stats'),
+    path('premium/', views.PremiumPageView.as_view(), name='premium'),
+    path('charge/', views.charge, name='charge'), 
 ]
 
 if settings.DEBUG:
