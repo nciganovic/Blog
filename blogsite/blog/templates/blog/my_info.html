@@ -6,7 +6,7 @@
     </div>
     <div class="container mt-3">
         <div class="row">
-            <div class="col-12 d-flex">
+            <div class="col-6 d-flex">
                 <div class="m-auto">
                     {% if user.profile.image  %}
                         <img src="{{ user.profile.image.url }}" alt="Profile pic">
@@ -16,7 +16,10 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-12 d-flex mt-3">
+            <div class="col-6 d-flex">
+                <h2 class="text-center m-auto">Stats</h2>
+            </div>
+            <div class="col-6 d-flex mt-3">
                 <div class="m-auto">
                     <p class="text-center font-15 border-bottom">{{ user.first_name }} {{ user.last_name }}</p>
                     <p class="text-center font-15 border-bottom">{{ user.username }}</p>
@@ -27,14 +30,69 @@
                     {% if user.profile.birth_date %}
                         <p class="text-center font-15 border-bottom mw-300">{{ user.profile.birth_date }}</p>
                     {% endif %}
+                    {% if user.profile.premium == True %}
+                        <p class="text-center font-15 border-bottom mw-300">Premium user</p>
+                    {% else %}
+                        <p class="text-center font-15 border-bottom mw-300">Basic user</p>
+                    {% endif %}
                 </div>
             </div>
-            <div class="col-12 d-flex">
+            <div class="col-6">
+                <p>Total views: {{ views_sum }}</p>
+                <p>Total likes: {{ likes_sum }}</p>
+                <div id="stats">
+                </div>
+            </div>
+            <div class="col-6 d-flex">
                 <div class="m-auto">
                     <a href="/change_info/" class="btn btn-primary">Change info</a>
                 </div>
             </div>
+            <div class="col-6 d-flex">
+                <a href="/stats/"class="btn btn-info m-auto">All stats</a>
+            </div>
         </div>
     </div>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script type="text/javascript">
+        likes = {{ likes_sum }};
+        views = {{ views_sum }};
+        Highcharts.chart('stats', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Your stats'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: [{
+                    name: 'Likes',
+                    y: likes,
+                    sliced: true,
+                }, {
+                    name: 'Views',
+                    y: views,
+                }]
+            }]
+        });
+    </script>
 {% endblock %}
             

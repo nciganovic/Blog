@@ -31,6 +31,15 @@
         <div class="col-12">
             <p class="m-2">{{ single_blog.content|safe }}</p>
         </div>
+        <div class="col-12">
+            <p>Likes = {{ single_blog.likes.count }}</p>
+            {% if user.is_authenticated %}
+                <p><a href="{{ single_blog.blog_slug }}/like">{{ like_value }}</a></p>
+            {% else %}
+                <p>Login to like this post.</p>
+            {% endif %}
+            <p>Views: {{ single_blog.views.count }}</a></p>
+        </div>
         <div class="comment-area mt-3 col-12">
             <h2>Comments:</h2>
             {% if user.is_authenticated %}
@@ -58,7 +67,6 @@
         </div>
     </div>
 </div>
-    
 {% endblock %}
             
 

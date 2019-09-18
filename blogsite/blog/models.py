@@ -32,13 +32,15 @@ class Categories(models.Model):
 
 class Blog(models.Model):
     headline = models.CharField(max_length = 200)
-    pub_date = models.DateTimeField('date published', default = timezone.now)
+    pub_date = models.DateTimeField('date published', default=timezone.now)
     content = models.TextField()
     category_name = models.ForeignKey(Categories, on_delete=models.CASCADE, default=None)
     img_name = models.CharField(max_length=200)
     blog_slug = models.SlugField(max_length = 200, unique=True)
     image = models.ImageField(upload_to = 'image', default=None)
     author = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, blank=True, related_name='blog_likes')
+    views = models.ManyToManyField(User, blank=True, related_name='blog_views')
     def __str__(self):
         """When class Blog is called, headlines will be displayed"""
         return self.headline
@@ -55,6 +57,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=200, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     image = models.ImageField(upload_to='profile_pic', default=None, blank=True)
+    premium = models.BooleanField(default=False)
     def __str__(self): 
         return self.user.username
 

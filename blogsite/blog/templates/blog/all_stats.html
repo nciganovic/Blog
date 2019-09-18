@@ -1,0 +1,66 @@
+{% extends "blog/header.html" %}
+
+{% block content %}
+<div class="col-12">
+    <h1 class="text-center mt-3">Stats</h1>
+</div>
+{% for b in blogs %}
+<div class="col-12 bg-primary" style="height: 10px;">
+</div>
+
+<div class="col-12 ">
+    <h2 class="text-center">{{ b.headline }}</h2>
+    <p class="text-center">Likes: {{ b.likes.count }}</p>
+    <p class="text-center">Views: {{ b.views.count }}</p>
+</div>
+
+<div id="{{ b.blog_slug }}" class="col-12">
+</div>
+{% endfor %}
+  
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    
+    <script type="text/javascript">
+    
+    {% for b in blogs %}
+        
+        Highcharts.chart('{{b.blog_slug}}', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Your stats'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: [{
+                    name: 'Likes',
+                    y: {{ b.likes.count|safe }},
+                    sliced: true,
+                }, {
+                    name: 'Views',
+                    y: {{ b.views.count|safe }},
+                }]
+            }]
+        });
+    {% endfor %}
+    </script>
+{% endblock %}
+            

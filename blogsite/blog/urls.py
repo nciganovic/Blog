@@ -5,6 +5,7 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from blogsite import settings
 from . import views
+#from .views import PostLikeToggle
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -12,6 +13,9 @@ urlpatterns = [
     path('login/', views.login_request, name='login'),
     path('logout/', views.logout_request, name='logout'),
     path('<single_slug>', views.single_slug, name='single_slug'),
+
+    path('<single_slug>/like', views.likes, name='likes'),#NEW
+
     path('create_blog/', views.create_blog, name='create_blog'),
     path('my_blogs/', views.my_blogs, name='my_blogs'),
     path('my_blogs/<single_slug>', views.edit_blog, name='edit_blog'),
@@ -19,6 +23,9 @@ urlpatterns = [
     path('my_info/', views.my_info, name='my_info'),
     path('change_info/', views.change_info, name='change_info'),
     path('contact/', views.contact, name='contact'),
+    path('stats/', views.stats, name='stats'),
+    path('premium/', views.PremiumPageView.as_view(), name='premium'),
+    path('charge/', views.charge, name='charge'), 
 ]
 
 if settings.DEBUG:
