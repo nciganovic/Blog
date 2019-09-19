@@ -1,10 +1,11 @@
+/*
 @media (max-width: 1800px){
     .col-4{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%}
 }
 @media (max-width: 1230px){
     .col-4{-ms-flex:0 0 100%;flex:0 0 100%;max-width:100%}
 }
-
+*/
 @media (max-width: 991.98px){
     .small-nav p{
         font-size: 1.5em;
@@ -14,6 +15,11 @@
     }
     .blog-user-image{-ms-flex:0 0 16.666%;flex:0 0 16.666%;max-width:16.666%}
     .blog-user-info{-ms-flex:0 0 83,337%;flex:0 0 83,337%;max-width:83,337%}
+
+    .container{
+        margin:0;
+        max-width: 100%; 
+    }
 }
 @media (max-width: 767.98px) {
     h1{
@@ -41,5 +47,11 @@
     }
     #SearchHolder{
         max-width:250px;
+    }
+    .user-name-nav{
+        display: none;
+    }
+    .upgrade-nav{
+        display: none;
     }
 }

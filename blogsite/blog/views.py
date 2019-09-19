@@ -357,6 +357,15 @@ def index(request):
     category = Categories.objects.all()
     blogs = Blog.objects.all()
     most_recent = Blog.objects.all().order_by('-id')[:4]
+
+    premium_user = User.objects.filter(profile__premium = True)
+    print('First premium user: ',premium_user[0])
+
+    premium_blogs = list()
+    for i in range(5):
+        premium_blogs = Blog.objects.filter(author=premium_user[i]).order_by('views')[:1]
+        print(i, '- Premium blog:', premium_blogs)
+
     query = request.GET.get('q'); 
     if query:
         search = True

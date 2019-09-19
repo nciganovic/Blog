@@ -1,59 +1,53 @@
 {% if fixed != False %}
-<nav class="navbar navbar-expand-xl navbar-light bg-light fixed-top">
-    <a class="navbar-brand mr-5 font-weight-bold" href="/">Read and Write</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto"> 
-            {% for c in category %} 
-                <li class="nav-item"><a href="../{{ c.category_slug }}" class="nav-link">{{c.category_name}}</a></li>
-            {% endfor %}     
-        </ul>
-        <ul class="navbar-nav mr-right">
-            {% if user.is_authenticated %}
-            <!-- Dropdown -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">{{ user.username }}</a>
-                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/my_blogs/">My Blogs</a>
-                    <a class="dropdown-item" href="/my_info/">My Info</a>
-                    <a class="dropdown-item" href="/premium/">Buy Premium</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/create_blog/">Create Blog</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/contact/">Contact us</a>
-            </li>
-            <li class="nav-item">
-                 <a class="nav-link" href="/logout/">Logout</a>
-            </li>
-            <li class="nav-item avatar">
-                <a class="nav-link p-0" href="#">
-                    {% if user.profile.image  %}
-                        <img src="{{ user.profile.image.url }}" class="z-depth-0" alt="Profile pic"  width="35px">
-                    {% else %}
+<nav class="navbar navbar-expand navbar-light" style="background-color: white">
+    <div class="container d-flex">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="navbar-brand font-weight-bold pl-3" href="/" style="padding-top: 0px; padding-bottom: 0px;">Read and Write</a></li>
+            </ul>
+            
+            <ul class="navbar-nav mr-right">
+                {% if user.is_authenticated %}
+                <li class="nav-item mt-1 upgrade-nav"><a class="border border-primary p-2 nav-link" href="/premium/" style="color:blue;">Upgrade</a></li>
+                <li class="nav-item mt-1 user-name-nav"><p class="pl-2 pr-2 mb-0 nav-link" >{{ user.first_name }} {{ user.last_name }}</p></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if user.profile.image  %}
+                            <img src="{{ user.profile.image.url }}" class="z-depth-0" alt="Profile pic"  width="35px">
+                        {% else %}
                         {% load static %}
-                        <img src="{% static 'image/user.png' %}" alt="Profile pic" height="35px">
-                    {% endif %}
-                </a>
-            </li>
-            {% else %}
-            <li class="nav-item">
+                            <img src="{% static 'image/user.png' %}" alt="Profile pic" height="35px">
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/create_blog/">Create blog</a>
+                        <a class="dropdown-item" href="/my_blogs/">My Blogs</a>
+                        <a class="dropdown-item" href="/my_info/">My Info</a>
+                        <a class="dropdown-item" href="/contact/">Contact us</a>
+                        <a class="dropdown-item" href="/logout/">Logout</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
                     <a class="nav-link" href="/register/">Register</a>
-            </li>
-            <li class="nav-item">
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/login/">Login</a>
-            </li>
-            {% endif %}
-        </ul>
+                </li>
+                {% endif %}
+            </ul>
     </div>
 </nav>
+<div class="categories sticky-top pt-2 pb-2 overflow-hidden">
+    <div class="container d-flex flex-row">
+        {% for c in category %} 
+            <a href="../{{ c.category_slug }}" class="ctg-nav-link text-uppercase">{{c.category_name}}</a>
+        {% endfor %}
+    </div>
+</div>
+<!--
 <div class="block">
 </div>
+-->
 {% else %}
 <nav class="navbar navbar-expand-xl navbar-light bg-light">
     <a class="navbar-brand mr-5 font-weight-bold" href="/">Read and Write</a>
