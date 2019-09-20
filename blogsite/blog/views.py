@@ -361,10 +361,17 @@ def index(request):
     premium_user = User.objects.filter(profile__premium = True)
     print('First premium user: ',premium_user[0])
 
-    premium_blogs = list()
+    single_premium_blog = []
     for i in range(5):
-        premium_blogs = Blog.objects.filter(author=premium_user[i]).order_by('views')[:1]
-        print(i, '- Premium blog:', premium_blogs)
+        premium_blog = Blog.objects.filter(author=premium_user[i]).order_by('views')[:1]
+        single_premium_blog.append(premium_blog[0])
+        print(i, '- Single_premium_blog:',single_premium_blog[i])
+  
+    print('--------->',single_premium_blog[0])
+    print('--------->',single_premium_blog[1])
+    print('--------->',single_premium_blog[2])
+    print('--------->',single_premium_blog[3])
+    print('--------->',single_premium_blog[4])
 
     query = request.GET.get('q'); 
     if query:
@@ -381,4 +388,9 @@ def index(request):
                                           "search": search, 
                                           "blogs": blogs,
                                           "most_recent": most_recent,
-                                          "query": query,})
+                                          "query": query,
+                                          "single_premium_blog_1":single_premium_blog[0],
+                                          "single_premium_blog_2":single_premium_blog[1],
+                                          "single_premium_blog_3":single_premium_blog[2],
+                                          "single_premium_blog_4":single_premium_blog[3],
+                                          "single_premium_blog_5":single_premium_blog[4],})

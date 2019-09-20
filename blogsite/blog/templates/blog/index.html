@@ -1,16 +1,100 @@
 {% extends "blog/header.html" %}
    
 {% block content %}
-<div class="col-4" style="height: 300px; background-color: green;">
-
+<div class="premium-div row border-bottom">
+    <!--LEFT-->
+    <div class="col-4">
+        <a class="text-dark" href="{{single_premium_blog_1.blog_slug}}">
+        <div class="col-12 mt-2">
+            <img src="{{ single_premium_blog_1.image.url }}" alt="P1" style="width:100%;">
+        </div>
+        <div class="col-12">
+            <h3 class="font-weight-bold mt-2">{{ single_premium_blog_1.headline }}</h3>
+            <p class="font-weight-bold" style="margin-bottom: 0.5rem; margin-top: 1.5rem;">{{ single_premium_blog_1.category_name }}</p>
+            <p style="margin-bottom: 0.5rem;">{{ single_premium_blog_1.author.first_name }} {{ single_premium_blog_1.author.last_name }}</p>
+            <p class="font-italic">Date published: {{ single_premium_blog_1.pub_date|date:'Y-m-d'  }}</p>
+        </div>
+        </a>
+    </div>
+    <!--MIDDLE-->
+    <div class="col-4" style="padding: 0px;">
+        <div class="post d-flex mt-2">
+            <div class="col-5">
+                <a href="{{ single_premium_blog_2.blog_slug }}">
+                <img src="{{ single_premium_blog_2.image.url }}" alt="P1" style="width:100%;">
+                </a>
+            </div>
+            <div class="col-7" style="padding: 0px;">
+                <a class="text-dark" href="{{ single_premium_blog_2.blog_slug }}">
+                <p class="font-weight-bold" style="margin-bottom:0.5rem; max-height: 40px; white-space: nowrap; overflow: hidden;">{{ single_premium_blog_2.headline }}</p>
+                <small>{{ single_premium_blog_2.category_name }}</small><br>
+                <small>{{ single_premium_blog_2.author.first_name }} {{ single_premium_blog_2.author.last_name }}</small>
+                </a>
+            </div>
+        </div>
+        <div class="post d-flex mt-5">
+            <div class="col-5">
+                <a href="{{ single_premium_blog_3.blog_slug }}">
+                <img src="{{ single_premium_blog_3.image.url }}" alt="P1" style="width:100%;">
+                </a>
+            </div>
+            <div class="col-7" style="padding: 0px;">
+                <a class="text-dark" href="{{ single_premium_blog_3.blog_slug }}">
+                <p class="font-weight-bold" style="margin-bottom:0.5rem; max-height: 40px; white-space: nowrap; overflow: hidden;">{{ single_premium_blog_3.headline }}</p>
+                <small>{{ single_premium_blog_3.category_name }}</small><br>
+                <small>{{ single_premium_blog_3.author.first_name }} {{ single_premium_blog_3.author.last_name }}</small>
+                </a>
+            </div>
+        </div>
+        <div class="post d-flex mt-5">
+            <div class="col-5">
+                <a href="{{ single_premium_blog_4.blog_slug }}">
+                <img src="{{ single_premium_blog_4.image.url }}" alt="P1" style="width:100%;">
+                </a>
+                </div>
+                <div class="col-7" style="padding: 0px;">
+                    <a class="text-dark" href="{{ single_premium_blog_4.blog_slug }}">
+                    <p class="font-weight-bold" style="margin-bottom:0.5rem; max-height: 40px; white-space: nowrap; overflow: hidden;">{{ single_premium_blog_4.headline }}</p>
+                    <small>{{ single_premium_blog_4.category_name }}</small><br>
+                    <small>{{ single_premium_blog_4.author.first_name }} {{ single_premium_blog_4.author.last_name }}</small>
+                    </a>
+                </div>
+        </div>
+    </div>
+    <!--RIGHT-->
+    <div class="col-4">
+        <a class="text-dark" href="{{ single_premium_blog_5.blog_slug }}">
+        <div class="col-12 mt-2">
+            <img src="{{ single_premium_blog_5.image.url }}" alt="P1" style="width:100%;">
+        </div>
+        <div class="col-12">
+            <h3 class="font-weight-bold mt-2">{{ single_premium_blog_5.headline }}</h3>
+            <p class="font-weight-bold" style="margin-bottom: 0.5rem; margin-top: 1.5rem;">{{ single_premium_blog_5.category_name }}</p>
+            <p style="margin-bottom: 0.5rem;">{{ single_premium_blog_5.author.first_name }} {{ single_premium_blog_5.author.last_name }}</p>
+            <p class="font-italic">Date published: {{ single_premium_blog_5.pub_date|date:'Y-m-d'  }}</p>
+        </div>
+        </a>
+    </div>
+    <p class="w-100" style="margin-bottom: 0px; text-align: right; color: green;">Premium user's blogs</p>
 </div>
-<div class="col-4" style="height: 300px; background-color: blue;">
-    
-</div>
-<div class="col-4" style="height: 300px; background-color: red;">
-    
-</div>
-
+<!--SEARCH BLOG-->
+<div class="col-12 cover-img mt-3">
+        <div class="outer d-flex">
+            <div class="inner m-auto">
+                <h3 class="text-center text-light desc">Search blog:</h3>
+                <div class="w-100">
+                    <form method="GET" action="" class="form-inline my-2 my-lg-0 ml-auto">
+                        <div class="input-group md-form form-sm form-2 pl-0 m-auto" id="SearchHolder">
+                            <input class="form-control my-0 py-1 red-border white-txt" name="q" type="text" placeholder="Try lorem..." aria-label="Search" id="SearchForm">
+                            <div class="input-group-append">
+                                <button type="submit" class="input-group-text white zero-radius" id="basic-text1"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 <!--
     <div class="col-12 cover-img">
         <div class="outer d-flex">
