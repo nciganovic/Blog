@@ -12,7 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from django.db.models import Q
+from django.db.models import Q, Count
 from .models import Blog, Categories, Comment, Profile
 from .forms import PostForm, myUserCreationForm, myAuthenticationForm, PostComment, ProfileForm, ContactForm
 from django.contrib.auth.models import User   
@@ -356,8 +356,12 @@ def index(request):
     search = False
     category = Categories.objects.all()
     blogs = Blog.objects.all()
-    most_recent = Blog.objects.all().order_by('-id')[:4]
-
+    most_recent = Blog.objects.all().order_by('-id')[:5]
+    
+    most_liked = Blog.objects.annotate(l_count=Count('likes')).order_by('-l_count')[:5]
+    for ml in most_liked:
+        print('Number of likes ------>', ml.likes.count(), 'Headline of blog ------>', ml.headline)
+    
     premium_user = User.objects.filter(profile__premium = True)
     print('First premium user: ',premium_user[0])
 
@@ -373,6 +377,11 @@ def index(request):
     print('--------->',single_premium_blog[3])
     print('--------->',single_premium_blog[4])
 
+    '''
+    for blog in blogs:
+        print(blog.content.split()[14:30])
+        break
+    '''
     query = request.GET.get('q'); 
     if query:
         search = True
@@ -388,6 +397,7 @@ def index(request):
                                           "search": search, 
                                           "blogs": blogs,
                                           "most_recent": most_recent,
+                                          "most_liked": most_liked,
                                           "query": query,
                                           "single_premium_blog_1":single_premium_blog[0],
                                           "single_premium_blog_2":single_premium_blog[1],
