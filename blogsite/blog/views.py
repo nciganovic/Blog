@@ -264,11 +264,15 @@ def single_slug(request, single_slug):
     categories = [c.category_slug for c in Categories.objects.all()] 
     if single_slug in categories:
         tmpl = "blog/blog_titles.html"
-        matching_categories = Blog.objects.filter(category_name__category_slug=single_slug)
-        first_blog = matching_categories[0]
-        return render(request, tmpl, context={"blogs": matching_categories, 
+        matching_blogs = Blog.objects.filter(category_name__category_slug=single_slug)[2:]
+        first_two_matching_blogs = Blog.objects.filter(category_name__category_slug=single_slug)[0:2]
+        this_category = Categories.objects.get(category_slug=single_slug)
+        most_viewed = Blog.objects.filter(category_name__category_slug=single_slug).annotate(v_count=Count('views')).order_by('-v_count')[:5]
+        return render(request, tmpl, context={"blogs": matching_blogs, 
                                               "category":category, 
-                                              "first_blog":first_blog})
+                                              "first_two_matching_blogs": first_two_matching_blogs,
+                                              "this_category": this_category,
+                                              "most_viewed": most_viewed})
     blogs = [b.blog_slug for b in Blog.objects.all()] 
     if single_slug in blogs:
         user = request.user

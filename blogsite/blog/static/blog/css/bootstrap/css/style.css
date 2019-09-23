@@ -169,6 +169,7 @@ h3{
 .mw-300{
     max-width: 300px;
 }
+/***NEW DESIGN CSS***/
 .ctg-nav-link{
     padding-right: 1.5rem; 
     padding-left:0.1rem; 
@@ -190,4 +191,22 @@ h3{
 }
 .riw{
     display: none; 
+}
+.ctg-intro{
+    display: none; 
+}
+.ml-mr-0{
+    margin-left: 0px; 
+    margin-right: 0px;
+}
+.font-12{
+    font-size: 1.2em; 
+}
+.font-30{
+    font-size: 3em; 
+}
+.too-long-text{
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
 }

@@ -24,6 +24,12 @@
     .middle{
         display: none; 
     }
+    .ctg-sidebar{
+        display: none; 
+    }
+    .ctg-intro{
+        display: block;
+    }
 }
 @media (max-width: 767.98px) {
     h1{
@@ -90,6 +96,9 @@
     }
     .ReadandWrite{
         display: none; 
+    }
+    .ctg-h-blog{
+        margin-top: 10px !important;
     }
 }
 @media (max-width: 376px) {

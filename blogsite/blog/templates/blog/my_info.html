@@ -1,6 +1,40 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
+<h1 class="text-center mt-3">My info</h1>
+<div class="row d-flex justify-content-center mt-5 border-bottom">
+    <div class="col-4">
+        <p class="font-12">Username:<span class="font-weight-bold"> {{ user.username }}</span></p>
+        <p class="font-12">Full name:<span class="font-weight-bold"> {{ user.first_name }} {{ user.last_name }}</span></p>
+        <p class="font-12">Email:<span class="font-weight-bold"> {{ user.email }}</span></p>
+        <p class="font-12 mb-0 border-top">Bio:</p> 
+        <p class="font-12 font-weight-bold">-{{ user.profile.bio }}</p> 
+        <p class="font-12">Born:<span class="font-weight-bold"> {{  user.profile.birth_date }}</span></p>
+        {% if user.profile.premium == True %}
+        <p class="font-12 border-bottom">Premium:<span class="font-weight-bold"> Yes</span></p>
+        {% else %}
+        <p class="font-12 border-bottom">Premium:<span class="font-weight-bold"> No</span></p>
+        {% endif %}
+        <p class="font-12">Views:<span class="font-weight-bold"> {{ views_sum }}</span></p>
+        <p class="font-12">Likes:<span class="font-weight-bold"> {{ likes_sum }}</span></p>
+    </div>
+    <div class="col-2">
+        <img src="{{ user.profile.image.url }}" alt="Profile pic">
+    </div>
+</div>
+<div class="row d-flex justify-content-center mt-3">
+    <div class="col-12">
+        <h2 class="text-center">Stats</h2>
+    </div>  
+    <div id="stats" class="col-12" style="height: 300px;">
+
+    </div>
+    <div class="col-12 d-flex">
+        <a href="/stats/"class="btn btn-info m-auto">All stats</a>
+    </div>
+</div>
+
+<!--
     <div class="col-12">
         <h1 class="text-center mt-3">My Info</h1>
     </div>
@@ -53,6 +87,7 @@
             </div>
         </div>
     </div>
+-->
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script type="text/javascript">
         likes = {{ likes_sum }};
