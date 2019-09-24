@@ -7,6 +7,7 @@
             
             <ul class="navbar-nav mr-right">
                 <!--Categories navbar-->
+                {% if category %}
                 <li class="nav-item dropdown categories-nav mt-1">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
@@ -15,6 +16,7 @@
                         {% endfor %}
                     </div>
                 </li>
+                {% endif %}
                 <!--End Categories navbar-->        
                 {% if user.is_authenticated %}
                 <li class="nav-item mt-1 upgrade-nav"><a class="border border-primary p-2 nav-link" href="/premium/" style="color:blue;">Upgrade</a></li>
@@ -22,10 +24,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {% if user.profile.image  %}
-                            <img src="{{ user.profile.image.url }}" class="z-depth-0" alt="Profile pic"  width="35px">
+                            <img class="rounded-circle" src="{{ user.profile.image.url }}" class="z-depth-0" alt="Profile pic"  width="35px">
                         {% else %}
                         {% load static %}
-                            <img src="{% static 'image/user.png' %}" alt="Profile pic" height="35px">
+                            <img  class="rounded-circle" src="{% static 'image/user.png' %}" alt="Profile pic" height="35px">
                         {% endif %}
                     </a>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">

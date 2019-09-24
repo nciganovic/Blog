@@ -210,3 +210,27 @@ h3{
     overflow: hidden; 
     text-overflow: ellipsis;
 }
+.small-btn a{
+    padding: 1%; 
+    border: 1px solid black; 
+    color: black; 
+}
+.small-btn :hover{ 
+    color: white; 
+    background-color: black;  
+}
+.font-10{
+    font-size: 1rem; 
+}
+.font-20{
+    font-size: 2rem; 
+}
+.my-info-pic{
+    display: none; 
+}
+.font-08{
+    font-size: 0.8em; 
+}
+.my-blogs-all{
+    border-right: 1px solid gray; 
+}

@@ -2,30 +2,42 @@
 
 {% block content %}
 <h1 class="text-center mt-3">My info</h1>
-<div class="row d-flex justify-content-center mt-5 border-bottom">
-    <div class="col-4">
-        <p class="font-12">Username:<span class="font-weight-bold"> {{ user.username }}</span></p>
-        <p class="font-12">Full name:<span class="font-weight-bold"> {{ user.first_name }} {{ user.last_name }}</span></p>
-        <p class="font-12">Email:<span class="font-weight-bold"> {{ user.email }}</span></p>
-        <p class="font-12 mb-0 border-top">Bio:</p> 
-        <p class="font-12 font-weight-bold">-{{ user.profile.bio }}</p> 
-        <p class="font-12">Born:<span class="font-weight-bold"> {{  user.profile.birth_date }}</span></p>
+<div class="row d-flex justify-content-center mt-5 border-bottom pb-3">
+    <div class="col-lg-6 col-md-8">
+        <div class="my-info-pic w-100">
+            {% if user.profile.image  %}
+                <img src="{{ user.profile.image.url }}" alt="Profile pic">
+            {% else %}
+                {% load static %}
+                <img src="{% static 'image/user.png' %}" alt="profile pic">
+            {% endif %}
+        </div>
+        
+        <p class="font-weight-bold font-20 mb-1 text-center-on-small">{{ user.first_name }} {{ user.last_name }}</p>
+        <p class="font-12 mb-1 text-center-on-small">{{user.profile.bio}}</p>
+        <p class="text-center-on-small font-08">Views: {{ views_sum }} Likes: {{ likes_sum }}</p>
+        <hr>
+        <p class="font-12 mt-4 text-center-on-small">{{ user.email }}</p>
+        <p class="font-12 text-center-on-small">{{ user.profile.birth_date }}</p>
         {% if user.profile.premium == True %}
-        <p class="font-12 border-bottom">Premium:<span class="font-weight-bold"> Yes</span></p>
+            <p class="font-12 font-weight-bold text-center-on-small">Premium user</p>
         {% else %}
-        <p class="font-12 border-bottom">Premium:<span class="font-weight-bold"> No</span></p>
+            <p class="font-12 font-weight-bold text-center-on-small">Basic user</p>
         {% endif %}
-        <p class="font-12">Views:<span class="font-weight-bold"> {{ views_sum }}</span></p>
-        <p class="font-12">Likes:<span class="font-weight-bold"> {{ likes_sum }}</span></p>
+        <div class="d-flex w-100">
+            <div class="small-btn font-weight-normal font-10" style="width: 100px;"><a href="/change_info/">Edit profile</a></div>
+        </div>
     </div>
-    <div class="col-2">
-        <img src="{{ user.profile.image.url }}" alt="Profile pic">
+    <div class="col-2 my-info-pic-2">
+        {% if user.profile.image  %}
+            <img  class="mt-2 rounded-circle" src="{{ user.profile.image.url }}" alt="Profile pic">
+        {% else %}
+            {% load static %}
+            <img class="mt-2 rounded-circle" src="{% static 'image/user.png' %}" alt="profile pic">
+        {% endif %}
     </div>
 </div>
-<div class="row d-flex justify-content-center mt-3">
-    <div class="col-12">
-        <h2 class="text-center">Stats</h2>
-    </div>  
+<div class="row d-flex justify-content-center mt-3"> 
     <div id="stats" class="col-12" style="height: 300px;">
 
     </div>

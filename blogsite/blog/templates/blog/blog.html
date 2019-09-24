@@ -16,10 +16,10 @@
             <div class="row ml-1 mr-1">
                 <div class="blog-user-image">
                     {% if single_blog.author.profile.image %}
-                        <img src="{{ single_blog.author.profile.image.url }}" width="64px;" alt="User info"/>
+                        <img class="rounded-circle" src="{{ single_blog.author.profile.image.url }}" width="64px;" alt="User info"/>
                     {% else %}
                         {% load static %}
-                        <img src="{% static 'image/user.png' %}" width="64px;" alt="profile pic">
+                        <img class="rounded-circle" src="{% static 'image/user.png' %}" width="64px;" alt="profile pic">
                     {% endif %}
                 </div>
                 <div class="blog-user-info">

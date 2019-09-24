@@ -4,19 +4,19 @@
 <div class="col-12">
     <h1 class="text-center mt-3">Stats</h1>
 </div>
+
 {% for b in blogs %}
-<div class="col-12 bg-primary" style="height: 10px;">
+<div class="row d-flex justify-content-center">
+    <div id="{{ b.blog_slug }}" class="col-12" style="height: 300px;">
+        
+    </div>
+    <div class="col-12">
+        <p class="text-center font-weight-bold">Likes: {{ b.likes.count }}, Views: {{ b.views.count }}</p>
+    </div>
 </div>
-
-<div class="col-12 ">
-    <h2 class="text-center">{{ b.headline }}</h2>
-    <p class="text-center">Likes: {{ b.likes.count }}</p>
-    <p class="text-center">Views: {{ b.views.count }}</p>
-</div>
-
-<div id="{{ b.blog_slug }}" class="col-12">
-</div>
+<hr>
 {% endfor %}
+
   
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     
@@ -32,7 +32,7 @@
                 type: 'pie'
             },
             title: {
-                text: 'Your stats'
+                text: '{{ b.headline }}'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

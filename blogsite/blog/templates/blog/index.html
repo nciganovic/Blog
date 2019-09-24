@@ -3,7 +3,7 @@
 {% block content %}
 <div class="premium-div row border-bottom mt-2 ml-mr-0">
     <!--LEFT-->
-    <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 border-right">
+    <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 border-right no-border-on-small">
         <a class="text-dark" href="{{single_premium_blog_1.blog_slug}}">
         <div class="col-12 mt-2">
             <img src="{{ single_premium_blog_1.image.url }}" alt="P1" class="w-100">
@@ -68,7 +68,7 @@
         </div>
     </div>
     <!--RIGHT-->
-    <div class="col-lg-4 col-md-6 col-sm-8 border-left">
+    <div class="col-lg-4 col-md-6 col-sm-8 border-left no-border-on-small">
         <a class="text-dark" href="{{ single_premium_blog_5.blog_slug }}">
         <div class="col-12 mt-2">
             <img src="{{ single_premium_blog_5.image.url }}" alt="P1" class="w-100">
@@ -111,17 +111,17 @@
     {% if search == False %}
         {% for mr in most_recent %}
             <div class="row mt-3 border-right border-top border-bottom">
-                <div class="col-5 p-0">
+                <div class="col-4 p-0">
                     <a href="{{mr.blog_slug}}">
                         <img src="{{mr.image.url}}" alt="{{ mr.headline }}" class="w-100">
                     </a>
                 </div>
-                <div class="col-7">
+                <div class="col-8">
                     <a class="text-dark" href="{{mr.blog_slug}}">
-                        <h3 class="font-weight-bold mt-2 mb-3 blog-txt-h too-long-text">{{ mr.headline }}</h3>
+                        <h3 class="font-weight-bold mt-2 mb-2 blog-txt-h too-long-text">{{ mr.headline }}</h3>
                         <p class="mb-0 blog-txt">{{ mr.category_name }}</p>
-                        <p class="mb-0 blog-txt">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
-                        <p class="mb-0 blog-txt">{{ mr.pub_date|date:'Y-m-d'  }}</p>
+                        <p class="mb-0 blog-txt d-none-on-small">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
+                        <p class="mb-0 blog-txt d-none-on-small">{{ mr.pub_date|date:'Y-m-d'  }}</p>
                     </a>
                 </div>
             </div>
@@ -146,8 +146,8 @@
                         <a class="text-dark" href="{{mr.blog_slug}}">
                             <h3 class="font-weight-bold mt-2 mb-3 blog-txt-h too-long-text">{{ mr.headline }}</h3>
                             <p class="mb-0 blog-txt">{{ mr.category_name }}</p>
-                            <p class="mb-0 blog-txt">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
-                            <p class="mb-0 blog-txt">{{ mr.pub_date|date:'Y-m-d'  }}</p>
+                            <p class="mb-0 blog-txt d-none-on-small">{{ mr.author.first_name }} {{ mr.author.last_name }}</p>
+                            <p class="mb-0 blog-txt d-none-on-small">{{ mr.pub_date|date:'Y-m-d'  }}</p>
                         </a>
                     </div>
                 </div>
@@ -155,17 +155,17 @@
         {% endif %}
         {% for blog in blogs %}
             <div class="row mt-3 border-right border-top border-bottom">
-                <div class="col-5 p-0">
+                <div class="col-4 p-0">
                     <a href="{{blog.blog_slug}}">
                         <img src="{{blog.image.url}}" class="w-100" alt="{{ blog.headline }}">
                     </a>
                 </div>
-                <div class="col-7">
+                <div class="col-8">
                     <a class="text-dark" href="{{blog.blog_slug}}">
                         <h3 class="font-weight-bold mt-2 mb-3 blog-txt-h too-long-text">{{ blog.headline }}</h3>
                         <p class="mb-0 blog-txt">{{ blog.category_name }}</p>
-                        <p class="mb-0 blog-txt">{{ blog.author.first_name }} {{ blog.author.last_name }}</p>
-                        <p class="mb-0 blog-txt">{{ blog.pub_date|date:'Y-m-d'  }}</p>
+                        <p class="mb-0 blog-txt d-none-on-small">{{ blog.author.first_name }} {{ blog.author.last_name }}</p>
+                        <p class="mb-0 blog-txt d-none-on-small">{{ blog.pub_date|date:'Y-m-d'  }}</p>
                     </a>
                 </div>
             </div>

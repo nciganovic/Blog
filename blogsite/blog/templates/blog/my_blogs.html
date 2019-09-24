@@ -1,9 +1,38 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-    <div class="col-12">
-        <h1 class="text-center mt-3">My Blogs</h1>
+    <h1 class="text-center mt-3">My Blogs</h1>
+    {% if blogs %}
+    <div class="row d-flex justify-content-center">
+        {% for blog in blogs %}
+        <div class="col-lg-8 col-md-8 col-xs-7">
+            <div class="row mt-5 my-blogs-all">
+                <div class="col-lg-5 col-md-12 p-0">
+                    <a href="{{blog.blog_slug}}">
+                        <img src="{{blog.image.url}}" class="w-100" alt="{{ blog.headline }}">
+                    </a>
+                </div>
+                <div class="col-lg-7 col-md-12">
+                    <a class="text-dark" href="{{blog.blog_slug}}">
+                        <h3 class="font-weight-bold mt-2 mb-2 too-long-text my-blogs-headline">{{ blog.headline }}</h3>
+                        <p class="mb-0">{{ blog.category_name }}</p>
+                        <p class="mb-0">{{ blog.pub_date }}</p>
+                        <div class="p-2"></div>
+                        <div class="buttons d-flex w-100 justify-content-end mt-2 ">
+                            <div class="single-btn border pt-2 pb-2 pl-4 pr-4 mr-2 mb-3 bg-primary"><a href="/my_blogs/{{blog.blog_slug}}" class="text-light">Edit</a></div>
+                            <div class="single-btn border pt-2 pb-2 pl-4 pr-4 ml-2 mb-3 bg-danger"><a href="/delete_blog/{{blog.blog_slug}}" class="text-light">Delete</a></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
+    {% else %}
+        <p class="text-center mt-3">You dont have any blogs yet, go and <a href="/create_blog/">create</a> one.</p>
+    {% endif %} 
+
+    <!--
     <div class="col-12">
         {% if blogs %}
             {% for blog in blogs %}
@@ -35,4 +64,5 @@
             <p class="text-center mt-3">You dont have any blogs yet, go and <a href="/create_blog/">create</a> one.</p>
         {% endif %} 
     </div>
+    -->
 {% endblock %}
