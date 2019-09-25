@@ -1,32 +1,75 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-        <div class="col-12 mt-3"><h1 class="text-center">{{ first_blog.category_name }}</h1></div>
-                {% for blog in blogs %}
-                <div class="col-12 d-flex justify-content-center">
-                        <div class="card m-3" id="mr-card">
-                            <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <a href="{{blog.blog_slug}}">
-                                    <img src="{{ blog.image.url }}" class="card-img" alt="{{ blog.img_name }}">
-                                </a>
-                            </div>
-                            <div class="col-md-8">
-                                <a href="{{blog.blog_slug}}">
-                                    <div class="card-body">
-                                    <h2 class="card-title text-dark" id="blog-titles-h2">{{ blog.headline }}</h2>
-                                    <p class="card-text">{{ blog.category_name }}</p>
-                                    <p class="card-text">{{ blog.author.first_name }} {{ blog.author.last_name }}</p>
-                                    
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+<div class="row mt-3">
+    <div class="col-md-12 ctg-intro">
+        <h1 class="text-center">{{ this_category.category_name }}</h1>
+        <p class="text-center mt-4 mb-4 font-12">{{ this_category.category_description }}</p>
+    </div>
+    <div class="col-lg-8 col-md-12">
+        <div class="col-12 p-0">
+            <img src="{{ this_category.image.url }}" alt="{{ blog.image.url }}" class="w-100">
+        </div>
+        <div class="col-12 d-flex mt-3 border-bottom p-0 pb-3">
+            {% for blog in first_two_matching_blogs %}
+            <div class="col-6 p-0 {% if forloop.counter == 1 %} border-right {% endif %}">
+                <div class="col-12 p-0 {% if forloop.counter == 1 %} pr-2 {% else %} pl-2 {% endif %}">
+                    <a href="{{ blog.blog_slug }}">
+                        <img src="{{blog.image.url}}" alt="{{ blog.headline }}" width="100%">
+                    </a>
                 </div>
+                <div class="col-12 p-0 {% if forloop.counter == 1 %} pr-2 {% else %} pl-2 {% endif %}">
+                    <a class="text-dark" href="{{ blog.blog_slug }}">
+                        <h3 class="font-weight-bold ml-2 mt-2 blog-txt-h too-long-text">{{blog.headline}}</h3>
+                        <p class="ml-2 mb-0 mt-3 blog-txt">{{blog.author.first_name}} {{blog.author.last_name}}</p>
+                        <p class="ml-2 mb-0 blog-txt">{{blog.pub_date}}</p>
+                    </a>
+                </div>
+            </div>
             {% endfor %}
-        
-
+        </div>
+        {% for blog in blogs %}
+        <div class="col-12 d-flex p-0 mt-3 mb-3 border">
+            <div class="col-4 p-0">
+                <a href="{{ blog.blog_slug }}">
+                    <img src="{{blog.image.url}}" alt="{{ blog.headline }}" width="100%">
+                </a>
+            </div>
+            <div class="col-8">
+                <a class="text-dark" href="{{ blog.blog_slug }}">
+                    <h3 class="font-weight-bold mt-3 blog-txt-h ctg-h-blog too-long-text">{{blog.headline}}</h3>
+                    <p class="mb-0 mt-3 blog-txt">{{blog.author.first_name}} {{blog.author.last_name}}</p>
+                    <p class="mb-0 blog-txt d-none-on-small">{{blog.pub_date}}</p>  
+                </a>              
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!--SIDEBAR CATEGORIESs-->
+    <div class="col-4 ctg-sidebar">
+        <div class="col-12 pl-2 border-left">
+            <h2 class="text-center">{{ this_category.category_name }}</h2>
+            <p class="text-center mt-4 mb-4 font-12">{{ this_category.category_description }}</p>
+        </div>
+        <div class="col-12 pt-3 pb-2 bg-light">
+            <h2 class="text-center font-weight-bold font-12">Most popular on {{ this_category.category_name }}</h2>
+        </div>
+        {% for blog in most_viewed %}
+        <div class="col-12 d-flex p-0 mt-3 mb-3 pl-2 border-right">
+            <div class="col-4 p-0">
+                <a href="{{ blog.blog_slug }}">
+                    <img src="{{blog.image.url}}" alt="{{ blog.headline }}" width="100%">
+                </a>
+            </div>
+            <div class="col-8">
+                <a class="text-dark" href="{{ blog.blog_slug }}">
+                    <p class="font-weight-bold too-long-text">{{blog.headline}}</p>    
+                </a>            
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
             
 

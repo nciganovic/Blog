@@ -35,16 +35,14 @@
                         </div>             
                     {% endfor %}
                 {% endif %}
-                <div class="container-fluid" id="content-wrap">
-                    <div class="row">
-                        {% block content %}
-                        {% endblock %}
-                    </div>
+                <div class="container" id="content-wrap">
+                    {% block content %}
+                    {% endblock %}
                 </div>
-                <footer class="page-footer font-small bg-light" id="footer">
+                <footer class="page-footer font-small border" id="footer">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-12 py-5">
+                            <div class="col-md-12">
                                 <div class="mb-5 flex-center">
                                     <a href="https://www.linkedin.com/in/nikola-ciganovi%C4%87-938255167/" target="blank">
                                         <i class="fab fa-linkedin text-dark fa-lg mr-md-5 mr-3 fa-3x"></i>
@@ -52,13 +50,13 @@
                                     <a href="https://github.com/nciganovic" target="blank">
                                         <i class="fab fa-github-square fa-lg text-dark mr-md-5 mr-3 fa-3x"> </i>
                                     <a href="#">
-                                        <i class="fas fa-user fa-lg text-dark fa-3x"> </i>
+                                        <i class="fas fa-globe-europe text-dark fa-3x"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="footer-copyright text-center py-3 text-dark">
+                    <div class="footer-copyright text-center py-3 border" style="background-color: white;">
                         <p class="text-dark copy">&copy; 2019 Copyright: Nikola Ciganovic</p>
                     </div>
                 </footer>

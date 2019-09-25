@@ -1,6 +1,52 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
+<h2 class="text-center mt-3">My info</h2>
+<div class="row d-flex justify-content-center mt-5 border-bottom pb-3">
+    <div class="col-lg-6 col-md-8">
+        <div class="my-info-pic w-100">
+            {% if user.profile.image  %}
+                <img class="m-auto rounded-circle" src="{{ user.profile.image.url }}" alt="Profile pic">
+            {% else %}
+                {% load static %}
+                <img class="m-auto rounded-circle" src="{% static 'image/user.png' %}" alt="profile pic">
+            {% endif %}
+        </div>
+        
+        <p class="font-weight-bold font-20 mb-1 text-center-on-small">{{ user.first_name }} {{ user.last_name }}</p>
+        <p class="font-12 mb-1 text-center-on-small">{{user.profile.bio}}</p>
+        <p class="text-center-on-small font-08">Views: {{ views_sum }} Likes: {{ likes_sum }}</p>
+        <hr>
+        <p class="font-12 mt-4 text-center-on-small">{{ user.email }}</p>
+        <p class="font-12 text-center-on-small">{{ user.profile.birth_date }}</p>
+        {% if user.profile.premium == True %}
+            <p class="font-12 font-weight-bold text-center-on-small">Premium user</p>
+        {% else %}
+            <p class="font-12 font-weight-bold text-center-on-small">Basic user</p>
+        {% endif %}
+        <div class="d-flex w-100">
+            <div class="small-btn font-weight-normal font-10" style="width: 100px;"><a href="/change_info/">Edit profile</a></div>
+        </div>
+    </div>
+    <div class="col-2 my-info-pic-2">
+        {% if user.profile.image  %}
+            <img  class="mt-2 rounded-circle" src="{{ user.profile.image.url }}" alt="Profile pic">
+        {% else %}
+            {% load static %}
+            <img class="mt-2 rounded-circle" src="{% static 'image/user.png' %}" alt="profile pic">
+        {% endif %}
+    </div>
+</div>
+<div class="row d-flex justify-content-center mt-3"> 
+    <div id="stats" class="col-12" style="height: 300px;">
+
+    </div>
+    <div class="col-12 d-flex">
+        <a href="/stats/"class="btn btn-info m-auto">All stats</a>
+    </div>
+</div>
+
+<!--
     <div class="col-12">
         <h1 class="text-center mt-3">My Info</h1>
     </div>
@@ -53,6 +99,7 @@
             </div>
         </div>
     </div>
+-->
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script type="text/javascript">
         likes = {{ likes_sum }};
