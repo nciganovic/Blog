@@ -85,6 +85,9 @@
     .no-border-on-small{
         border: 0px !important; 
     }
+    .show-on-small{
+        display: block;
+    }
 }
 @media (max-width: 575.98px) {
     .small-nav p{

@@ -234,3 +234,13 @@ h3{
 .my-blogs-all{
     border-right: 1px solid gray; 
 }
+.show-on-small{
+    display: none;
+}
+.upgrade{
+    color:blue !important; 
+}
+.upgrade:hover{
+    color: white !important; 
+    background-color: blue; 
+}

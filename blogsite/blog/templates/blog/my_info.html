@@ -1,15 +1,15 @@
 {% extends "blog/header.html" %}
 
 {% block content %}
-<h1 class="text-center mt-3">My info</h1>
+<h2 class="text-center mt-3">My info</h2>
 <div class="row d-flex justify-content-center mt-5 border-bottom pb-3">
     <div class="col-lg-6 col-md-8">
         <div class="my-info-pic w-100">
             {% if user.profile.image  %}
-                <img src="{{ user.profile.image.url }}" alt="Profile pic">
+                <img class="m-auto rounded-circle" src="{{ user.profile.image.url }}" alt="Profile pic">
             {% else %}
                 {% load static %}
-                <img src="{% static 'image/user.png' %}" alt="profile pic">
+                <img class="m-auto rounded-circle" src="{% static 'image/user.png' %}" alt="profile pic">
             {% endif %}
         </div>
         
