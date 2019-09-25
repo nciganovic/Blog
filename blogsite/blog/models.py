@@ -30,6 +30,9 @@ class Categories(models.Model):
         """When class Cagories is called, category_name will be displayed"""
         return self.category_name
 
+    def get_absolute_url(self):
+        return f'/{self.category_slug}'
+
 class Blog(models.Model):
     headline = models.CharField(max_length = 200)
     pub_date = models.DateTimeField('date published', default=timezone.now)
@@ -44,6 +47,9 @@ class Blog(models.Model):
     def __str__(self):
         """When class Blog is called, headlines will be displayed"""
         return self.headline
+
+    def get_absolute_url(self):
+        return f'/{self.blog_slug}'
 
 class Comment(models.Model):
     comment_text = models.TextField(max_length = 200)
