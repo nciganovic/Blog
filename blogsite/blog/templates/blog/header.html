@@ -3,9 +3,21 @@
         <head>
             {% load static %}
 
-            <title>Blog</title>
+            <title>{{ title }}</title>
+
+            <meta charset="UTF-8">
             
             <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+            <meta name="description" content="{{ description }}"> <!--Description-->
+
+            <meta name="keywords" content="{{ keywords }}">
+
+            {% if author %}
+            <meta name="author" content="{{ author }}">
+            {% else %}
+            <meta name="author" content="Read and Write">
+            {% endif %}
 
             <link rel="shortcut icon" href="{% static 'image/icon.ico' %}"> 
 

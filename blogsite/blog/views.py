@@ -45,8 +45,17 @@ def charge(request):
 
 def stats(request):
     tmpl = 'blog/all_stats.html'
+    user = request.user
     blogs = Blog.objects.filter(author=request.user)
-    return render(request, tmpl, {"blogs": blogs})
+    title = 'Stats on Read and Write | Create and read blogs'
+    description = 'This is section for all statistics about users blogs.'
+    keywords = 'blog, blogs, write, blogging, read'
+    author = f'{user.first_name} {user.last_name}'
+    return render(request, tmpl, {"blogs": blogs,
+                                  "keywords":keywords,
+                                  "description":description,
+                                  "author": author,
+                                  "title": title})
 
 def likes(request, single_slug): 
     print('Single slug----------------', single_slug)
@@ -63,6 +72,9 @@ def likes(request, single_slug):
 def contact(request):
     tmpl = "blog/contact.html"
     category = Categories.objects.all()
+    title = 'Contact on Read and Write | Create and read blogs'
+    description = 'This is section for contacting author of website via email address.'
+    keywords = 'blog, blogs, write, blogging, read'
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -86,14 +98,22 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, tmpl, {"form": form, 
-                                  "category":category})
+                                  "category":category,
+                                  "keywords":keywords,
+                                  "description":description,
+                                  "title": title})
 
 def change_info(request):
     tmpl = "blog/change_info.html"
+    user = request.user
     category = Categories.objects.all()
+    title = 'Change info on Read and Write | Create and read blogs'
+    description = 'This is section for changing information about current user.'
+    keywords = 'blog, blogs, write, blogging, read'
+    author = f'{user.first_name} {user.last_name}'
     if request.method == "POST":
-        register_form = myUserCreationForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        register_form = myUserCreationForm(request.POST, instance=user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=user.profile)
         if register_form.is_valid() and profile_form.is_valid():
             is_valid = True
             image = profile_form.cleaned_data.get('image')
@@ -122,12 +142,17 @@ def change_info(request):
         register_form = myUserCreationForm(instance=request.user)
     return render(request, tmpl, context={"register":register_form,
                                           "profile":profile_form,
-                                          "category": category,})
+                                          "category": category,
+                                          "keywords":keywords,
+                                          "description":description,
+                                          "author":author,
+                                          "title": title})
 
 def my_info(request):
     tmpl = "blog/my_info.html"
-    profile = Profile.objects.filter(user=request.user)
-    user_blogs = Blog.objects.filter(author=request.user)
+    user = request.user
+    profile = Profile.objects.filter(user=user)
+    user_blogs = Blog.objects.filter(author=user)
     views_sum = 0
     likes_sum = 0
     
@@ -143,27 +168,45 @@ def my_info(request):
         print('Likes sum-->',blog.headline, ' ', likes_sum)
         print('--------------------------')
     
-    comments_on_user_blog = Blog.objects.filter()
-
     category = Categories.objects.all()
+    title = 'My info on Read and Write | Create and read blogs'
+    description = 'This is section for viewing all information about current user and statistics for his blogs.'
+    keywords = 'blog, blogs, write, blogging, read'
+    author = f'{user.first_name} {user.last_name}'
     return render(request, tmpl, context={"profile": profile, 
                                           "category": category,
                                           "views_sum":json.dumps(views_sum),
-                                          "likes_sum": json.dumps(likes_sum),})
+                                          "likes_sum": json.dumps(likes_sum),
+                                          "keywords":keywords,
+                                          "description":description,
+                                          "author":author,
+                                          "title": title})
 
 def my_blogs(request):
     tmpl = "blog/my_blogs.html"
     current_author = request.user
     blogs = Blog.objects.filter(author=current_author)
     category = Categories.objects.all()
+    title = 'My blogs on Read and Write | Create and read blogs'
+    description = 'This is section for viewing all blogs of current user.'
+    keywords = 'blog, blogs, write, blogging, read'
+    author = f'{current_author.first_name} {current_author.last_name}'
     return render(request, tmpl, context={"blogs": blogs, 
-                                          "category": category})
+                                          "category": category,
+                                          "keywords":keywords,
+                                          "description":description,
+                                          "author":author,
+                                          "title": title})
 
 def delete_blog(request, single_slug):
     current_author = request.user
-    blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
+    blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)]
     if single_slug in blogs_author:
         matching_blog = Blog.objects.get(blog_slug=single_slug)
+        title = f'Delete {matching_blog.headline} on Read and Write | Create and read blogs'
+        description = f'This is section for deleting {matching_blog.headline} blog in {matching_blog.category_name} category. Here you can delete blog you previously written.'
+        keywords = 'blog, blogs, write, blogging, delete'
+        author = f'{current_author.first_name} {current_author.last_name}'
     if request.method == "POST":
         category = Categories.objects.all()
         matching_blog.delete()
@@ -175,7 +218,12 @@ def delete_blog(request, single_slug):
         blogs_author = [b.blog_slug for b in Blog.objects.filter(author=current_author)] 
         if single_slug in blogs_author:
             matching_blog = Blog.objects.get(blog_slug=single_slug)
-            return render(request, 'blog/delete_blog.html', context={"delete_blog": matching_blog, "category":category})
+            return render(request, 'blog/delete_blog.html', context={"delete_blog": matching_blog, 
+                                                                     "category":category,
+                                                                     "keywords":keywords,
+                                                                     "description":description,
+                                                                     "author":author,
+                                                                     "title": title})
 
 def edit_blog(request, single_slug):
     tmpl = "blog/edit_blog.html"
@@ -218,15 +266,26 @@ def edit_blog(request, single_slug):
         if single_slug in blogs_author:
             matching_blog = Blog.objects.get(blog_slug=single_slug)
             form = PostForm(instance=matching_blog)
+            title = f'Edit {matching_blog.headline} on Read and Write | Create and read blogs'
+            description = f'This is section for editing {matching_blog.headline} blog in {matching_blog.category_name} category. Here you can edit blog you previously written.'
+            keywords = 'blog, blogs, write, blogging, edit'
+            author = f'{current_author.first_name} {current_author.last_name}'
             return render(request, tmpl, context={"edit_blog": matching_blog, 
                                                   "form": form, 
                                                   "category": category,
-                                                  "fixed": fixed})
+                                                  "fixed": fixed,
+                                                  "keywords":keywords,
+                                                  "description":description,
+                                                  "author": author,
+                                                  "title": title})
 
 def create_blog(request):
     """Creating User's Blog"""
     tmpl = "blog/create_blog.html"
     fixed = False
+    title = 'Create blog on Read and Write | Create and read blogs'
+    description = 'This is section for blog creation. Here you can write you blog.'
+    keywords = 'blog, blogs, write, blogging, read'
     if request.method == "POST":
         blog_post_form = PostForm(request.POST, request.FILES)
         category = Categories.objects.all()
@@ -256,7 +315,10 @@ def create_blog(request):
         category = Categories.objects.all()
     return render(request, tmpl, context={"form": blog_post_form,
                                           "category":category,
-                                          "fixed": fixed})
+                                          "fixed": fixed,
+                                          "keywords":keywords,
+                                          "description":description,
+                                          "title": title})
 
 def single_slug(request, single_slug):
     """Creating links for every category"""
@@ -268,17 +330,27 @@ def single_slug(request, single_slug):
         first_two_matching_blogs = Blog.objects.filter(category_name__category_slug=single_slug)[0:2]
         this_category = Categories.objects.get(category_slug=single_slug)
         most_viewed = Blog.objects.filter(category_name__category_slug=single_slug).annotate(v_count=Count('views')).order_by('-v_count')[:5]
+        title = f'{this_category.category_name} on Read and Write | Create and read blogs'
+        description = f'This is {this_category.category_name} category for this website. Welcome to Read and Wire, website made for bloggers to write their blogs. They can also interact with other users by liking and commenting on blogs.'
+        keywords = f'blog, blogs, write, blogging, {this_category.category_name}'
         return render(request, tmpl, context={"blogs": matching_blogs, 
                                               "category":category, 
                                               "first_two_matching_blogs": first_two_matching_blogs,
                                               "this_category": this_category,
-                                              "most_viewed": most_viewed})
+                                              "most_viewed": most_viewed,
+                                              "keywords":keywords,
+                                              "description":description,
+                                              "title":title})
     blogs = [b.blog_slug for b in Blog.objects.all()] 
     if single_slug in blogs:
         user = request.user
         tmpl = 'blog/blog.html'
         matching_blog = Blog.objects.get(blog_slug=single_slug)
         comments = Comment.objects.filter(blog=matching_blog).order_by('-id')
+        title = f'{matching_blog.headline} on Read and Write | Create and read blogs'
+        description = f'This is {matching_blog.headline} blog in {matching_blog.category_name} category. Welcome to Read and Wire, website made for bloggers to write their blogs. They can also interact with other users by liking and commenting on blogs.'
+        keywords = f'blog, blogs, write, blogging, {matching_blog.category_name}'
+        author = f'{matching_blog.author.first_name} {matching_blog.author.last_name}'
         if request.method == "POST": 
             comment_form = PostComment(request.POST or None)
             if comment_form.is_valid():
@@ -305,6 +377,10 @@ def single_slug(request, single_slug):
             "comment_form":comment_form,
             "category":category,
             "like_value":like_value,
+            "keywords":keywords,
+            "description":description,
+            "author": author,
+            "title":title,
         }
         return render(request, tmpl, context)   
 
@@ -316,6 +392,9 @@ def logout_request(request):
 
 def login_request(request):
     """Logging in"""
+    title = 'Login on Read and Write | Create and read blogs'
+    description = 'This is login page for this website. Welcome to Read and Wire, website made for bloggers to write their blogs. They can also interact with other users by liking and commenting on blogs.'
+    keywords = 'blog, blogs, write, blogging, read'
     category = Categories.objects.all()
     if request.method == "POST":
         form = myAuthenticationForm(request, data=request.POST)
@@ -331,10 +410,17 @@ def login_request(request):
         else: messages.error(request, "Invalid username or password")
     else:
         form = myAuthenticationForm()
-    return render(request, "blog/login.html", {"form": form, 'category':category})
+    return render(request, "blog/login.html", {"form": form, 
+                                               "category":category,
+                                               "keywords":keywords,
+                                               "description":description,
+                                               "title": title})
 
 def register(request):
     """Registering new user"""
+    title = 'Register on Read and Write | Create and read blogs'
+    description = 'This is registration page for this website. Welcome to Read and Wire, website made for bloggers to write their blogs. They can also interact with other users by liking and commenting on blogs.'
+    keywords = 'blog, blogs, write, blogging, read'
     category = Categories.objects.all()
     if request.method == 'POST':
         form = myUserCreationForm(request.POST)
@@ -352,10 +438,16 @@ def register(request):
         form = myUserCreationForm()
         profile_form = ProfileForm()
     return render(request, "blog/register.html", {"form": form, 
-                                                  "category":category})
+                                                  "category":category,
+                                                  "keywords":keywords,
+                                                  "description":description,
+                                                  "title": title})
 
 def index(request):
     """Loading index page"""
+    description = 'Welcome to Read and Wire, website made for bloggers to write their blogs. They can also interact with other users by liking and commenting on blogs.'
+    keywords = 'blog, blogs, write, blogging, read'
+    title = 'Read and Write | Create and read blogs'
     tmpl = "blog/index.html"
     search = False
     category = Categories.objects.all()
@@ -381,11 +473,6 @@ def index(request):
     print('--------->',single_premium_blog[3])
     print('--------->',single_premium_blog[4])
 
-    '''
-    for blog in blogs:
-        print(blog.content.split()[14:30])
-        break
-    '''
     query = request.GET.get('q'); 
     if query:
         search = True
@@ -407,4 +494,7 @@ def index(request):
                                           "single_premium_blog_2":single_premium_blog[1],
                                           "single_premium_blog_3":single_premium_blog[2],
                                           "single_premium_blog_4":single_premium_blog[3],
-                                          "single_premium_blog_5":single_premium_blog[4],})
+                                          "single_premium_blog_5":single_premium_blog[4],
+                                          "keywords": keywords,
+                                          "description": description,
+                                          "title": title})
