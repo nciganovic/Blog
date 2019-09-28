@@ -59,7 +59,70 @@ class TestModels(TestCase):
         self.assertEqual(c.get_absolute_url(), f'/{c.category_slug}')
         self.assertEqual(comment.__str__(), '{}:{}'.format(b.headline, str(user.username)) )
 
-''' 
+class TestViews(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.Test_Models = TestModels()
+
+        self.premium_user_1 = User.objects.create(first_name = 'tpu1',last_name = 'tpu1',email = 'tpu1@test.com',username = 'tpu1',password = 'Test1234',is_active=True)
+        self.premium_user_2 = User.objects.create(first_name = 'tpu2',last_name = 'tpu2',email = 'tpu2@test.com',username = 'tpu2',password = 'Test1234',is_active=True)
+        self.premium_user_3 = User.objects.create(first_name = 'tpu3',last_name = 'tpu3',email = 'tpu3@test.com',username = 'tpu3',password = 'Test1234',is_active=True)
+        self.premium_user_4 = User.objects.create(first_name = 'tpu4',last_name = 'tpu4',email = 'tpu4@test.com',username = 'tpu4',password = 'Test1234',is_active=True)
+        self.premium_user_5 = User.objects.create(first_name = 'tpu5',last_name = 'tpu5',email = 'tpu5@test.com',username = 'tpu5',password = 'Test1234',is_active=True)
+
+        self.get_premium_user_1 = User.objects.get(first_name='tpu1')
+        self.get_premium_user_2 = User.objects.get(first_name='tpu2')
+        self.get_premium_user_3 = User.objects.get(first_name='tpu3')
+        self.get_premium_user_4 = User.objects.get(first_name='tpu4')
+        self.get_premium_user_5 = User.objects.get(first_name='tpu5')
+
+        get_profile_1 = Profile.objects.get(user=self.get_premium_user_1)
+        get_profile_1.premium = True
+        if get_profile_1.premium == True:
+            print('tpu1 is premium')
+        else:
+            print('tpu1 is NOT premium') 
+
+        get_profile_2 = Profile.objects.get(user=self.get_premium_user_2)
+        get_profile_2.premium = True
+        if get_profile_2.premium == True:
+            print('tpu2 is premium')
+        else:
+            print('tpu2 is NOT premium')
+
+        get_profile_3 = Profile.objects.get(user=self.get_premium_user_3)
+        get_profile_3.premium = True
+        if get_profile_3.premium == True:
+            print('tpu3 is premium')
+        else:
+            print('tpu3 is NOT premium')
+
+        get_profile_4 = Profile.objects.get(user=self.get_premium_user_4)
+        get_profile_4.premium = True
+        if get_profile_4.premium == True:
+            print('tpu4 is premium')
+        else:
+            print('tpu4 is NOT premium')
+
+        get_profile_5 = Profile.objects.get(user=self.get_premium_user_5)
+        get_profile_5.premium = True
+        if get_profile_5.premium == True:
+            print('tpu5 is premium')
+        else:
+            print('tpu5 is NOT premium')
+    
+        self.category = self.Test_Models.create_Categories()
+
+        self.blog_1 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_1, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline1', image='image',)
+        self.blog_2 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_2, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline2', image='image',)
+        self.blog_3 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_3, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline3', image='image',)
+        self.blog_4 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_4, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline4', image='image',)
+        self.blog_5 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_5, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline5', image='image',)
+   
+    def test_index(self):
+        resp = self.client.get(reverse('index'))
+        self.assertEqual(resp.status_code, 200)
+    '''
 class TestViews(TestCase):
     def setUp(self):
         self.request_factory = RequestFactory()
@@ -71,13 +134,14 @@ class TestViews(TestCase):
         self.create_Categories = self.Test_Models.create_Categories()
     
     def test_views_index(self):
+        print('TEST 2 STARTED')
         c = self.Test_Models.create_Categories()
         resp = self.client.get(reverse('index'))
         
         self.assertEqual(resp.status_code, 200)
         resp_decoded = resp.content.decode()
         self.assertIn(c.category_name, resp_decoded)
- 
+    
     #REGISTER
     def test_views_register_GET(self):
         resp_get = self.client.get(reverse('register'))

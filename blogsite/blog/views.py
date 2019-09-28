@@ -357,6 +357,7 @@ def single_slug(request, single_slug):
                 content = request.POST.get('comment_text')
                 comment = Comment.objects.create(blog=matching_blog, author=user, comment_text=content)
                 comment.save()
+                messages.success(request, 'Comment successfuly added!')
                 return HttpResponseRedirect(request.path_info)
         else:
             comment_form = PostComment()
@@ -482,8 +483,6 @@ def index(request):
             Q(author__first_name__icontains=query) |
             Q(author__last_name__icontains=query) 
         ).distinct()
-        if not blogs:
-            messages.error(request, f"Search {query} doesnt exist")
     return render(request, tmpl, context={"category": category, 
                                           "search": search, 
                                           "blogs": blogs,
