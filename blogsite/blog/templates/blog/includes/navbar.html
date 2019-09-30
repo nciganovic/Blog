@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand navbar-light" style="background-color: white">
+<nav class="navbar navbar-expand navbar-light">
     <div class="container d-flex">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item ReadandWrite"><h1><a class="navbar-brand font-weight-bold pl-3" href="/" style="padding-top: 0px; padding-bottom: 0px; font-size: 1.5rem;">Read and Write</a></h1></li>
-                <li class="nav-item riw"><a class="navbar-brand font-weight-bold pl-3" href="/" style="padding-top: 0px; padding-bottom: 0px;">R&W</a></li>
+                <li class="nav-item ReadandWrite"><h1><a class="navbar-brand font-weight-bold pl-3 pt-0 pb-0 font-15rem" href="/">Read and Write</a></h1></li>
+                <li class="nav-item riw"><a class="navbar-brand font-weight-bold pl-3 pt-0 pb-0" href="/">R&W</a></li>
             </ul>
             
             <ul class="navbar-nav mr-right">
                 <!--Categories navbar-->
                 {% if category %}
-                <li class="nav-item dropdown categories-nav mt-1">
+                <li class="nav-item dropdown categories-nav">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                         {% for c in category %}

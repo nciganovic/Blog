@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
-from .models import Blog, Categories, Comment
+from .models import Blog, Categories, Comment, Profile
 from .views import index, register, create_blog, my_blogs, single_slug
 from .forms import myUserCreationForm, myAuthenticationForm, PostForm
 
@@ -25,16 +25,12 @@ class TestModels(TestCase):
         return User.objects.create( first_name = 'Test_name_1',
                                     last_name = 'Test_name_2',
                                     email = 'test@test.com',
-                                    username = 'test',
+                                    username = 'test_user',
                                     password = 'Test1234',
                                     is_active=True)
-
-    def get_User(self):
-        return User.objects.get(username = 'test')
-
+    
     def create_Blog(self):
-        u = User(username = 'test4', password = 'test4')
-        u.save()
+        u = User.objects.get(username = 'test_user', password = 'Test1234')
         return Blog.objects.create( headline = 'New Test headline', 
                                     pub_date = timezone.now(),
                                     author = u, 
@@ -42,17 +38,91 @@ class TestModels(TestCase):
                                     category_name = self.create_Categories(),
                                     img_name = 'test_image',
                                     blog_slug = 'newtestheadline',
-                                    image = 'image',
-                                     )
+                                    image = 'image',)
+                                  
+    def create_Comment(self):
+        b = Blog.objects.get(headline = 'New Test headline')
+        u = User.objects.get(username = 'test_user', password = 'Test1234')
+        return Comment.objects.create(comment_text='this is comment text',
+                                      author=u,
+                                      blog=b)
     
     def test_blog_creation(self):
-      
+        user = self.create_User()
         b = self.create_Blog()
         c = self.create_Categories()
+        comment = self.create_Comment()
         self.assertTrue(isinstance(b, Blog))
         self.assertEqual(b.__str__(), b.headline)
         self.assertEqual(c.__str__(), c.category_name)
+        self.assertEqual(b.get_absolute_url(), f'/{b.blog_slug}')
+        self.assertEqual(c.get_absolute_url(), f'/{c.category_slug}')
+        self.assertEqual(comment.__str__(), '{}:{}'.format(b.headline, str(user.username)) )
+
+class TestViews(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.Test_Models = TestModels()
+
+        self.premium_user_1 = User.objects.create(first_name = 'tpu1',last_name = 'tpu1',email = 'tpu1@test.com',username = 'tpu1',password = 'Test1234',is_active=True)
+        self.premium_user_2 = User.objects.create(first_name = 'tpu2',last_name = 'tpu2',email = 'tpu2@test.com',username = 'tpu2',password = 'Test1234',is_active=True)
+        self.premium_user_3 = User.objects.create(first_name = 'tpu3',last_name = 'tpu3',email = 'tpu3@test.com',username = 'tpu3',password = 'Test1234',is_active=True)
+        self.premium_user_4 = User.objects.create(first_name = 'tpu4',last_name = 'tpu4',email = 'tpu4@test.com',username = 'tpu4',password = 'Test1234',is_active=True)
+        self.premium_user_5 = User.objects.create(first_name = 'tpu5',last_name = 'tpu5',email = 'tpu5@test.com',username = 'tpu5',password = 'Test1234',is_active=True)
+
+        self.get_premium_user_1 = User.objects.get(first_name='tpu1')
+        self.get_premium_user_2 = User.objects.get(first_name='tpu2')
+        self.get_premium_user_3 = User.objects.get(first_name='tpu3')
+        self.get_premium_user_4 = User.objects.get(first_name='tpu4')
+        self.get_premium_user_5 = User.objects.get(first_name='tpu5')
+
+        get_profile_1 = Profile.objects.get(user=self.get_premium_user_1)
+        get_profile_1.premium = True
+        if get_profile_1.premium == True:
+            print('tpu1 is premium')
+        else:
+            print('tpu1 is NOT premium') 
+
+        get_profile_2 = Profile.objects.get(user=self.get_premium_user_2)
+        get_profile_2.premium = True
+        if get_profile_2.premium == True:
+            print('tpu2 is premium')
+        else:
+            print('tpu2 is NOT premium')
+
+        get_profile_3 = Profile.objects.get(user=self.get_premium_user_3)
+        get_profile_3.premium = True
+        if get_profile_3.premium == True:
+            print('tpu3 is premium')
+        else:
+            print('tpu3 is NOT premium')
+
+        get_profile_4 = Profile.objects.get(user=self.get_premium_user_4)
+        get_profile_4.premium = True
+        if get_profile_4.premium == True:
+            print('tpu4 is premium')
+        else:
+            print('tpu4 is NOT premium')
+
+        get_profile_5 = Profile.objects.get(user=self.get_premium_user_5)
+        get_profile_5.premium = True
+        if get_profile_5.premium == True:
+            print('tpu5 is premium')
+        else:
+            print('tpu5 is NOT premium')
     
+        self.category = self.Test_Models.create_Categories()
+
+        self.blog_1 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_1, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline1', image='image',)
+        self.blog_2 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_2, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline2', image='image',)
+        self.blog_3 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_3, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline3', image='image',)
+        self.blog_4 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_4, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline4', image='image',)
+        self.blog_5 = Blog.objects.create(headline='New Test headline', pub_date=timezone.now(), author=self.premium_user_5, content='Test content', category_name=self.category, img_name='test_image', blog_slug='newtestheadline5', image='image',)
+   
+    def test_index(self):
+        resp = self.client.get(reverse('index'))
+        self.assertEqual(resp.status_code, 200)
+    '''
 class TestViews(TestCase):
     def setUp(self):
         self.request_factory = RequestFactory()
@@ -64,22 +134,20 @@ class TestViews(TestCase):
         self.create_Categories = self.Test_Models.create_Categories()
     
     def test_views_index(self):
-        '''Testing index page at views.py'''
+        print('TEST 2 STARTED')
         c = self.Test_Models.create_Categories()
         resp = self.client.get(reverse('index'))
         
         self.assertEqual(resp.status_code, 200)
         resp_decoded = resp.content.decode()
         self.assertIn(c.category_name, resp_decoded)
- 
+    
     #REGISTER
     def test_views_register_GET(self):
-        '''Register GET method'''
         resp_get = self.client.get(reverse('register'))
         self.assertEqual(resp_get.status_code, 200)
     
     def test_views_register_POST(self):
-        '''Register POST method'''
         url = reverse('register')
         resp_post = self.client.post(url)
         self.assertEqual(resp_post.status_code, 200)
@@ -101,7 +169,6 @@ class TestViews(TestCase):
         self.client.login(username = 'Test_username_new', password="testpassword123")
 
     def test_views_redirect_register_form(self): 
-        '''testing redirecting form'''
         url = reverse('register')
         resp_post = self.client.post(url, {
             'first_name':"Test_name_new",
@@ -156,14 +223,14 @@ class TestViews(TestCase):
         self.assertEqual(resp_post.status_code, 302)
         self.assertRedirects(resp_post, '/', status_code=302, target_status_code=200, 
         msg_prefix='', fetch_redirect_response=True) 
-    '''
+    
     #SINGLE_SLUG
     def test_view_single_slug_category(self):
         c = self.Test_Models.create_Categories()
         url = reverse('single_slug', args=(c.category_slug,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-    '''
+   
     #TODO fix single_slug for blogs    
 
     #CREATE_BLOG
@@ -176,7 +243,7 @@ class TestViews(TestCase):
         url = reverse('create_blog')
         resp = self.client.post(url)
         self.assertEqual(resp.status_code, 200)
-    '''
+    
     def test_view_is_valid_create_blog_form(self): 
         c = self.Test_Models.create_Categories()
         blog_post = PostForm(data={
@@ -218,7 +285,7 @@ class TestViews(TestCase):
              })
         self.assertRedirects(resp_post, '/', status_code=302, target_status_code=200, 
         msg_prefix='', fetch_redirect_response=True)
-    '''
+    
     #MY_BLOG     
     def test_my_blog(self):
         url = reverse('my_blogs')
@@ -258,3 +325,4 @@ class SlugTestCase(TestCase):
         object_2 = Blog.objects.get(pk=2)
         self.assertEqual(object_1.blog_slug, 'this-is-title')
         self.assertEqual(object_2.blog_slug, 'this-is-title-2')
+    '''

@@ -1,28 +1,3 @@
-<!--
-{% if messages %}
-        {% for message in messages %}
-            {% if message.tags == 'success'%}
-                {{ message }}
-            {% elif message.tags == 'info'%}
-                {{ message }}
-            {% elif message.tags == 'warning'%}
-                {{ message }}
-            {% elif message.tags == 'error'%}
-                {{ message }}
-            {% endif %}
-        {% endfor %}
-{% endif %} 
-
-
-<!--
-            {% if messages %}
-            {% for message in messages %}
-                <div class="message-block d-flex justify-content-center {% messages.tag %}">
-                    {% include "blog/includes/messages.html" %}
-                </div>
-            {% endif %}
-            -->
--->
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}

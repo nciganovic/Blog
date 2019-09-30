@@ -18,14 +18,16 @@
         <p class="text-center-on-small font-08">Views: {{ views_sum }} Likes: {{ likes_sum }}</p>
         <hr>
         <p class="font-12 mt-4 text-center-on-small">{{ user.email }}</p>
+        {% if user.profile.birth_date %}
         <p class="font-12 text-center-on-small">{{ user.profile.birth_date }}</p>
+        {% endif %}
         {% if user.profile.premium == True %}
             <p class="font-12 font-weight-bold text-center-on-small">Premium user</p>
         {% else %}
             <p class="font-12 font-weight-bold text-center-on-small">Basic user</p>
         {% endif %}
         <div class="d-flex w-100">
-            <div class="small-btn font-weight-normal font-10" style="width: 100px;"><a href="/change_info/">Edit profile</a></div>
+            <div class="small-btn font-weight-normal font-10 change-info-btn"><a href="/change_info/">Edit profile</a></div>
         </div>
     </div>
     <div class="col-2 my-info-pic-2">
@@ -38,7 +40,7 @@
     </div>
 </div>
 <div class="row d-flex justify-content-center mt-3"> 
-    <div id="stats" class="col-12" style="height: 300px;">
+    <div id="stats" class="col-12 h-300">
 
     </div>
     <div class="col-12 d-flex">

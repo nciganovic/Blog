@@ -4,18 +4,21 @@
 <div class="col-12">
     <h1 class="text-center mt-3">Stats</h1>
 </div>
-
-{% for b in blogs %}
-<div class="row d-flex justify-content-center">
-    <div id="{{ b.blog_slug }}" class="col-12" style="height: 300px;">
-        
+{% if blogs %}
+    {% for b in blogs %}
+    <div class="row d-flex justify-content-center">
+        <div id="{{ b.blog_slug }}" class="col-12 h-300">
+            
+        </div>
+        <div class="col-12">
+            <p class="text-center font-weight-bold">Likes: {{ b.likes.count }}, Views: {{ b.views.count }}</p>
+        </div>
     </div>
-    <div class="col-12">
-        <p class="text-center font-weight-bold">Likes: {{ b.likes.count }}, Views: {{ b.views.count }}</p>
-    </div>
-</div>
-<hr>
-{% endfor %}
+    <hr>
+    {% endfor %}
+{% else %}
+    <p class="text-center mt-3">Stats will be shown when you <a href="/create_blog/">create</a> one blog.</p>
+{% endif %} 
 
   
     <script src="https://code.highcharts.com/highcharts.src.js"></script>

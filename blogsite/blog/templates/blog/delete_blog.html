@@ -7,7 +7,7 @@
 <div class="container">
     <p class="text-center">Do you really want to delete "{{ delete_blog.headline }}"? This action cannot be undone.</p>
     <div class="col-12">
-        <div class="m-auto" style="width:250px;">
+        <div class="m-auto w-220">
             <form  method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <button class="btn btn-danger" type="submit">Yes</button>
