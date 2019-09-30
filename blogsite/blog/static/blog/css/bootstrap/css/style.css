@@ -143,6 +143,9 @@ h3{
 .font-15{
     font-size:1.5em; 
 }
+.font-15rem{
+    font-size:1.5rem; 
+}
 .responsive{
     width:100%; 
     height: auto; 
@@ -243,4 +246,13 @@ h3{
 .upgrade:hover{
     color: white !important; 
     background-color: blue; 
+}
+.h-300{
+    height: 300px; 
+}
+.w-220{
+    width: 220px; 
+}
+.change-info-btn{
+    width: 100px; 
 }
