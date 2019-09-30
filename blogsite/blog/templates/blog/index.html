@@ -94,6 +94,7 @@
             <h3 class="text-center text-light desc">Search blog:</h3>
             <div class="w-100">
                 <form method="GET" action="#go-there" class="form-inline my-2 my-lg-0 ml-auto">
+                {% csrf_token %}
                     <div class="input-group md-form form-sm form-2 pl-0 m-auto" id="SearchHolder">
                         <input class="form-control my-0 py-1 red-border white-txt" name="q" type="text" placeholder="Try lorem..." aria-label="Search" id="SearchForm">
                         <div class="input-group-append">
