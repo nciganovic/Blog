@@ -7,10 +7,8 @@ class StaticViewSitemap(Sitemap):
     priority = 0.8
     def items(self):
         working_url = ['index','register', 'login', 
-                        'logout',  'create_blog', 
-                        'my_blogs', 
-                        'my_info', 'change_info',
-                        'contact', 'stats', 'premium', 'charge']
+                        'logout',  'create_blog',
+                        'contact', 'premium', 'charge']
         return working_url
 
     def location(self, item):

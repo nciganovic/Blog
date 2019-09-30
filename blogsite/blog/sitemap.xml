@@ -30,31 +30,7 @@
         <lastmod>2019-09-30</lastmod>
     </url>
     <url>
-        <loc>https://read-and-write.herokuapp.com/my_blogs/</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-        <lastmod>2019-09-30</lastmod>
-    </url>
-    <url>
-        <loc>https://read-and-write.herokuapp.com/my_info/</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-        <lastmod>2019-09-30</lastmod>
-    </url>
-    <url>
-        <loc>https://read-and-write.herokuapp.com/change_info/</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-        <lastmod>2019-09-30</lastmod>
-    </url>
-    <url>
         <loc>https://read-and-write.herokuapp.com/contact/</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-        <lastmod>2019-09-30</lastmod>
-    </url>
-    <url>
-        <loc>https://read-and-write.herokuapp.com/stats/</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
         <lastmod>2019-09-30</lastmod>

@@ -13,9 +13,7 @@ urlpatterns = [
     path('login/', views.login_request, name='login'),
     path('logout/', views.logout_request, name='logout'),
     path('<single_slug>', views.single_slug, name='single_slug'),
-
-    path('<single_slug>/like', views.likes, name='likes'),#NEW
-
+    path('<single_slug>/like', views.likes, name='likes'),
     path('create_blog/', views.create_blog, name='create_blog'),
     path('my_blogs/', views.my_blogs, name='my_blogs'),
     path('my_blogs/<single_slug>', views.edit_blog, name='edit_blog'),
