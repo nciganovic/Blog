@@ -73,7 +73,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'django.contrib.sitemaps',
+    'django.contrib.sites'
 ]
+
+SITE_ID = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

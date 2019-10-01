@@ -35,9 +35,9 @@
             <p>Views: {{ single_blog.views.count }} Likes: {{ single_blog.likes.count }}</p>
             {% if user.is_authenticated %}
                 {% if like_value == 'Like' %}
-                    <p><a class="text-dark font-20" href="{{ single_blog.blog_slug }}/like"><i class="far fa-thumbs-up"></i></a></p>
+                    <p><a class="text-dark font-20" href="../{{ single_blog.blog_slug }}/like"><i class="far fa-thumbs-up"></i></a></p>
                 {% else %}
-                    <p><a class="text-dark font-20" href="{{ single_blog.blog_slug }}/like"><i class="fas fa-thumbs-up"></i></a></p>
+                    <p><a class="text-dark font-20" href="../{{ single_blog.blog_slug }}/like"><i class="fas fa-thumbs-up"></i></a></p>
                 {% endif %}
             {% else %}
                 <p>Login to like this post.</p>

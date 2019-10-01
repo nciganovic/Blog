@@ -26,9 +26,9 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('', include('blog.urls')),
-    path('sitemap.xml/', sitemap, {'sitemaps':sitemaps}),
+    path('sitemap.xml', sitemap, {'sitemaps':sitemaps}),
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
-    path('robots.txt/', TemplateView.as_view(template_name='blog/robots.txt', content_type='text/plain')),
+    path('robots.txt', TemplateView.as_view(template_name='blog/robots.txt', content_type='text/plain')),
+    path('', include('blog.urls'))
 ]

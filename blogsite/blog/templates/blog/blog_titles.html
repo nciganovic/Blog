@@ -14,12 +14,12 @@
             {% for blog in first_two_matching_blogs %}
             <div class="col-6 p-0 {% if forloop.counter == 1 %} border-right {% endif %}">
                 <div class="col-12 p-0 {% if forloop.counter == 1 %} pr-2 {% else %} pl-2 {% endif %}">
-                    <a href="{{ blog.blog_slug }}">
+                    <a href="../{{ blog.blog_slug }}">
                         <img src="{{blog.image.url}}" alt="{{ blog.headline }}" width="100%">
                     </a>
                 </div>
                 <div class="col-12 p-0 {% if forloop.counter == 1 %} pr-2 {% else %} pl-2 {% endif %}">
-                    <a class="text-dark" href="{{ blog.blog_slug }}">
+                    <a class="text-dark" href="../{{ blog.blog_slug }}">
                         <h3 class="font-weight-bold ml-2 mt-2 blog-txt-h too-long-text">{{blog.headline}}</h3>
                         <p class="ml-2 mb-0 mt-3 blog-txt">{{blog.author.first_name}} {{blog.author.last_name}}</p>
                         <p class="ml-2 mb-0 blog-txt">{{blog.pub_date}}</p>
@@ -31,12 +31,12 @@
         {% for blog in blogs %}
         <div class="col-12 d-flex p-0 mt-3 mb-3 border">
             <div class="col-4 p-0">
-                <a href="{{ blog.blog_slug }}">
+                <a href="../{{ blog.blog_slug }}">
                     <img src="{{blog.image.url}}" alt="{{ blog.headline }}" width="100%">
                 </a>
             </div>
             <div class="col-8">
-                <a class="text-dark" href="{{ blog.blog_slug }}">
+                <a class="text-dark" href="../{{ blog.blog_slug }}">
                     <h3 class="font-weight-bold mt-3 blog-txt-h ctg-h-blog too-long-text">{{blog.headline}}</h3>
                     <p class="mb-0 mt-3 blog-txt">{{blog.author.first_name}} {{blog.author.last_name}}</p>
                     <p class="mb-0 blog-txt d-none-on-small">{{blog.pub_date}}</p>  
@@ -57,12 +57,12 @@
         {% for blog in most_viewed %}
         <div class="col-12 d-flex p-0 mt-3 mb-3 pl-2 border-right">
             <div class="col-4 p-0">
-                <a href="{{ blog.blog_slug }}">
+                <a href="../{{ blog.blog_slug }}">
                     <img src="{{blog.image.url}}" alt="{{ blog.headline }}" width="100%">
                 </a>
             </div>
             <div class="col-8">
-                <a class="text-dark" href="{{ blog.blog_slug }}">
+                <a class="text-dark" href="../{{ blog.blog_slug }}">
                     <p class="font-weight-bold too-long-text">{{blog.headline}}</p>    
                 </a>            
             </div>

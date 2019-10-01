@@ -12,7 +12,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                         {% for c in category %}
-                        <a class="dropdown-item" href="{{ c.category_slug }}">{{ c.category_name }}</a>
+                        <a class="dropdown-item" href="../{{ c.category_slug }}">{{ c.category_name }}</a>
                         {% endfor %}
                     </div>
                 </li>
