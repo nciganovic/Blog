@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
-from blog.sitemaps import StaticViewSitemap, BlogSitemap, CategoriesSitemap
+from blog.sitemaps import StaticViewSitemap, StaticViewIndexSitemap, BlogSitemap, CategoriesSitemap
 
 sitemaps = {
+    'index': StaticViewIndexSitemap,
     'static': StaticViewSitemap,
     'blog': BlogSitemap,
     'categories': CategoriesSitemap,
