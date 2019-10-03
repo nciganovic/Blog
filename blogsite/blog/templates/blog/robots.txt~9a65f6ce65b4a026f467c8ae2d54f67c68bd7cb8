@@ -1,0 +1,9 @@
+Sitemap: https://read-and-write.herokuapp.com/sitemap.xml/
+User-agent: *
+Disallow: /admin/
+Disallow: /my_blogs/
+Disallow: /my_info/
+Disallow: /change_info/
+Disallow: /stats/
+Disallow: /edit_blog/
+Disallow: /delete_blog/
