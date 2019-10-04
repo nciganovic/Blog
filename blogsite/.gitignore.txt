@@ -1,2 +1,2 @@
-db.sqlite3
-requirements.txt
+blogsite/db.sqlite3
+blogsite/requirements.txt
