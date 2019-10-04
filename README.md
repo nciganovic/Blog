@@ -1,7 +1,7 @@
 # Read and Write
 Bloging website made with Django
 
-What is used in this project?
+# What is used in this project?
 -Python 3.7
 -Django 2.2
 -Javascript
@@ -11,7 +11,7 @@ What is used in this project?
 -Heroku for deployment
 -Amazon web services
 
-What i learned to do in Django with this project?
+# What i learned to do in Django with this project?
 -Creating dynamic web pages
 -Login page 
 -Register page
