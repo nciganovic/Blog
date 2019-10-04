@@ -459,14 +459,26 @@ def index(request):
     for ml in most_liked:
         print('Number of likes ------>', ml.likes.count(), 'Headline of blog ------>', ml.headline)
     
-    premium_user = User.objects.filter(profile__premium = True)
-    print('First premium user: ',premium_user[0])
+    premium_user = User.objects.filter(profile__premium = True).order_by('-id')
+    print('Number of premium users ',premium_user.count())
 
     single_premium_blog = []
-    for i in range(5):
-        premium_blog = Blog.objects.filter(author=premium_user[i]).order_by('views')[:1]
-        single_premium_blog.append(premium_blog[0])
-        print(i, '- Single_premium_blog:',single_premium_blog[i])
+    j = 0
+    print('----------------------------------------------------------')
+    print('\n')
+    for i in range(premium_user.count()):
+        print("Premium user -->", i, premium_user[i])
+        if j == 5:
+            break
+        else:
+            premium_blog = Blog.objects.filter(author=premium_user[i]).order_by('views')[:1]
+            print("Premium blog -->", i, premium_blog)
+            if premium_blog:
+                print(i, 'has a blog!')
+                single_premium_blog.append(premium_blog[0])
+                print('Append', i, 'sucessfull')
+                j += 1
+        print('\n')
   
     print('--------->',single_premium_blog[0])
     print('--------->',single_premium_blog[1])
