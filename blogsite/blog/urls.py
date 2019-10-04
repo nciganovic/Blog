@@ -9,21 +9,23 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    #path('robots.txt', views.robots, name='robots'), 
     path('register/', views.register, name='register'),
     path('login/', views.login_request, name='login'),
     path('logout/', views.logout_request, name='logout'),
-    path('<single_slug>', views.single_slug, name='single_slug'),
-    path('<single_slug>/like', views.likes, name='likes'),
     path('create_blog/', views.create_blog, name='create_blog'),
     path('my_blogs/', views.my_blogs, name='my_blogs'),
-    path('my_blogs/<single_slug>', views.edit_blog, name='edit_blog'),
-    path('delete_blog/<single_slug>', views.delete_blog, name='delete_blog'),
     path('my_info/', views.my_info, name='my_info'),
     path('change_info/', views.change_info, name='change_info'),
     path('contact/', views.contact, name='contact'),
     path('stats/', views.stats, name='stats'),
     path('premium/', views.PremiumPageView.as_view(), name='premium'),
     path('charge/', views.charge, name='charge'), 
+    path('<single_slug>/', views.single_slug, name='single_slug'),
+    path('<single_slug>/like', views.likes, name='likes'),
+    path('my_blogs/<single_slug>', views.edit_blog, name='edit_blog'),
+    path('delete_blog/<single_slug>', views.delete_blog, name='delete_blog'),
+    
 ]
 
 if settings.DEBUG:
